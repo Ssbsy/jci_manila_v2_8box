@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
+import 'package:jci_manila_v2/core/constants/images.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/const/assets.dart';
 
 class WidgetCustomAppbar extends StatelessWidget {
@@ -18,14 +19,14 @@ class WidgetCustomAppbar extends StatelessWidget {
     this.assets,
     this.textColor = Palette.black,
     this.color = const Color(0xFF1B1C2B),
-    this.fontSize = 14,
+    this.fontSize = 16,
     this.isbold = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 30, bottom: 20, left: 15, right: 15),
+      padding: const EdgeInsets.only(top: 30, bottom: 20, left: 10, right: 10),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.only(bottomRight: Radius.circular(22)),
@@ -50,6 +51,7 @@ class WidgetCustomAppbar extends StatelessWidget {
                 (context) => GestureDetector(
                   onTap: () => Scaffold.of(context).openEndDrawer(),
                   child: Container(
+                    height: 40,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
                       vertical: 5,
@@ -60,7 +62,7 @@ class WidgetCustomAppbar extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Assets.eikonConradDpng,
+                        Images.postImg,
                         const Gap(5),
                         const Icon(Icons.menu),
                       ],

@@ -44,6 +44,9 @@ class EventContent extends StatelessWidget {
   }
 
   Row _row(Icon icon, String title) {
-    return Row(spacing: 10, children: [icon, WidgetText(title: title)]);
+    return Row(
+      spacing: 10,
+      children: [icon, Expanded(child: WidgetText(title: title, maxLine: 2))],
+    );
   }
 }

@@ -12,6 +12,7 @@ class WidgetFab extends StatelessWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: FABController.showFAB,
       builder: (context, show, _) {
+        debugPrint('FAB visibility: $show');
         if (!show) return const SizedBox.shrink();
 
         return ValueListenableBuilder<FABDesignType>(

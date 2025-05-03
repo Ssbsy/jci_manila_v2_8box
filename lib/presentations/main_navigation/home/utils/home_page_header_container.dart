@@ -28,7 +28,7 @@ class HomePageHeaderContainer extends StatelessWidget {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    'Eikon',
+                    'Jan Adrian',
                     style: TextStyle(
                       fontSize: 18,
                       color: Color(0xFFE9A101),
@@ -47,7 +47,7 @@ class HomePageHeaderContainer extends StatelessWidget {
                 children: [
                   _logo(Assets.jciBlackLogo, Colors.amber),
                   _logo(
-                    Icon(Icons.check, color: Colors.white, size: 15),
+                    Icon(Icons.verified_user, color: Colors.white, size: 15),
                     Colors.lightGreen,
                   ),
                 ],

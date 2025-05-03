@@ -1,11 +1,13 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 
 class WidgetImageContainer extends StatelessWidget {
   final String imageAsset;
   final double alpha;
-  final dynamic child;
+  final Widget? child;
   final BorderRadius? radius;
+
   const WidgetImageContainer({
     super.key,
     required this.imageAsset,
@@ -16,19 +18,25 @@ class WidgetImageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: radius,
-        image: DecorationImage(
-          image: AssetImage(imageAsset),
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(
-            Palette.black.withValues(alpha: alpha),
-            BlendMode.darken,
+    return ClipRRect(
+      borderRadius: radius ?? BorderRadius.zero,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Transform.rotate(
+            angle: math.pi,
+            child: Image.asset(
+              imageAsset,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.black.withOpacity(alpha),
+              colorBlendMode: BlendMode.darken,
+            ),
           ),
-        ),
+          if (child != null) child!,
+        ],
       ),
-      child: child,
     );
   }
 }

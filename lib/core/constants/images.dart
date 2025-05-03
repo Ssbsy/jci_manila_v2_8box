@@ -7,4 +7,10 @@ class Images {
   );
   static final redRibbonLogo = Image.asset('assets/icons/red_ribbon_logo.png');
   static final johnsonsLogo = Image.asset('assets/icons/johnson_logo.png');
+
+  static final benefitsQr = Image.asset('assets/images/benefits_qr.png');
+
+  static final postImg = Image.asset('assets/images/jan_adrian_post.png');
+
+  static final addImgBtn = Image.asset('assets/icons/add_img_btn.png');
 }

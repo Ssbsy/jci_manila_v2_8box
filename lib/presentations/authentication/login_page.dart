@@ -41,200 +41,207 @@ class _LoginPageState extends State<LoginPage> {
               colors: [gradientStart, gradientEnd],
             ),
           ),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/icons/jci_manila_logo_white_1.png',
-                  height: 100,
-                ),
-                Text(
-                  "We are a University of Leaders",
-                  style: TextStyle(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/icons/jci_manila_logo_white_1.png',
+                    height: 100,
+                  ),
+                  Text(
+                    "We are a University of Leaders",
+                    style: TextStyle(
+                      color: neutral50,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const Gap(5),
+                  WidgetText(
+                    title:
+                        "An organization of young men turned great leaders"
+                        "aiming to create positive changes in the community"
+                        "as a whole.",
+                    maxLine: 4,
+                    color: neutral300,
+                    isCentered: true,
+                    size: 14,
+                  ),
+                  const Gap(20),
+
+                  // Login
+                  Card(
                     color: neutral50,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                const Gap(5),
-                WidgetText(
-                  title:
-                      "An organization of young men turned great leaders"
-                      "aiming to create positive changes in the community"
-                      "as a whole.",
-                  maxLine: 4,
-                  color: neutral300,
-                  isCentered: true,
-                  size: 14,
-                ),
-                const Gap(20),
-
-                // Login
-                Card(
-                  color: neutral50,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  elevation: 10,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          Text(
-                            "Member's Login",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: neutral900,
-                            ),
-                          ),
-                          SizedBox(height: 20),
-
-                          //Email
-                          TextFormField(
-                            controller: _emailController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: neutral100,
-                              prefixIcon: Icon(
-                                Icons.email_outlined,
-                                color: neutral300,
-                              ),
-                              labelText: "Email",
-                              hintText: "example@example.com",
-                              labelStyle: TextStyle(color: neutral300),
-                              hintStyle: TextStyle(color: neutral300),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    elevation: 10,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            Text(
+                              "Member's Login",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: neutral900,
                               ),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
-                              }
-                              if (!RegExp(
-                                r'^[^@]+@[^@]+\.[^@]+',
-                              ).hasMatch(value)) {
-                                return 'Enter a valid email';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 15),
+                            SizedBox(height: 20),
 
-                          // Password
-                          TextFormField(
-                            controller: _passwordController,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: neutral100,
-                              prefixIcon: Icon(
-                                Icons.vpn_key_outlined,
-                                color: neutral300,
-                              ),
-                              labelText: "Password",
-                              hintText: "Enter your password here",
-                              labelStyle: TextStyle(color: neutral300),
-                              hintStyle: TextStyle(color: neutral300),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your password';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 10),
-
-                          // Forgot
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Checkbox(
-                                    value: rememberMe,
-                                    onChanged: (val) {
-                                      setState(() {
-                                        rememberMe = val!;
-                                      });
-                                    },
-                                  ),
-                                  WidgetText(
-                                    title: 'Remember me',
-                                    color: neutral300,
-                                  ),
-                                ],
-                              ),
-                              TextButton(
-                                onPressed: () => Get.offAllNamed('/forgot'),
-                                child: WidgetText(
-                                  title: 'Forgot Password',
-                                  color: primary300,
+                            //Email
+                            TextFormField(
+                              controller: _emailController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: neutral100,
+                                prefixIcon: Icon(
+                                  Icons.email_outlined,
+                                  color: neutral300,
+                                ),
+                                labelText: "Email",
+                                hintText: "example@example.com",
+                                labelStyle: TextStyle(color: neutral300),
+                                hintStyle: TextStyle(color: neutral300),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your email';
+                                }
+                                if (!RegExp(
+                                  r'^[^@]+@[^@]+\.[^@]+',
+                                ).hasMatch(value)) {
+                                  return 'Enter a valid email';
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 15),
 
-                          // Login Button
-                          ElevatedButton(
-                            onPressed: () {
-                              // if (_formKey.currentState!.validate()) {
-                              //   Get.offAllNamed('/pageManager');
-                              // }
-                              Get.offAllNamed('/pageManager');
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: accent500,
-                              minimumSize: Size.fromHeight(45),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                            // Password
+                            TextFormField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: neutral100,
+                                prefixIcon: Icon(
+                                  Icons.vpn_key_outlined,
+                                  color: neutral300,
+                                ),
+                                labelText: "Password",
+                                hintText: "Enter your password here",
+                                labelStyle: TextStyle(color: neutral300),
+                                hintStyle: TextStyle(color: neutral300),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your password';
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 10),
+
+                            // Forgot
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Transform.scale(
+                                      scale: 0.8,
+                                      child: Checkbox(
+                                        value: rememberMe,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            rememberMe = val!;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    WidgetText(
+                                      title: 'Remember me',
+                                      size: 10,
+                                      color: neutral300,
+                                    ),
+                                  ],
+                                ),
+                                TextButton(
+                                  onPressed: () => Get.offAllNamed('/forgot'),
+                                  child: WidgetText(
+                                    title: 'Forgot Password',
+                                    size: 10,
+                                    color: primary300,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+
+                            // Login Button
+                            ElevatedButton(
+                              onPressed: () {
+                                // if (_formKey.currentState!.validate()) {
+                                //   Get.offAllNamed('/pageManager');
+                                // }
+                                Get.offAllNamed('/pageManager');
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: accent500,
+                                minimumSize: Size.fromHeight(45),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: WidgetText(
+                                title: 'Login',
+                                color: neutral50,
+                                isBold: true,
+                                size: 14,
                               ),
                             ),
-                            child: WidgetText(
-                              title: 'Login',
-                              color: neutral50,
-                              isBold: true,
-                              size: 14,
-                            ),
-                          ),
-                          const Gap(10),
+                            const Gap(10),
 
-                          // Register Button
-                          OutlinedButton(
-                            onPressed: () {
-                              Get.offAllNamed('/register');
-                            },
-                            style: OutlinedButton.styleFrom(
-                              side: BorderSide(color: accent500),
-                              minimumSize: Size.fromHeight(45),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                            // Register Button
+                            OutlinedButton(
+                              onPressed: () {
+                                Get.offAllNamed('/register');
+                              },
+                              style: OutlinedButton.styleFrom(
+                                side: BorderSide(color: accent500),
+                                minimumSize: Size.fromHeight(45),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: WidgetText(
+                                title: 'Register as an Applicant',
+                                color: accent500,
+                                size: 14,
                               ),
                             ),
-                            child: WidgetText(
-                              title: 'Register as an Applicant',
-                              color: accent500,
-                              size: 14,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

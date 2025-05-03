@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:jci_manila_v2/app/components/widget_bottom_nav.dart';
 import 'package:jci_manila_v2/app/components/widget_drawer.dart';
 import 'package:jci_manila_v2/app/components/widget_fab.dart';
@@ -8,14 +10,15 @@ import 'package:jci_manila_v2/presentations/main_navigation/events/event_page.da
 import 'package:jci_manila_v2/presentations/main_navigation/home/home_page.dart';
 
 class PageManager extends StatefulWidget {
-  const PageManager({super.key});
+  final int initialPage;
+  const PageManager({super.key, this.initialPage = 0});
 
   @override
   State<PageManager> createState() => _PageManagerState();
 }
 
 class _PageManagerState extends State<PageManager> {
-  int currentIndex = 0;
+  late int currentIndex;
 
   final List<Widget> pages = [
     HomePage(),
@@ -24,6 +27,13 @@ class _PageManagerState extends State<PageManager> {
     BenefitsPage(),
     CalendarPage(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.initialPage;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -57,7 +67,11 @@ class _PageManagerState extends State<PageManager> {
           ],
         ),
         endDrawer: WidgetDrawer(),
-        floatingActionButton: WidgetFab(onPressed: () {}),
+        floatingActionButton: WidgetFab(
+          onPressed: () {
+            Get.offAllNamed('/post');
+          },
+        ),
       ),
     );
   }

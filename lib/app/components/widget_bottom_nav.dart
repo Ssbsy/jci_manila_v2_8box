@@ -15,7 +15,7 @@ class WidgetBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
@@ -34,6 +34,7 @@ class WidgetBottomNav extends StatelessWidget {
                 style: TextStyle(
                   color: isSelected ? Color(0xFF1B1C2B) : Colors.grey,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  fontSize: 12,
                 ),
                 child: items[index],
               ),
