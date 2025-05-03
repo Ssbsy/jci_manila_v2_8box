@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:jci_manila_v2/core/models/feed.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/const/assets.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/utils/home_page_feed_reaction.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/utils/home_page_feed_header.dart';
 
-class HomePageFeed extends StatelessWidget {
-  const HomePageFeed({super.key});
+class HomePageFeed extends StatefulWidget {
+  final Feed feed;
+  const HomePageFeed({super.key, required this.feed});
 
+  @override
+  State<HomePageFeed> createState() => _HomePageFeedState();
+}
+
+class _HomePageFeedState extends State<HomePageFeed> {
   @override
   Widget build(BuildContext context) {
     return Column(

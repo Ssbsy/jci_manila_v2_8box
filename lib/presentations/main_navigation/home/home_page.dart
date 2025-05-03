@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const Gap(20),
-          HomePageFeed(),
+          HomePageFeed(feed: feed,),
         ],
       ),
     );
