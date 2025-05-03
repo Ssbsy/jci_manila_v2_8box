@@ -10,6 +10,7 @@ class WidgetText extends StatelessWidget {
   final int maxLine;
   final bool isCentered;
   final TextStyle? style;
+  final bool isUnderlined;
   const WidgetText({
     super.key,
     required this.title,
@@ -20,6 +21,7 @@ class WidgetText extends StatelessWidget {
     this.maxLine = 1,
     this.isCentered = false,
     this.style,
+    this.isUnderlined = false,
   });
 
   @override
@@ -37,6 +39,8 @@ class WidgetText extends StatelessWidget {
             fontSize: size,
             color: color,
             fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+            decoration:
+                isUnderlined ? TextDecoration.underline : TextDecoration.none,
           ),
     );
   }

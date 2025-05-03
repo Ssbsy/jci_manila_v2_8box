@@ -8,9 +8,11 @@ import 'package:jci_manila_v2/presentations/drawer/business_directory/business_d
 import 'package:jci_manila_v2/presentations/drawer/members_database/members_database_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/official_groups/official_groups_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/project/project_screen.dart';
+import 'package:jci_manila_v2/presentations/drawer/resources/resources_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/settings/settings_screen.dart';
+import 'package:jci_manila_v2/presentations/drawer/sponsors/screens/sponsor_details_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/sponsors/sponsors_screen.dart';
-import 'package:jci_manila_v2/presentations/main_navigation/home/create_post_screen.dart';
+import 'package:jci_manila_v2/presentations/main_navigation/home/screens/create_post_screen.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/page_manager.dart';
 import 'package:jci_manila_v2/presentations/start/on_boarding_screen.dart';
 import 'package:jci_manila_v2/presentations/start/splash_screen.dart';
@@ -30,8 +32,9 @@ class GetPages {
     GetPage(name: '/groups', page: () => OfficialGroupsScreen()),
     GetPage(name: '/database', page: () => MembersDatabaseScreen()),
     GetPage(name: '/sponsors', page: () => SponsorsScreen()),
-    GetPage(name: '/resources', page: () => SponsorsScreen()),
+    GetPage(name: '/resources', page: () => ResourcesScreen()),
     GetPage(name: '/settings', page: () => SettingsScreen()),
     GetPage(name: '/post', page: () => CreatePostScreen()),
+    GetPage(name: '/sponsorDetails', page: () => SponsorDetailsScreen()),
   ];
 }

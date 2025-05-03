@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/constants/images.dart';
-import 'package:jci_manila_v2/presentations/main_navigation/home/const/assets.dart';
 
 class WidgetCustomAppbar extends StatelessWidget {
   final String? title;
@@ -12,6 +13,7 @@ class WidgetCustomAppbar extends StatelessWidget {
   final Color textColor;
   final double fontSize;
   final bool isbold;
+  final bool isBack;
 
   const WidgetCustomAppbar({
     super.key,
@@ -21,6 +23,7 @@ class WidgetCustomAppbar extends StatelessWidget {
     this.color = const Color(0xFF1B1C2B),
     this.fontSize = 16,
     this.isbold = false,
+    this.isBack = false,
   });
 
   @override
@@ -34,18 +37,31 @@ class WidgetCustomAppbar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          assets ??
-              (title != null
-                  ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: WidgetText(
-                      title: title!,
-                      color: textColor,
-                      size: fontSize,
-                      isBold: isbold,
-                    ),
-                  )
-                  : const SizedBox()),
+          Row(
+            children: [
+              if (isBack != false)
+                GestureDetector(
+                  onTap: () => Get.offAllNamed('/sponsors'),
+                  child: Icon(
+                    Icons.arrow_back_ios,
+                    color: Palette.white,
+                    size: 18,
+                  ),
+                ),
+              assets ??
+                  (title != null
+                      ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: WidgetText(
+                          title: title!,
+                          color: textColor,
+                          size: fontSize,
+                          isBold: isbold,
+                        ),
+                      )
+                      : const SizedBox()),
+            ],
+          ),
           Builder(
             builder:
                 (context) => GestureDetector(
