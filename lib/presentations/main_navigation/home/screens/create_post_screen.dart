@@ -55,7 +55,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            onPressed: () => Get.offAllNamed('/pageManager'),
+            onPressed: () => Navigator.pop(context),
             icon: Icon(Icons.arrow_back_ios, size: 20),
           ),
           title: WidgetText(title: 'Cancel Post'),

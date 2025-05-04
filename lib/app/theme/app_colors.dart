@@ -11,4 +11,17 @@ class Palette {
   static const Color gold = Color(0xFFFFFBE0);
   static const Color silver = Color(0xFFF1F1F1);
   static const Color bronze = Color(0xFFFFF6F0);
+
+  //--------------//
+  static const Color gradientStart = Color(0xFF1B1C2B);
+  static const Color gradientEnd = Color(0xFF1B3C63);
+  static const Color neutralWhite = Color(0xFFFFFFFF);
+  static const Color neutralLightGray = Color(0xFFF5F5F5);
+  static const Color neutralGray = Color(0xFFBDBDBD);
+  static const Color neutralBlack = Color(0xFF121212);
+  static const Color accentBlue = Color(0xFF145FB0);
+  static const Color primarySky = Color(0xFF64B5F6);
+
+  //--------------//
+  static const Color veryDarkBlueGray = Color(0xFF1A1C2B);
 }

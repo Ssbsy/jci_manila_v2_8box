@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:jci_manila_v2/core/constants/images.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/const/assets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -24,12 +25,9 @@ class _HomePageAutochangingTileState extends State<HomePageAutochangingTile> {
     super.initState();
 
     _tiles = [
-      _buildLogoTile(Assets.dashboardImg01),
-      _buildLogoTile(Assets.dashboardImg01),
-      _buildLogoTile(Assets.dashboardImg01),
-      _buildLogoTile(Assets.dashboardImg01),
-      _buildLogoTile(Assets.dashboardImg01),
-      _buildLogoTile(Assets.dashboardImg01),
+      _buildLogoTile(Images.autochanging01),
+      _buildLogoTile(Images.autochanging02),
+      _buildLogoTile(Images.autochanging03),
     ];
 
     _startAutoScroll();
