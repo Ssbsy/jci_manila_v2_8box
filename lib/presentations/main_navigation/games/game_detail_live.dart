@@ -9,9 +9,10 @@ class GameDetailLive extends StatelessWidget {
     return Scaffold(
       backgroundColor: Palette.neutralWhite,
       appBar: AppBar(
-        backgroundColor: Palette.gradientEnd,
+        backgroundColor: Color(0xFF1B1C2B),
+        foregroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text("Live Now"),
-        foregroundColor: Palette.neutralWhite,
       ),
       body: ListView(
         children: [

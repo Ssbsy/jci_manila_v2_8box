@@ -13,10 +13,12 @@ class GameDetailPast extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Palette.neutralWhite,
         appBar: AppBar(
-          backgroundColor: Palette.gradientEnd,
+          backgroundColor: Color(0xFF1B1C2B),
+          foregroundColor: Colors.white,
+          iconTheme: const IconThemeData(color: Colors.white),
           title: const Text("Watching"),
-          foregroundColor: Palette.neutralWhite,
         ),
+
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
