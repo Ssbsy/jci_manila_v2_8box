@@ -7,7 +7,9 @@ import 'package:jci_manila_v2/app/components/widget_fab.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/benefits/benefits_page.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/calendar/calendar_page.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/events/event_page.dart';
+import 'package:jci_manila_v2/presentations/main_navigation/games/games_page.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/home_page.dart';
+import 'package:jci_manila_v2/presentations/main_navigation/home/screens/create_post_screen.dart';
 
 class PageManager extends StatefulWidget {
   final int initialPage;
@@ -23,7 +25,7 @@ class _PageManagerState extends State<PageManager> {
   final List<Widget> pages = [
     HomePage(),
     EventPage(),
-    Center(child: Text('Games')),
+    GamesPage(),
     BenefitsPage(),
     CalendarPage(),
   ];
@@ -69,7 +71,17 @@ class _PageManagerState extends State<PageManager> {
         endDrawer: WidgetDrawer(),
         floatingActionButton: WidgetFab(
           onPressed: () {
-            Get.offAllNamed('/post');
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (context) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: CreatePostScreen(),
+                );
+              },
+            );
           },
         ),
       ),
