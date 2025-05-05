@@ -24,4 +24,13 @@ class Palette {
 
   //--------------//
   static const Color veryDarkBlueGray = Color(0xFF1A1C2B);
+
+  static const Color warmGoldenYellow = Color(0xFFF5C500);
+  static const Color veryPalePinkPeachCream = Color.fromRGBO(
+    255,
+    248,
+    246,
+    1.0,
+  );
+  static const Color veryDarkNavy = Color(0xFF1B1C2B);
 }

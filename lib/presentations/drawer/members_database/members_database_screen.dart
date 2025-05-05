@@ -44,8 +44,8 @@ class _MembersDatabaseScreenState extends State<MembersDatabaseScreen> {
     MembersDatabaseModel(
       firstName: 'Sean Patrick',
       lastName: 'Si',
-      type: 'Associate',
-      badge: Images.brownBadge,
+      type: 'Regular',
+      badge: Images.silverBadge,
     ),
   ];
 

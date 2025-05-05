@@ -48,4 +48,16 @@ class Images {
   static final yellowBadge = Image.asset('assets/icons/yellow_badge_png.png');
   static final silverBadge = Image.asset('assets/icons/silver_badge_png.png');
   static final brownBadge = Image.asset('assets/icons/brown_badge_png.png');
+  static final badge = Image.asset('assets/icons/badge_png.png');
+  static final hackerIcon = Image.asset(
+    'assets/icons/hacker_business_list.png',
+  );
+
+  static final officialGroupPhoto = Image.asset(
+    'assets/images/official_groups_photo.png',
+  );
+
+  static final officialGroupBasketballPhoto = Image.asset(
+    'assets/images/official_groups_basketball_photo.png',
+  );
 }

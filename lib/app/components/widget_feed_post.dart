@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/constants/feed_reaction.dart';
+import 'package:jci_manila_v2/core/constants/feed_reaction.dart'
+    as FeedReaction;
 import 'package:jci_manila_v2/core/models/feed.dart';
 
 class WidgetFeedPost extends StatefulWidget {

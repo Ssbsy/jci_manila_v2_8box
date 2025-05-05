@@ -31,11 +31,11 @@ class MembersDatabaseContent extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _row('First Name: ', 'Sean Patrick'),
-                      _row('Last Name: ', 'Si'),
+                      _row('First Name: ', database.firstName),
+                      _row('Last Name: ', database.lastName),
                     ],
                   ),
-                  Images.yellowBadge,
+                  database.badge,
                 ],
               ),
             ),
@@ -46,7 +46,10 @@ class MembersDatabaseContent extends StatelessWidget {
                 Row(
                   children: [
                     WidgetText(title: 'Type: '),
-                    WidgetText(title: 'Associate', color: Palette.neutralGray),
+                    WidgetText(
+                      title: database.type,
+                      color: Palette.neutralGray,
+                    ),
                   ],
                 ),
                 Container(
