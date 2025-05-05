@@ -91,9 +91,7 @@ class _BusinessDirectoryScreenState extends State<BusinessDirectoryScreen> {
             currentIndex = index;
             FABController.showFAB.value = (index == 1);
             FABController.fabDesignType.value =
-                (index == 1)
-                    ? FABDesignType.altFab
-                    : FABDesignType.defaultFab; // changed
+                (index == 1) ? FABDesignType.altFab : FABDesignType.defaultFab;
           }),
       child: Column(
         children: [
