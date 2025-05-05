@@ -23,16 +23,13 @@ class WidgetImageContainer extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Transform.rotate(
-            angle: math.pi,
-            child: Image.asset(
-              imageAsset,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-              color: Colors.black.withOpacity(alpha),
-              colorBlendMode: BlendMode.darken,
-            ),
+          Image.asset(
+            imageAsset,
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.black.withOpacity(alpha),
+            colorBlendMode: BlendMode.darken,
           ),
           if (child != null) child!,
         ],

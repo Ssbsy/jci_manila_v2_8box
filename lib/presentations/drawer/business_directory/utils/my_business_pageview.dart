@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/widgets/widget_dropdown.dart';
 import 'package:jci_manila_v2/app/widgets/widget_search_bar.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
+import 'package:jci_manila_v2/presentations/drawer/business_directory/widgets/business_list.dart';
 
 class MyBusinessPageview extends StatefulWidget {
   const MyBusinessPageview({super.key});
@@ -14,9 +15,10 @@ class MyBusinessPageview extends StatefulWidget {
 class _MyBusinessPageviewState extends State<MyBusinessPageview> {
   final controller = TextEditingController();
   String? selectedCategory;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,6 +42,9 @@ class _MyBusinessPageviewState extends State<MyBusinessPageview> {
               },
             ),
           ),
+          const Gap(20),
+          const BusinessList(),
+          const SizedBox(height: 100),
         ],
       ),
     );

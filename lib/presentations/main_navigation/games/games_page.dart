@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jci_manila_v2/app/components/widget_custom_appbar.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/games/game_detail_live.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/games/game_detailed_past.dart';
@@ -6,7 +7,6 @@ import 'package:jci_manila_v2/presentations/main_navigation/games/widgets/all_ga
 import 'package:jci_manila_v2/presentations/main_navigation/games/widgets/basketball_page.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/games/widgets/game_filter_chips.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/games/widgets/game_search_bar.dart';
-import 'package:jci_manila_v2/presentations/main_navigation/games/widgets/games_app_bar.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/games/widgets/ml_page.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/games/widgets/ryder_clup_page.dart';
 
@@ -20,7 +20,6 @@ class GamesPage extends StatefulWidget {
 class _GamesPageState extends State<GamesPage> with TickerProviderStateMixin {
   late TabController _tabController;
   String selectedFilter = "All";
-
   final List<String> filters = ["All", "Ryder Club", "MLBB", "Basketball"];
 
   @override
@@ -45,11 +44,16 @@ class _GamesPageState extends State<GamesPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Palette.neutralWhite,
-      appBar: const GamesAppBar(),
-      body: Column(
+    return DefaultTabController(
+      length: 2, // Games & Past Games
+      child: Column(
         children: [
+          const WidgetCustomAppbar(
+            title: 'Games',
+            textColor: Colors.white,
+            fontSize: 20,
+            isbold: true,
+          ),
           TabBar(
             controller: _tabController,
             indicatorColor: Palette.accentBlue,
@@ -110,6 +114,7 @@ class _GamesPageState extends State<GamesPage> with TickerProviderStateMixin {
         );
       default:
         return AllGamesPage(
+          isPastGames: isPastGames,
           onLiveGameTap: _openLiveGame,
           onPastGameTap: _openPastGame,
         );
