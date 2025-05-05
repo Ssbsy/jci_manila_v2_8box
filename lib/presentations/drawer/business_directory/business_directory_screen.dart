@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/components/widget_custom_appbar.dart';
 import 'package:jci_manila_v2/app/components/widget_drawer.dart';
+import 'package:jci_manila_v2/app/components/widget_fab.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
+import 'package:jci_manila_v2/presentations/drawer/business_directory/widgets/add_business_form.dart';
 import 'package:jci_manila_v2/presentations/drawer/business_directory/utils/business_pageview.dart';
 import 'package:jci_manila_v2/presentations/drawer/business_directory/utils/my_business_pageview.dart';
 
@@ -31,9 +33,23 @@ class _BusinessDirectoryScreenState extends State<BusinessDirectoryScreen> {
     return GestureDetector(
       onTap: () {},
       child: Scaffold(
+        endDrawer: WidgetDrawer(),
+        floatingActionButton:
+            currentIndex == 1
+                ? WidgetFab(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const AddBusinessForm(),
+                      ),
+                    );
+                  },
+                )
+                : null,
         body: Column(
           children: [
-            WidgetCustomAppbar(
+            const WidgetCustomAppbar(
               title: 'Business Directory',
               textColor: Colors.white,
               isbold: true,
@@ -46,10 +62,9 @@ class _BusinessDirectoryScreenState extends State<BusinessDirectoryScreen> {
                 _buildTab(title: 'My Business', index: 1),
               ],
             ),
-            pages[currentIndex],
+            Expanded(child: pages[currentIndex]),
           ],
         ),
-        endDrawer: WidgetDrawer(),
       ),
     );
   }
@@ -67,14 +82,14 @@ class _BusinessDirectoryScreenState extends State<BusinessDirectoryScreen> {
           WidgetText(
             title: title,
             isBold: true,
-            color: isSelected ? Colors.blue : Colors.black,
+            color: isSelected ? Colors.blueAccent : Colors.black,
             size: size,
           ),
           const Gap(5),
           Container(
             height: 2,
             width: MediaQuery.of(context).size.width * 0.5,
-            color: isSelected ? Colors.blue : Colors.transparent,
+            color: isSelected ? Colors.blueAccent : Colors.transparent,
           ),
         ],
       ),

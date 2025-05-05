@@ -44,31 +44,34 @@ class _GamesPageState extends State<GamesPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const WidgetCustomAppbar(
-          title: 'Games',
-          textColor: Colors.white,
-          fontSize: 20,
-          isbold: true,
-        ),
-        TabBar(
-          controller: _tabController,
-          indicatorColor: Palette.accentBlue,
-          labelColor: Palette.neutralBlack,
-          unselectedLabelColor: Palette.neutralGray,
-          tabs: const [Tab(text: "Games"), Tab(text: "Past Games")],
-        ),
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              _buildContentTab(isPastGames: false),
-              _buildContentTab(isPastGames: true),
-            ],
+    return DefaultTabController(
+      length: 2, // Games & Past Games
+      child: Column(
+        children: [
+          const WidgetCustomAppbar(
+            title: 'Games',
+            textColor: Colors.white,
+            fontSize: 20,
+            isbold: true,
           ),
-        ),
-      ],
+          TabBar(
+            controller: _tabController,
+            indicatorColor: Palette.accentBlue,
+            labelColor: Palette.neutralBlack,
+            unselectedLabelColor: Palette.neutralGray,
+            tabs: const [Tab(text: "Games"), Tab(text: "Past Games")],
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _buildContentTab(isPastGames: false),
+                _buildContentTab(isPastGames: true),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
