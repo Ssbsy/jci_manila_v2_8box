@@ -11,29 +11,33 @@ class MembersDatabaseContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Container(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.grey.shade200,
+          color: Colors.grey.shade100,
         ),
         child: Column(
           children: [
-            Row(
-              spacing: 15,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Images.seanPatrickPng,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _row('First Name: ', 'Sean Patrick'),
-                    _row('Last Name: ', 'Si'),
-                  ],
-                ),
-                Images.yellowBadge,
-              ],
+            Container(
+              decoration: BoxDecoration(color: Palette.white),
+              padding: const EdgeInsets.all(7),
+              child: Row(
+                spacing: 15,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Images.seanPatrickPng,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _row('First Name: ', 'Sean Patrick'),
+                      _row('Last Name: ', 'Si'),
+                    ],
+                  ),
+                  Images.yellowBadge,
+                ],
+              ),
             ),
             const Divider(),
             Row(

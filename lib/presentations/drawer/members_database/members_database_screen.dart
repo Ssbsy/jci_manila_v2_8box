@@ -7,6 +7,7 @@ import 'package:jci_manila_v2/app/widgets/widget_search_bar.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/constants/images.dart';
 import 'package:jci_manila_v2/core/models/members_database_model.dart';
+import 'package:jci_manila_v2/presentations/drawer/members_database/screens/members_database_details_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/members_database/utils/members_database_content.dart';
 
 class MembersDatabaseScreen extends StatefulWidget {
@@ -31,25 +32,26 @@ class _MembersDatabaseScreenState extends State<MembersDatabaseScreen> {
     MembersDatabaseModel(
       firstName: 'Sean Patrick',
       lastName: 'Si',
-      type: 'Associate',
-      badge: Images.yellowBadge,
+      type: 'Regular',
+      badge: Images.silverBadge,
+    ),
+    MembersDatabaseModel(
+      firstName: 'Sean Patrick',
+      lastName: 'Si',
+      type: 'Senate',
+      badge: Images.brownBadge,
     ),
     MembersDatabaseModel(
       firstName: 'Sean Patrick',
       lastName: 'Si',
       type: 'Associate',
-      badge: Images.yellowBadge,
-    ),
-    MembersDatabaseModel(
-      firstName: 'Sean Patrick',
-      lastName: 'Si',
-      type: 'Associate',
-      badge: Images.yellowBadge,
+      badge: Images.brownBadge,
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('Database length: ${database.length}');
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -75,7 +77,20 @@ class _MembersDatabaseScreenState extends State<MembersDatabaseScreen> {
               ...List.generate(database.length, (index) {
                 return Column(
                   children: [
-                    MembersDatabaseContent(database: database[index]),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (_) => MembersDatabaseDetailsScreen(
+                                  database: database[index],
+                                ),
+                          ),
+                        );
+                      },
+                      child: MembersDatabaseContent(database: database[index]),
+                    ),
                     const Gap(15),
                   ],
                 );

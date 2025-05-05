@@ -41,6 +41,11 @@ class Images {
   static final seanPatrickPng = Image.asset(
     'assets/images/sean_patrick_png.png',
   );
+  static final seanPatrick02Png = Image.asset(
+    'assets/images/sean_patrick_02_png.png',
+  );
 
   static final yellowBadge = Image.asset('assets/icons/yellow_badge_png.png');
+  static final silverBadge = Image.asset('assets/icons/silver_badge_png.png');
+  static final brownBadge = Image.asset('assets/icons/brown_badge_png.png');
 }
