@@ -1,3 +1,1 @@
-class FeedReaction {
-  static bool like = false;
-}
+bool like = false;

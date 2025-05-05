@@ -37,4 +37,27 @@ class Images {
   static final autochanging03 = Image.asset(
     'assets/images/autochanging_03.png',
   );
+
+  static final seanPatrickPng = Image.asset(
+    'assets/images/sean_patrick_png.png',
+  );
+  static final seanPatrick02Png = Image.asset(
+    'assets/images/sean_patrick_02_png.png',
+  );
+
+  static final yellowBadge = Image.asset('assets/icons/yellow_badge_png.png');
+  static final silverBadge = Image.asset('assets/icons/silver_badge_png.png');
+  static final brownBadge = Image.asset('assets/icons/brown_badge_png.png');
+  static final badge = Image.asset('assets/icons/badge_png.png');
+  static final hackerIcon = Image.asset(
+    'assets/icons/hacker_business_list.png',
+  );
+
+  static final officialGroupPhoto = Image.asset(
+    'assets/images/official_groups_photo.png',
+  );
+
+  static final officialGroupBasketballPhoto = Image.asset(
+    'assets/images/official_groups_basketball_photo.png',
+  );
 }
