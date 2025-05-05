@@ -1,6 +1,6 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
-import 'package:jci_manila_v2/app/theme/app_colors.dart';
 
 class WidgetImageContainer extends StatelessWidget {
   final String imageAsset;
@@ -23,13 +23,17 @@ class WidgetImageContainer extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            imageAsset,
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-            color: Colors.black.withOpacity(alpha),
-            colorBlendMode: BlendMode.darken,
+          Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.rotationX(math.pi),
+            child: Image.asset(
+              imageAsset,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.black.withOpacity(alpha),
+              colorBlendMode: BlendMode.darken,
+            ),
           ),
           if (child != null) child!,
         ],
