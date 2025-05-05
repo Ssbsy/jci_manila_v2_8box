@@ -37,4 +37,10 @@ class Images {
   static final autochanging03 = Image.asset(
     'assets/images/autochanging_03.png',
   );
+
+  static final seanPatrickPng = Image.asset(
+    'assets/images/sean_patrick_png.png',
+  );
+
+  static final yellowBadge = Image.asset('assets/icons/yellow_badge_png.png');
 }

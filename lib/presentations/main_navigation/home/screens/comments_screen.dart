@@ -31,87 +31,87 @@ class _CommentsScreenState extends State<CommentsScreen> {
     String reaction = widget.feed.reactions.toString();
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _header(reaction, context),
-              const Divider(),
-              ...comments.map(
-                (comment) => ListTile(
-                  leading: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [comment.userPhoto],
-                  ),
-                  title: WidgetText(title: comment.user),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 0.5),
-                        ),
-                        child: WidgetText(title: comment.comment, maxLine: 10),
+        body: Column(
+          children: [
+            _header(reaction, context),
+            const Divider(),
+            ...comments.map(
+              (comment) => ListTile(
+                leading: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [comment.userPhoto],
+                ),
+                title: WidgetText(title: comment.user),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 0.5),
                       ),
+                      child: WidgetText(title: comment.comment, maxLine: 10),
+                    ),
 
-                      Row(
-                        spacing: 10,
-                        children: [
-                          WidgetText(title: comment.time),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isLiked = !isLiked;
-                                CommentReaction.like = isLiked;
-                              });
-                            },
-                            child: WidgetText(
-                              title: 'Like',
-                              color:
-                                  CommentReaction.like
-                                      ? Colors.red
-                                      : Palette.black,
-                            ),
+                    Row(
+                      spacing: 10,
+                      children: [
+                        WidgetText(title: comment.time),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isLiked = !isLiked;
+                              CommentReaction.like = isLiked;
+                            });
+                          },
+                          child: WidgetText(
+                            title: 'Like',
+                            color:
+                                CommentReaction.like
+                                    ? Colors.red
+                                    : Palette.black,
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Row _header(String reaction, BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            WidgetText(title: 'Liked by $reaction others', isBold: true),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.arrow_forward_ios, size: 15),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            const WidgetText(title: 'Close'),
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.close, size: 20),
-            ),
-          ],
-        ),
-      ],
+  Padding _header(String reaction, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              WidgetText(title: 'Liked by $reaction others', isBold: true),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.arrow_forward_ios, size: 15),
+              ),
+            ],
+          ),
+          Row(
+            spacing: 5,
+            children: [
+              const WidgetText(title: 'Close'),
+              GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Icon(Icons.close),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

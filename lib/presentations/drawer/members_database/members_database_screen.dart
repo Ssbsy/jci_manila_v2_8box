@@ -5,6 +5,9 @@ import 'package:jci_manila_v2/app/components/widget_drawer.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_search_bar.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
+import 'package:jci_manila_v2/core/constants/images.dart';
+import 'package:jci_manila_v2/core/models/members_database_model.dart';
+import 'package:jci_manila_v2/presentations/drawer/members_database/utils/members_database_content.dart';
 
 class MembersDatabaseScreen extends StatefulWidget {
   const MembersDatabaseScreen({super.key});
@@ -18,30 +21,67 @@ class _MembersDatabaseScreenState extends State<MembersDatabaseScreen> {
   String selectedTab = 'All';
   final List<String> tabs = ['All', 'Senator', 'Baby JC', 'Director'];
 
+  final List<MembersDatabaseModel> database = [
+    MembersDatabaseModel(
+      firstName: 'Sean Patrick',
+      lastName: 'Si',
+      type: 'Associate',
+      badge: Images.yellowBadge,
+    ),
+    MembersDatabaseModel(
+      firstName: 'Sean Patrick',
+      lastName: 'Si',
+      type: 'Associate',
+      badge: Images.yellowBadge,
+    ),
+    MembersDatabaseModel(
+      firstName: 'Sean Patrick',
+      lastName: 'Si',
+      type: 'Associate',
+      badge: Images.yellowBadge,
+    ),
+    MembersDatabaseModel(
+      firstName: 'Sean Patrick',
+      lastName: 'Si',
+      type: 'Associate',
+      badge: Images.yellowBadge,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: Column(
-          children: [
-            WidgetCustomAppbar(
-              title: 'Members Database',
-              textColor: Colors.white,
-              isbold: true,
-            ),
-            const Gap(10),
-            WidgetSearchBar(controller: controller),
-            const Gap(10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Wrap(
-                spacing: 10,
-                children: tabs.map((tab) => _nav(tab)).toList(),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              WidgetCustomAppbar(
+                title: 'Members Database',
+                textColor: Colors.white,
+                isbold: true,
               ),
-            ),
-            const Gap(10),
-          ],
+              const Gap(10),
+              WidgetSearchBar(controller: controller),
+              const Gap(10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Wrap(
+                  spacing: 5,
+                  children: tabs.map((tab) => _nav(tab)).toList(),
+                ),
+              ),
+              const Gap(15),
+              ...List.generate(database.length, (index) {
+                return Column(
+                  children: [
+                    MembersDatabaseContent(database: database[index]),
+                    const Gap(15),
+                  ],
+                );
+              }),
+            ],
+          ),
         ),
         endDrawer: WidgetDrawer(),
       ),
