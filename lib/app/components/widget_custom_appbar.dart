@@ -20,7 +20,7 @@ class WidgetCustomAppbar extends StatelessWidget {
     this.title,
     this.assets,
     this.textColor = Palette.black,
-    this.color = const Color(0xFF1B1C2B),
+    this.color = Palette.veryDarkBluishGray,
     this.fontSize = 16,
     this.isbold = false,
     this.isBack = false,

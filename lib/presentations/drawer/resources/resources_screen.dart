@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:jci_manila_v2/app/components/widget_custom_appbar.dart';
 import 'package:jci_manila_v2/app/components/widget_drawer.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
@@ -21,9 +23,12 @@ class ResourcesScreen extends StatelessWidget {
             child: Column(
               spacing: 10,
               children: [
-                _row('History'),
-                _row('Creed'),
-                _row('Board of Directors'),
+                _row('History', onTap: () => Get.offAllNamed('/history')),
+                _row('Creed', onTap: () => Get.offAllNamed('/creed')),
+                _row(
+                  'Board of Directors',
+                  onTap: () => Get.offAllNamed('/BOD'),
+                ),
               ],
             ),
           ),

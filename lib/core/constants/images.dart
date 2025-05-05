@@ -60,4 +60,6 @@ class Images {
   static final officialGroupBasketballPhoto = Image.asset(
     'assets/images/official_groups_basketball_photo.png',
   );
+
+  static final historyPhoto = Image.asset('assets/images/history_photo.png');
 }
