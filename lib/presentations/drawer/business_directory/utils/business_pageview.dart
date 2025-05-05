@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:jci_manila_v2/app/components/widget_fab.dart';
 import 'package:jci_manila_v2/app/widgets/widget_dropdown.dart';
 import 'package:jci_manila_v2/app/widgets/widget_search_bar.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
