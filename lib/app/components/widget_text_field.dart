@@ -11,6 +11,7 @@ class WidgetTextField extends StatelessWidget {
   final FontWeight fontWeight;
   final Color textColor;
   final String? hintText;
+  final TextStyle? hintStyle;
   final bool obscureText;
   final TextInputType keyboardType;
   final int maxLines;
@@ -40,6 +41,7 @@ class WidgetTextField extends StatelessWidget {
     this.fontWeight = FontWeight.normal,
     this.textColor = Palette.black,
     this.hintText,
+    this.hintStyle,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.maxLines = 1,
@@ -93,6 +95,8 @@ class WidgetTextField extends StatelessWidget {
               fillColor: fillColor,
               filled: isFilled,
               hintText: hintText,
+              hintStyle:
+                  hintStyle ?? const TextStyle(color: Palette.neutralGray),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   width: enabledBorderSide,

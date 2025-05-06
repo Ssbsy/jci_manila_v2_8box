@@ -159,6 +159,7 @@ class AddBusinessForm extends StatelessWidget {
         _buildSectionSubHeader(label),
         WidgetTextField(
           controller: TextEditingController(text: value),
+          // ignore: deprecated_member_use
           fillColor: Palette.neutralGray.withOpacity(0.15),
           isFilled: true,
           enabledBorderSideColor: Colors.transparent,
