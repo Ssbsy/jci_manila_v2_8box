@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/widgets/widget_search_bar.dart';
-import 'package:jci_manila_v2/app/widgets/widget_text.dart';
-import 'package:jci_manila_v2/core/constants/fab_controller.dart';
-import 'package:jci_manila_v2/presentations/main_navigation/events/const/explore_assets.dart';
-import 'package:jci_manila_v2/presentations/main_navigation/events/const/texts.dart';
+import 'package:jci_manila_v2/presentations/main_navigation/events/utils/event_content.dart';
 
 class MyEventsPageview extends StatefulWidget {
   const MyEventsPageview({super.key});
@@ -16,42 +12,37 @@ class MyEventsPageview extends StatefulWidget {
 
 class _MyEventsPageviewState extends State<MyEventsPageview> {
   final controller = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      FABController.showFAB.value = true;
-      FABController.fabDesignType.value = FABDesignType.defaultFab;
-    });
-  }
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      FABController.showFAB.value = false;
-    });
-    super.dispose();
-  }
+  final List<EventModel> myEventList = [
+    EventModel(
+      title: "Asia Pacific Conference - Mongolia, Ulaanbaatar",
+      description: "Join us for an exciting onto in this year’s JCI Asia",
+      location: "Ulaanbaatar, Mongolia",
+      dateTime: "June 11–16, 2025 | 8:00 AM",
+      imagePath: "assets/images/event.png",
+      registrants: 8,
+      isMyEvent: true,
+    ),
+    EventModel(
+      title: "JCI Youth Summit - Philippines",
+      description: "Empowering the next generation of leaders in JCI.",
+      location: "Manila, Philippines",
+      dateTime: "July 5, 2025 | 9:00 AM",
+      imagePath: "assets/images/event.png",
+      registrants: 12,
+      isMyEvent: true,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          WidgetSearchBar(controller: controller),
-          const Gap(10),
-          _content(context),
-        ],
-      ),
-    );
-  }
-
-  Widget _content(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.grey),
-      ),
-      child: Column(children: []),
+    return ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      children: [
+        WidgetSearchBar(controller: controller),
+        const Gap(10),
+        ...myEventList.map((event) => EventContent(event: event)).toList(),
+      ],
     );
   }
 }

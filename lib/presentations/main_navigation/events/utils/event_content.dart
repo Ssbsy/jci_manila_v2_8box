@@ -1,52 +1,169 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
-import 'package:jci_manila_v2/presentations/main_navigation/events/const/explore_assets.dart';
+
+class EventModel {
+  final String title;
+  final String description;
+  final String location;
+  final String dateTime;
+  final String imagePath;
+  final int? registrants; // Optional for general events
+  final bool isMyEvent;
+
+  EventModel({
+    required this.title,
+    required this.description,
+    required this.location,
+    required this.dateTime,
+    required this.imagePath,
+    this.registrants,
+    this.isMyEvent = false,
+  });
+}
 
 class EventContent extends StatelessWidget {
-  const EventContent({super.key});
+  final EventModel event;
+
+  const EventContent({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(12),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-        child: Column(
-          spacing: 10,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ExploreAssets.exploreContent01,
-            WidgetText(
-              title: 'Lorem ipsum dolor sit amet consectetur',
-              isBold: true,
-            ),
-            WidgetText(
-              title:
-                  'Lorem ipsum dolor sit amet consectetur. Elit fringilla aliquam ultricies pellentesque augue posuere. Volutpat at sed viverra adipiscing massa eu sit elit senectus. ',
-              isJustified: true,
-            ),
-            _row(
-              Icon(Icons.location_on, color: Colors.blue, size: 20),
-              'Lorem ipsum dolor sit amet consectetur',
-            ),
-            _row(
-              Icon(Icons.access_time_filled, color: Colors.blue, size: 18),
-              '10:00AM - 6:00PM',
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  event.imagePath,
+                  height: 200,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const Gap(12),
+
+              // Title
+              WidgetText(
+                title: event.title,
+                size: 16,
+                isBold: true,
+                maxLine: 2,
+              ),
+              const Gap(6),
+
+              // Description
+              WidgetText(
+                title: event.description,
+                size: 13,
+                color: Colors.grey,
+                maxLine: 2,
+              ),
+              const Gap(10),
+
+              // Location
+              Row(
+                children: [
+                  const Icon(
+                    Icons.location_on,
+                    color: Palette.accentBlue,
+                    size: 18,
+                  ),
+                  const Gap(6),
+                  WidgetText(title: event.location, size: 13),
+                ],
+              ),
+              const Gap(6),
+
+              // Date
+              Row(
+                children: [
+                  const Icon(
+                    Icons.calendar_today,
+                    color: Palette.accentBlue,
+                    size: 16,
+                  ),
+                  const Gap(6),
+                  WidgetText(title: event.dateTime, size: 13),
+                ],
+              ),
+              const Gap(10),
+
+              // Registrants (only if My Events)
+              if (event.isMyEvent && event.registrants != null) ...[
+                const Gap(6),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.groups,
+                      size: 18,
+                      color: Palette.accentBlue,
+                    ),
+                    const Gap(6),
+                    WidgetText(
+                      title: "${event.registrants} Registrants",
+                      size: 13,
+                      color: Palette.accentBlue,
+                    ),
+                  ],
+                ),
+              ],
+              const Gap(14),
+
+              // Button
+              SizedBox(
+                width: double.infinity,
+                child:
+                    event.isMyEvent
+                        ? OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            side: const BorderSide(color: Palette.accentBlue),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: const WidgetText(
+                            title: "View Event",
+                            size: 14,
+                            isBold: true,
+                            color: Palette.accentBlue,
+                          ),
+                        )
+                        : ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Palette.accentBlue,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: const WidgetText(
+                            title: "Register",
+                            size: 14,
+                            isBold: true,
+                            color: Colors.white,
+                          ),
+                        ),
+              ),
+            ],
+          ),
         ),
       ),
-    );
-  }
-
-  Row _row(Icon icon, String title) {
-    return Row(
-      spacing: 10,
-      children: [icon, Expanded(child: WidgetText(title: title, maxLine: 2))],
     );
   }
 }

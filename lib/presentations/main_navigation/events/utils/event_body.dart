@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/events/utils/event_pageview.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/events/utils/my_events_pageview.dart';
 
 class EventBody extends StatefulWidget {
-  const EventBody({super.key});
+  final ValueChanged<int>? onTabChanged;
+
+  const EventBody({super.key, this.onTabChanged});
 
   @override
   State<EventBody> createState() => _EventBodyState();
@@ -13,7 +16,8 @@ class EventBody extends StatefulWidget {
 
 class _EventBodyState extends State<EventBody> {
   int currentIndex = 0;
-  final List<Widget> pages = [EventPageview(), MyEventsPageview()];
+
+  final List<Widget> pages = const [EventPageview(), MyEventsPageview()];
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +31,8 @@ class _EventBodyState extends State<EventBody> {
             _buildTab(title: 'My Events', index: 1),
           ],
         ),
-        const Gap(20),
-        pages[currentIndex],
+        const Gap(10),
+        Expanded(child: IndexedStack(index: currentIndex, children: pages)),
       ],
     );
   }
@@ -40,20 +44,24 @@ class _EventBodyState extends State<EventBody> {
   }) {
     final isSelected = currentIndex == index;
     return GestureDetector(
-      onTap: () => setState(() => currentIndex = index),
+      onTap: () {
+        if (currentIndex == index) return;
+        setState(() => currentIndex = index);
+        widget.onTabChanged?.call(index);
+      },
       child: Column(
         children: [
           WidgetText(
             title: title,
-            isBold: true,
-            color: isSelected ? Colors.blue : Colors.black,
             size: size,
+            isBold: true,
+            color: isSelected ? Palette.accentBlue : Colors.black,
           ),
           const Gap(5),
           Container(
             height: 2,
-            width: MediaQuery.of(context).size.width * 0.5,
-            color: isSelected ? Colors.blue : Colors.transparent,
+            width: MediaQuery.of(context).size.width * 0.4,
+            color: isSelected ? Palette.accentBlue : Colors.transparent,
           ),
         ],
       ),
