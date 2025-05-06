@@ -21,6 +21,7 @@ class Palette {
   static const Color neutralBlack = Color(0xFF121212);
   static const Color accentBlue = Color(0xFF145FB0);
   static const Color primarySky = Color(0xFF64B5F6);
+  static const Color lightSkyBlue = Color(0xFF87C5F9);
 
   //--------------//
   static const Color veryDarkBlueGray = Color(0xFF1A1C2B);

@@ -7,6 +7,7 @@ import 'package:jci_manila_v2/app/components/widget_fab.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/benefits/benefits_page.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/calendar/calendar_page.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/events/event_page.dart';
+import 'package:jci_manila_v2/presentations/main_navigation/events/utils/add_event_form.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/games/games_page.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/home_page.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/screens/create_post_screen.dart';
@@ -71,17 +72,29 @@ class _PageManagerState extends State<PageManager> {
         endDrawer: WidgetDrawer(),
         floatingActionButton: WidgetFab(
           onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              builder: (context) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: CreatePostScreen(),
-                );
-              },
-            );
+            if (currentIndex == 0) {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder:
+                    (context) => Container(
+                      height: MediaQuery.of(context).size.height * 0.95,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+                      child: const CreatePostScreen(),
+                    ),
+              );
+            } else if (currentIndex == 1) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const AddEventForm()),
+              );
+            }
           },
         ),
       ),

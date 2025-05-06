@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/constants/images.dart';
@@ -15,6 +13,7 @@ class CreatePostScreen extends StatefulWidget {
 
 class _CreatePostScreenState extends State<CreatePostScreen> {
   final controller = TextEditingController();
+  bool _hasChanges = false;
 
   @override
   void dispose() {
@@ -25,57 +24,86 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false,
+      canPop: !_hasChanges,
       onPopInvoked: (didPop) async {
         if (didPop) return;
-
-        Navigator.pop(context);
+        _handleExit(context);
       },
       child: SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
             leading: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.arrow_back_ios, size: 20),
+              onPressed: () => _handleExit(context),
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+                color: Colors.black,
+              ),
             ),
-            title: WidgetText(title: 'Cancel Post'),
+            title: GestureDetector(
+              onTap: () => _handleExit(context),
+              child: const WidgetText(
+                title: 'Cancel Post',
+                color: Colors.black,
+                size: 16,
+                isBold: true,
+              ),
+            ),
             centerTitle: false,
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 10.0),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    // Handle post submission
+                    Navigator.pop(context);
+                  },
                   child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
                     ),
-                    child: WidgetText(title: 'Post', color: Palette.white),
+                    decoration: BoxDecoration(
+                      color: Palette.accentBlue,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const WidgetText(
+                      title: 'Post',
+                      color: Palette.white,
+                      size: 14,
+                      isBold: true,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-          body: Expanded(
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              child: Column(
-                children: [
-                  _header(),
-                  const Gap(10),
-                  TextField(
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Gap(15),
+                _header(),
+                const Gap(15),
+                Expanded(
+                  child: TextField(
                     controller: controller,
+                    onChanged:
+                        (value) =>
+                            setState(() => _hasChanges = value.isNotEmpty),
                     maxLines: null,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'What would you like to share?',
                       hintStyle: TextStyle(color: Colors.grey),
                       border: InputBorder.none,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -83,13 +111,48 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     );
   }
 
-  Row _header() {
+  Future<void> _handleExit(BuildContext context) async {
+    if (!_hasChanges) {
+      Navigator.pop(context);
+      return;
+    }
+
+    final shouldExit = await showDialog<bool>(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Discard post?'),
+            content: const Text(
+              'You have unsaved changes. Are you sure you want to discard them?',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('Discard'),
+              ),
+            ],
+          ),
+    );
+
+    if (shouldExit ?? false) {
+      if (mounted) Navigator.pop(context);
+    }
+  }
+
+  Widget _header() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
-          spacing: 5,
-          children: [Images.postImg, WidgetText(title: 'Jan Adrian')],
+          children: [
+            Images.postImg,
+            const Gap(10),
+            const WidgetText(title: 'Jan Adrian', isBold: true, size: 16),
+          ],
         ),
         Images.addImgBtn,
       ],
