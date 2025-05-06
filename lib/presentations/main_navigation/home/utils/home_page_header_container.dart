@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/const/assets.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class HomePageHeaderContainer extends StatelessWidget {
   const HomePageHeaderContainer({super.key});
@@ -55,7 +56,11 @@ class HomePageHeaderContainer extends StatelessWidget {
             ],
           ),
 
-          Assets.qrCodePng,
+          QrImageView(
+            data: '1234567890',
+            version: QrVersions.auto,
+            size: 100.0,
+          ),
         ],
       ),
     );

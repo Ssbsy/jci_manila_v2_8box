@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:jci_manila_v2/app/components/widget_custom_appbar.dart';
 import 'package:jci_manila_v2/app/components/widget_drawer.dart';
 import 'package:jci_manila_v2/app/components/widget_fab.dart';
@@ -45,7 +47,9 @@ class _ProjectScreenState extends State<ProjectScreen> {
           ],
         ),
         endDrawer: WidgetDrawer(),
-        floatingActionButton: WidgetFab(onPressed: () {}),
+        floatingActionButton: WidgetFab(
+          onPressed: () => Get.offAllNamed('/addProject'),
+        ),
       ),
     );
   }

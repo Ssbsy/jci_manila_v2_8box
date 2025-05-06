@@ -13,7 +13,7 @@ class AnimatedWidgets extends StatelessWidget {
         AnimatedPositioned(
           duration: const Duration(seconds: 2),
           curve: Curves.easeInOut,
-          bottom: animate ? Get.height / 4 : -Get.height / 4,
+          bottom: animate ? Get.height / 15 : -Get.height / 15,
           left: 0,
           right: 0,
           child: Image.asset(

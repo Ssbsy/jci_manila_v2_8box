@@ -28,15 +28,9 @@ class Images {
     'assets/images/tkl_steel_corp_img.png',
   );
 
-  static final autochanging01 = Image.asset(
-    'assets/images/autochanging_01.png',
-  );
-  static final autochanging02 = Image.asset(
-    'assets/images/autochanging_02.png',
-  );
-  static final autochanging03 = Image.asset(
-    'assets/images/autochanging_03.png',
-  );
+  static final autochanging01 = Image.asset('assets/images/event_01.png');
+  static final autochanging02 = Image.asset('assets/images/event_02.png');
+  static final autochanging03 = Image.asset('assets/images/event_03.png');
 
   static final seanPatrickPng = Image.asset(
     'assets/images/sean_patrick_png.png',

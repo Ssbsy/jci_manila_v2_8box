@@ -11,8 +11,10 @@ class Assets {
       'assets/images/background_dashboard.png';
 
   static final jciManilaLogoWhite1 = Image.asset(
-    'assets/icons/jci_ Manila_Logo_white_1.png',
+    'assets/icons/jci_manila_logo_white_1_home.png',
     fit: BoxFit.contain,
+    height: 70,
+    width: 100,
   );
 
   static final dashboardImg01 = Image.asset(

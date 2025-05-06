@@ -8,6 +8,7 @@ import 'package:jci_manila_v2/presentations/drawer/business_directory/business_d
 import 'package:jci_manila_v2/presentations/drawer/members_database/members_database_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/official_groups/official_groups_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/project/project_screen.dart';
+import 'package:jci_manila_v2/presentations/drawer/project/screens/add_project_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/project/screens/project_details_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/resources/resources_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/resources/screens/board_of_directors_screen.dart';
@@ -44,5 +45,6 @@ class GetPages {
     GetPage(name: '/creed', page: () => CreedScreen()),
     GetPage(name: '/BOD', page: () => BoardOfDirectorsScreen()),
     GetPage(name: '/projectDetails', page: () => ProjectDetailsScreen()),
+    GetPage(name: '/addProject', page: () => AddProjectScreen()),
   ];
 }
