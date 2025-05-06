@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
+import 'package:jci_manila_v2/presentations/main_navigation/events/utils/event_detail.dart';
+import 'package:jci_manila_v2/presentations/main_navigation/events/utils/my_event_detail.dart';
 
 class EventModel {
   final String title;
@@ -128,7 +130,14 @@ class EventContent extends StatelessWidget {
                 child:
                     event.isMyEvent
                         ? OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const MyEventDetail(),
+                              ),
+                            );
+                          },
                           style: OutlinedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             side: const BorderSide(color: Palette.accentBlue),
@@ -144,7 +153,14 @@ class EventContent extends StatelessWidget {
                           ),
                         )
                         : ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const EventDetail(),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Palette.accentBlue,
                             padding: const EdgeInsets.symmetric(vertical: 12),

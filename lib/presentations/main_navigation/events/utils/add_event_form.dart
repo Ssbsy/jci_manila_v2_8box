@@ -4,8 +4,15 @@ import 'package:jci_manila_v2/app/components/widget_text_field.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 
-class AddEventForm extends StatelessWidget {
+class AddEventForm extends StatefulWidget {
   const AddEventForm({super.key});
+
+  @override
+  State<AddEventForm> createState() => _AddEventFormState();
+}
+
+class _AddEventFormState extends State<AddEventForm> {
+  String? selectedEventType;
 
   @override
   Widget build(BuildContext context) {
@@ -24,69 +31,87 @@ class AddEventForm extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildSectionHeader('Event Information'),
-            _buildFormField('Event Type', 'Select the event type'),
+            _buildDropdownField(
+              'Event Type',
+              'Select the event type',
+              ['Conference', 'Seminar', 'Workshop', 'Social'],
+              selectedEventType,
+              (val) => setState(() => selectedEventType = val),
+            ),
             const Gap(12),
-            _buildFormField('Event Title', 'Enter your event title'),
+            _buildTextField('Event Title', 'Enter your event title'),
             const Gap(12),
-            _buildFormField(
+            _buildTextField(
               'Event Description',
               'Enter your event description',
               maxLines: 3,
             ),
             const Gap(12),
-            _buildFormField('Event Date', 'Select the date of event'),
+            _buildTextField(
+              'Event Date',
+              'Select the date of event',
+              icon: Icons.calendar_today,
+            ),
             const Gap(12),
-            _buildFormField('Event Time', 'Select the time of event'),
+            _buildTextField(
+              'Event Time',
+              'Select the time of event',
+              icon: Icons.access_time,
+            ),
             const Gap(12),
-            _buildFormField(
+            _buildTextField(
               'Registration Start Date',
               'Select the start date of registration',
+              icon: Icons.calendar_today,
             ),
             const Gap(12),
-            _buildFormField(
+            _buildTextField(
               'Registration Start Time',
               'Select the start time of registration',
+              icon: Icons.access_time,
             ),
             const Gap(12),
-            _buildFormField(
+            _buildTextField(
               'Registration End Date',
               'Select the end date of registration',
+              icon: Icons.calendar_today,
             ),
             const Gap(12),
-            _buildFormField(
+            _buildTextField(
               'Registration End Time',
               'Select the end time of registration',
+              icon: Icons.access_time,
             ),
 
             _buildSectionHeader('Onsite/In-Person Settings', topMargin: 24),
             _buildCheckboxField('Onsite/In-Person'),
             const Gap(12),
-            _buildFormField('Onsite Fee', 'Enter your onsite fee'),
+            _buildTextField('Onsite Fee', 'Enter your onsite fee'),
 
             _buildSectionHeader('GMM Section', topMargin: 24),
             _buildCheckboxField('Allow Free GMM'),
             const Gap(12),
-            _buildFormField('Online Free GMM Cost', 'Enter your GMM cost'),
+            _buildTextField('Online Free GMM Cost', 'Enter your GMM cost'),
             const Gap(12),
-            _buildFormField('Chairman', 'Select the chairman for event'),
+            _buildTextField('Chairman', 'Select the chairman for event'),
 
             _buildSectionHeader('Committee Members', topMargin: 24),
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.lightBlue.shade100,
+                color: Palette.lightSkyBlue,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
                 children: [
-                  _buildFormField(
+                  _buildTextField(
                     'Committee name',
                     "Enter the committee's name",
                   ),
                   const Gap(12),
-                  _buildFormField('Committee ID', "Enter the committee's ID"),
+                  _buildTextField('Committee ID', "Enter the committee's ID"),
                   const Gap(12),
-                  _buildFormField('Member Type', "Select the member's type"),
+                  _buildTextField('Member Type', "Select the member's type"),
                 ],
               ),
             ),
@@ -111,7 +136,12 @@ class AddEventForm extends StatelessWidget {
     );
   }
 
-  Widget _buildFormField(String label, String hint, {int maxLines = 1}) {
+  Widget _buildTextField(
+    String label,
+    String hint, {
+    int maxLines = 1,
+    IconData? icon,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -126,6 +156,67 @@ class AddEventForm extends StatelessWidget {
           enabledBorderSideColor: Palette.neutralLightGray,
           focusedBorderSideColor: Palette.neutralLightGray,
           textColor: Palette.neutralBlack,
+          suffixIcon:
+              icon != null ? Icon(icon, color: Palette.accentBlue) : null,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDropdownField(
+    String label,
+    String hint,
+    List<String> items,
+    String? selectedValue,
+    ValueChanged<String?> onChanged,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        WidgetText(title: label, size: 14, isBold: false),
+        const Gap(6),
+        DropdownButtonFormField<String>(
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+            color: Palette.neutralBlack,
+          ),
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+              color: Palette.neutralGray,
+            ),
+            filled: true,
+            fillColor: Palette.neutralWhite,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 14,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Palette.neutralLightGray, width: 1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Palette.neutralLightGray,
+                width: 1.5,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          value: selectedValue,
+          items:
+              items
+                  .map(
+                    (item) => DropdownMenuItem(
+                      value: item,
+                      child: Text(item, style: const TextStyle(fontSize: 14)),
+                    ),
+                  )
+                  .toList(),
+          onChanged: onChanged,
         ),
       ],
     );
