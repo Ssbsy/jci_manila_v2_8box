@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:jci_manila_v2/app/components/widget_text_field.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:jci_manila_v2/app/theme/app_colors.dart';
+import 'package:jci_manila_v2/app/widgets/widget_button.dart';
+import 'package:jci_manila_v2/app/widgets/widget_text_field.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/presentations/drawer/project/components/project_appbar.dart';
 
@@ -111,6 +115,26 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                       memberTypeController,
                       "Enter the members's Type",
                     ),
+
+                    const Gap(10),
+
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: WidgetButton(
+                        text: 'Add Committee',
+                        isBold: true,
+                        onTap: () {},
+                        textColor: Palette.primary,
+                        borderColor: Palette.primary,
+                        borderRadius: 12,
+                        borderWidth: 1.5,
+                        padding: 10,
+                      ),
+                    ),
+
+                    const Gap(25),
+
+                    _bottom(context),
                   ],
                 ),
               ),
@@ -118,6 +142,35 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Row _bottom(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        WidgetButton(
+          text: 'Cancel',
+          onTap: () => Get.offAllNamed('/projects'),
+          containerWidth: MediaQuery.of(context).size.width * 0.43,
+          borderRadius: 12,
+          isBold: true,
+          borderColor: Palette.primary,
+          textColor: Palette.primary,
+          padding: 10,
+        ),
+        WidgetButton(
+          text: 'Save',
+          onTap: () {},
+          isBold: true,
+          containerWidth: MediaQuery.of(context).size.width * 0.43,
+          borderRadius: 12,
+          borderColor: Palette.primary,
+          containerColor: Palette.primary,
+          textColor: Palette.white,
+          padding: 10,
+        ),
+      ],
     );
   }
 

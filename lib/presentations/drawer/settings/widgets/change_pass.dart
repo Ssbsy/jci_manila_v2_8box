@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
-import 'package:jci_manila_v2/app/components/widget_text_field.dart';
+import 'package:jci_manila_v2/app/widgets/widget_text_field.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/presentations/drawer/settings/widgets/change_pass_success.dart';
 
