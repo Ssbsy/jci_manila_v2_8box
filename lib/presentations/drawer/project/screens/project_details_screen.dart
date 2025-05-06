@@ -33,8 +33,6 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 ],
               ),
             ),
-
-            pages[index],
           ],
         ),
       ),
