@@ -1,0 +1,57 @@
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:jci_manila_v2/app/theme/app_colors.dart';
+import 'package:jci_manila_v2/app/widgets/widget_text.dart';
+
+class ProfileAboutYourself extends StatelessWidget {
+  const ProfileAboutYourself({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      width: double.infinity,
+      decoration: BoxDecoration(color: Palette.neutralGray),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          WidgetText(
+            title: 'About yourself',
+            color: Palette.black,
+            isBold: true,
+            size: 14,
+          ),
+          const Gap(5),
+          WidgetText(
+            title:
+                "Motivational and leadership speaker in the Philippines. He is a certified John Maxwell team member and certified Reiss Profile Master.",
+            color: Palette.black,
+            maxLine: 10,
+          ),
+          const Gap(10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            spacing: 100,
+            children: [
+              _col('First Name', 'Jan Adrian'),
+              _col('Last Name', 'Padiernos'),
+            ],
+          ),
+          const Gap(15),
+          _col('Middle Name', 'D.', isCentered: false),
+        ],
+      ),
+    );
+  }
+
+  Column _col(String title, String subTitle, {bool isCentered = true}) {
+    return Column(
+      crossAxisAlignment:
+          isCentered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      children: [
+        WidgetText(title: title, isBold: true),
+        WidgetText(title: subTitle),
+      ],
+    );
+  }
+}
