@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 
@@ -33,7 +35,7 @@ class ProjectsScreenContent extends StatelessWidget {
           const Gap(10),
           _content("University of Leaders Orientation (ULO5)", "For Approval"),
           const Gap(10),
-          _content("University of Leaders Orientation (ULO5)", "For Approval"),
+          _content("Gabi ng Parangal 2025: Hall of Fame)", "For Approval"),
         ],
       ),
     );
@@ -69,6 +71,7 @@ class ProjectsScreenContent extends StatelessWidget {
               _icon(
                 Icon(Icons.visibility_outlined, size: 18, color: Palette.white),
                 color: Colors.blue.shade700,
+                onTap: () => Get.offAllNamed('/projectDetails'),
               ),
             ],
           ),

@@ -33,4 +33,7 @@ class Palette {
     1.0,
   );
   static const Color veryDarkNavy = Color(0xFF1B1C2B);
+
+  //AppBar
+  static const Color veryDarkBluishGray = Color(0xFF1B1C2B);
 }

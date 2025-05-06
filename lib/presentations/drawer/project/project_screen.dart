@@ -28,22 +28,25 @@ class _ProjectScreenState extends State<ProjectScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          WidgetCustomAppbar(
-            title: 'Projects',
-            textColor: Colors.white,
-            isbold: true,
-          ),
-          const Gap(10),
-          WidgetSearchBar(controller: searchController),
-          const Gap(10),
-          ProjectsScreenContent(),
-        ],
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: Column(
+          children: [
+            WidgetCustomAppbar(
+              title: 'Projects',
+              textColor: Colors.white,
+              isbold: true,
+            ),
+            const Gap(10),
+            WidgetSearchBar(controller: searchController),
+            const Gap(10),
+            ProjectsScreenContent(),
+          ],
+        ),
+        endDrawer: WidgetDrawer(),
+        floatingActionButton: WidgetFab(onPressed: () {}),
       ),
-      endDrawer: WidgetDrawer(),
-      floatingActionButton: WidgetFab(onPressed: () {}),
     );
   }
 }
