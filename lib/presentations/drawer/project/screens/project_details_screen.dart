@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/presentations/drawer/project/components/project_appbar.dart';
-import 'package:jci_manila_v2/presentations/drawer/project/screens/commitee_member_screen.dart';
+import 'package:jci_manila_v2/presentations/drawer/project/screens/committee_member_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/project/screens/project_information_screen.dart';
 
 class ProjectDetailsScreen extends StatefulWidget {
@@ -12,6 +12,10 @@ class ProjectDetailsScreen extends StatefulWidget {
 }
 
 class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
+  final List<Widget> pages = [
+    ProjectInformationScreen(),
+    CommitteeMemberScreen(),
+  ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,6 +33,8 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
                 ],
               ),
             ),
+
+            pages[index],
           ],
         ),
       ),
