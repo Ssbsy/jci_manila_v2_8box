@@ -101,7 +101,10 @@ class WidgetDrawer extends StatelessWidget {
 
   Widget _header(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.pop(context);
+        Get.toNamed('/profile');
+      },
       child: Container(
         decoration: BoxDecoration(
           color: Colors.grey.shade200,

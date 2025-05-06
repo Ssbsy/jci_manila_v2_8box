@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jci_manila_v2/app/theme/app_colors.dart';
 
 class Images {
   static final jollibeeLogo = Image.asset('assets/icons/jollibee_logo.png');
@@ -56,4 +57,12 @@ class Images {
   );
 
   static final historyPhoto = Image.asset('assets/images/history_photo.png');
+
+  static final profile_photo_01 = Image.asset(
+    'assets/images/profile_photo.png',
+  );
+  static final whiteBadge = Image.asset(
+    'assets/icons/badge_png.png',
+    color: Palette.white,
+  );
 }
