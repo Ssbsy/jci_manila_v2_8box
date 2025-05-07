@@ -25,7 +25,7 @@ class AuthProvider extends ChangeNotifier {
       );
 
       if (_userData != null) {
-        Get.toNamed('/dashboard', arguments: _userData);
+        Get.toNamed('/pageManager', arguments: _userData);
         print('Login successful: $_userData');
         return null;
       } else {
