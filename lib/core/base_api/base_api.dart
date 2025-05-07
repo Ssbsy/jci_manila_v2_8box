@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseApiServices {
-  final String baseUrl = 'https://apiv2.jcimanila.com';
+  final String baseUrl = 'https://apiv2.jcimanila.com/';
 
   //Get header method
   Future<Map<String, String>> getHeaders() async {

@@ -9,7 +9,7 @@ class RegisterServices {
 
   //Register Method with Endpoint
   Future<Map<String, dynamic>> postRegister({
-    required String photo,
+    String? photo,
     required String fullName,
     required String firstName,
     required String lastName,
@@ -22,7 +22,7 @@ class RegisterServices {
     required String industry,
     required String email,
     required String password,
-    required String resume,
+    String? resume,
     required String sponsorID,
     required String sponsorName,
   }) async {
