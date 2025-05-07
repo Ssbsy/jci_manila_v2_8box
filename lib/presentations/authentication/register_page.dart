@@ -24,111 +24,114 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () => Get.offAllNamed('/login'),
-          icon: Icon(Icons.arrow_back_ios, color: Palette.white, size: 20),
-        ),
-        title: WidgetText(
-          title: 'Register as an Applicant',
-          color: Palette.white,
-          size: 16,
-        ),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF1B1C2B), Color(0xFF1B3C63)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () => Get.offAllNamed('/login'),
+            icon: Icon(Icons.arrow_back_ios, color: Palette.white, size: 20),
+          ),
+          title: WidgetText(
+            title: 'Register as an Applicant',
+            color: Palette.white,
+            size: 16,
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF1B1C2B), Color(0xFF1B3C63)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
             ),
           ),
         ),
-      ),
-      body: Container(
-        color: neutral50,
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              sectionLabel("Basic Details"),
-              inputField("Last Name", "Enter your last name"),
-              inputField("First Name", "Enter your first name"),
-              inputField("Nickname", "Enter your nickname"),
-              dateField("Birthday", "Select your date of birth"),
-              inputField("School Graduated", "Enter the year you graduated"),
-              inputField("Home Address", "Enter your current address"),
-              label("Profile Picture"),
-              fileButton("Upload picture"),
+        body: Container(
+          color: neutral50,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: [
+                sectionLabel("Basic Details"),
+                inputField("Last Name", "Enter your last name"),
+                inputField("First Name", "Enter your first name"),
+                inputField("Nickname", "Enter your nickname"),
+                dateField("Birthday", "Select your date of birth"),
+                inputField("School Graduated", "Enter the year you graduated"),
+                inputField("Home Address", "Enter your current address"),
+                label("Profile Picture"),
+                fileButton("Upload picture"),
 
-              sectionLabel("Account Details"),
-              inputField("Email", "Enter your email address"),
-              inputField(
-                "Password",
-                "Enter your chosen password",
-                obscure: true,
-              ),
-              inputField(
-                "Confirm Password",
-                "Enter your chosen password again",
-                obscure: true,
-              ),
+                sectionLabel("Account Details"),
+                inputField("Email", "Enter your email address"),
+                inputField(
+                  "Password",
+                  "Enter your chosen password",
+                  obscure: true,
+                ),
+                inputField(
+                  "Confirm Password",
+                  "Enter your chosen password again",
+                  obscure: true,
+                ),
 
-              sectionLabel("Business Details"),
-              inputField("Profession", "Enter your profession"),
-              inputField("Industry", "Enter your industry"),
-              inputField("Sponsor Name", "Enter your sponsor's name"),
-              inputField(
-                "Sponsor ID",
-                "Automatically retrieved",
-                enabled: false,
-                color: Colors.grey[300],
-              ),
-              label("Resume"),
-              fileButton("Choose file"),
+                sectionLabel("Business Details"),
+                inputField("Profession", "Enter your profession"),
+                inputField("Industry", "Enter your industry"),
+                inputField("Sponsor Name", "Enter your sponsor's name"),
+                inputField(
+                  "Sponsor ID",
+                  "Automatically retrieved",
+                  enabled: false,
+                  color: Colors.grey[300],
+                ),
+                label("Resume"),
+                fileButton("Choose file"),
 
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => Get.offAllNamed('/login'),
-                      style: OutlinedButton.styleFrom(
-                        minimumSize: Size.fromHeight(50),
-                        side: BorderSide(color: accent500),
-                      ),
-                      child: WidgetText(
-                        title: 'Cancel',
-                        color: accent500,
-                        size: 14,
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Get.offAllNamed('/login'),
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: Size.fromHeight(50),
+                          side: BorderSide(color: accent500),
+                        ),
+                        child: WidgetText(
+                          title: 'Cancel',
+                          color: accent500,
+                          size: 14,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // if (_formKey.currentState!.validate()) {
-                        //   Get.offAllNamed('/pageManager');
-                        // }
-                        Get.offAllNamed('/pageManager');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: accent500,
-                        minimumSize: Size.fromHeight(50),
-                      ),
-                      child: Text(
-                        "Register",
-                        style: TextStyle(color: Colors.white),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // if (_formKey.currentState!.validate()) {
+                          //   Get.offAllNamed('/pageManager');
+                          // }
+                          Get.offAllNamed('/pageManager');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: accent500,
+                          minimumSize: Size.fromHeight(50),
+                        ),
+                        child: Text(
+                          "Register",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -136,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget sectionLabel(String text) => Padding(
-    padding: const EdgeInsets.only(top: 20, bottom: 10),
+    padding: const EdgeInsets.only(top: 10, bottom: 10),
     child: Text(
       text,
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),

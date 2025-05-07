@@ -10,7 +10,7 @@ class ProfileSports extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(color: Palette.neutralGray),
+      decoration: BoxDecoration(color: Palette.neutralLightGray),
       child: Column(
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,

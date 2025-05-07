@@ -11,7 +11,7 @@ class ProfileAboutYourself extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       width: double.infinity,
-      decoration: BoxDecoration(color: Palette.neutralGray),
+      decoration: BoxDecoration(color: Palette.neutralLightGray),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,7 +31,7 @@ class ProfileAboutYourself extends StatelessWidget {
           const Gap(10),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            spacing: 100,
+            spacing: 70,
             children: [
               _col('First Name', 'Jan Adrian'),
               _col('Last Name', 'Padiernos'),

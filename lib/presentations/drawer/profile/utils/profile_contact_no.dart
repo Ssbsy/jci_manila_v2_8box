@@ -11,13 +11,13 @@ class ProfileContactNo extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(color: Palette.neutralGray),
+      decoration: BoxDecoration(color: Palette.neutralLightGray),
       child: Column(
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            spacing: 100,
+            spacing: 30,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

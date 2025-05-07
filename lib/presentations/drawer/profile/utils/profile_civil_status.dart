@@ -10,14 +10,14 @@ class ProfileCivilStatus extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(color: Palette.neutralGray),
+      decoration: BoxDecoration(color: Palette.neutralLightGray),
       child: Column(
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _col(isCentered: false, 'Civil Status', 'Married'),
           Row(
-            spacing: 100,
+            spacing: 60,
             children: [
               _col(isCentered: false, 'Spouse Name', 'null'),
               _col(isCentered: false, 'Spouse Contact', 'null'),

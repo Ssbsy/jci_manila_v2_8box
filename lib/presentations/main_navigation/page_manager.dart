@@ -79,7 +79,7 @@ class _PageManagerState extends State<PageManager> {
                 backgroundColor: Colors.transparent,
                 builder:
                     (context) => Container(
-                      height: MediaQuery.of(context).size.height * 0.95,
+                      height: MediaQuery.of(context).size.height,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.vertical(

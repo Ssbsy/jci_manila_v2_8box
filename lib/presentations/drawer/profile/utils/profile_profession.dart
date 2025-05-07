@@ -10,20 +10,20 @@ class ProfileProfession extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(color: Palette.neutralGray),
+      decoration: BoxDecoration(color: Palette.neutralLightGray),
       child: Column(
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            spacing: 90,
+            spacing: 60,
             children: [
               _col('Profession', 'CEO/Founder'),
               _col('Employment Status', 'Self-Employed'),
             ],
           ),
           Row(
-            spacing: 100,
+            spacing: 70,
             children: [
               _col('Company', 'SEO Hacker'),
               _col('Industry', 'Digital Marketing'),

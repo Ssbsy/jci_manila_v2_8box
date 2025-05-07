@@ -40,13 +40,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetImageContainer(
-      alpha: 0.3,
-      imageAsset: 'assets/images/splash_background.jpg',
-      child: Scaffold(
-        backgroundColor: Palette.transparent,
-        body: AnimatedWidgets(animate: _animate),
-      ),
+    return Scaffold(
+      backgroundColor: Palette.veryDarkBluishGray,
+      body: AnimatedWidgets(animate: _animate),
     );
   }
 }
