@@ -7,9 +7,12 @@ import 'package:jci_manila_v2/presentations/drawer/profile/components/profile_ap
 import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_about_yourself.dart';
 import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_civil_status.dart';
 import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_contact_no.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_highschool.dart';
 import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_home_address.dart';
 import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_options.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_profession.dart';
 import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_shipping_address.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_sports.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -81,6 +84,13 @@ class ProfileScreen extends StatelessWidget {
                     ProfileShippingAddress(),
                     _divider(),
                     ProfileContactNo(),
+                    _divider(),
+                    ProfileHighschool(),
+                    _divider(),
+                    ProfileProfession(),
+                    _divider(),
+                    ProfileSports(),
+                    const Gap(20),
                   ],
                 ),
               ),

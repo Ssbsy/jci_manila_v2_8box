@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 
-class ProfileHighschool extends StatelessWidget {
-  const ProfileHighschool({super.key});
+class ProfileProfession extends StatelessWidget {
+  const ProfileProfession({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +15,22 @@ class ProfileHighschool extends StatelessWidget {
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _col('High School', 'MHCS'),
-          _col('Educational Attainment', "Bachelor's Degree"),
-          _col('School Graduated', "De La Selle University - Manila"),
+          Row(
+            spacing: 90,
+            children: [
+              _col('Profession', 'CEO/Founder'),
+              _col('Employment Status', 'Self-Employed'),
+            ],
+          ),
+          Row(
+            spacing: 100,
+            children: [
+              _col('Company', 'SEO Hacker'),
+              _col('Industry', 'Digital Marketing'),
+            ],
+          ),
+          _col('Office Address', "3/F C&C Business Center, Aguire Avenue, BF"),
+          _col('Office City', "Parañaque City"),
         ],
       ),
     );

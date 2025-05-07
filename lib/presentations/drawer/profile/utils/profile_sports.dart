@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 
-class ProfileHighschool extends StatelessWidget {
-  const ProfileHighschool({super.key});
+class ProfileSports extends StatelessWidget {
+  const ProfileSports({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +15,10 @@ class ProfileHighschool extends StatelessWidget {
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _col('High School', 'MHCS'),
-          _col('Educational Attainment', "Bachelor's Degree"),
-          _col('School Graduated', "De La Selle University - Manila"),
+          _col('Sports', 'null'),
+          _col('Instagran', ""),
+          _col('Twitter', "null"),
+          _col('Linkedln', "null"),
         ],
       ),
     );

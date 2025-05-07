@@ -14,10 +14,15 @@ class ProfileAppbar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: () => Get.back(),
         icon: Icon(Icons.arrow_back_ios, color: Palette.white),
       ),
-      title: WidgetText(title: 'Profile', color: Palette.white),
+      title: WidgetText(
+        title: 'Profile',
+        color: Palette.white,
+        size: 18,
+        isBold: true,
+      ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () => Get.toNamed('/profileEdit'),
           icon: Icon(Icons.edit, color: Palette.white),
         ),
       ],
