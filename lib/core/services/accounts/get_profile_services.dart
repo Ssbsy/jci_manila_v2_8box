@@ -1,0 +1,38 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:jci_manila_v2/core/base_api/base_api.dart';
+
+class GetProfileServices {
+  final BaseApiServices apiServices;
+
+  GetProfileServices(this.apiServices);
+
+  //Login Method with Endpoint
+  Future<Map<dynamic, dynamic>> getProfile() async {
+    const endpoint = 'v2.2/profile';
+
+    try {
+      final headers = await apiServices.getHeaders();
+      final response = await http.get(
+        Uri.parse('${apiServices.baseUrl}$endpoint'),
+        headers: headers,
+      );
+
+      print("Raw API response: ${response.body}");
+
+      if (response.statusCode < 600) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        return responseData;
+      } else {
+        print("Server error: ${response.statusCode} - ${response.body}");
+        return {
+          "success": false,
+          "message": "Server error: ${response.statusCode}",
+        };
+      }
+    } catch (e) {
+      print(e);
+      return {"success": false, "message": "An error occurred: $e"};
+    }
+  }
+}

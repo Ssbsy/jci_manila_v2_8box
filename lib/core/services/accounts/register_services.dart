@@ -8,7 +8,7 @@ class RegisterServices {
   RegisterServices(this.apiServices);
 
   //Register Method with Endpoint
-  Future<Map<dynamic, dynamic>> postRegister({
+  Future<Map<String, dynamic>> postRegister({
     required String photo,
     required String fullName,
     required String firstName,
