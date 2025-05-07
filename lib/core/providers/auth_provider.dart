@@ -26,7 +26,7 @@ class AuthProvider extends ChangeNotifier {
 
       if (_userData != null) {
         Get.toNamed('/pageManager', arguments: _userData);
-        print('Login successful: $_userData');
+        debugPrint('Login successful: $_userData');
         return null;
       } else {
         return 'Incorrect email or password';

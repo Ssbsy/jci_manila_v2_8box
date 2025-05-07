@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:jci_manila_v2/presentations/authentication/login_page.dart';
 
 class NewPasswordPage extends StatefulWidget {
   const NewPasswordPage({super.key});

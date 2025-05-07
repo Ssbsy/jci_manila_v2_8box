@@ -4,6 +4,11 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
+import 'package:jci_manila_v2/core/constants/font_manager.dart';
+import 'package:jci_manila_v2/core/providers/auth_provider.dart';
+import 'package:jci_manila_v2/core/utils/credentianl_manager.dart';
+import 'package:jci_manila_v2/core/utils/login_secure_storage.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,6 +22,77 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool rememberMe = false;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedCredentials();
+  }
+
+  void _loadSavedCredentials() async {
+    final credentials = await LoginSecureStorage.getCredentials();
+
+    if (credentials.isNotEmpty) {
+      setState(() {
+        _emailController.text = credentials[0] ?? '';
+        _passwordController.text = credentials[1] ?? '';
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _setCheck(bool? value) async {
+    CredentialManager(
+      emailController: _emailController,
+      passwordController: _passwordController,
+      context: context,
+      setRememberMeState: (bool newValue) {
+        setState(() {
+          rememberMe = newValue;
+        });
+      },
+    ).setCheck(value);
+  }
+
+  void _loginBtn() async {
+    debugPrint('attempting to login...'); //Debug
+    FocusScope.of(context).unfocus();
+
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    setState(() {
+      isLoading = true;
+    });
+
+    String? errorMessage = await authProvider.login(
+      username: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+
+    if (!mounted) return;
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (errorMessage != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage, style: FontManager.normalWhiteMedium),
+          behavior: SnackBarBehavior.fixed,
+        ),
+      );
+    } else {
+      Get.offNamed('/pageManager');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,13 +235,9 @@ class _LoginPageState extends State<LoginPage> {
                                   children: [
                                     Transform.scale(
                                       scale: 0.8,
-                                      child: Checkbox(
+                                      child: Checkbox.adaptive(
                                         value: rememberMe,
-                                        onChanged: (val) {
-                                          setState(() {
-                                            rememberMe = val!;
-                                          });
-                                        },
+                                        onChanged: _setCheck,
                                       ),
                                     ),
                                     WidgetText(
@@ -190,10 +262,9 @@ class _LoginPageState extends State<LoginPage> {
                             // Login Button
                             ElevatedButton(
                               onPressed: () {
-                                // if (_formKey.currentState!.validate()) {
-                                //   Get.offAllNamed('/pageManager');
-                                // }
-                                Get.offAllNamed('/pageManager');
+                                if (_formKey.currentState!.validate()) {
+                                  _loginBtn();
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Palette.accent500,
