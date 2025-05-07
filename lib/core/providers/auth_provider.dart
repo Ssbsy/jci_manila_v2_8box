@@ -24,15 +24,15 @@ class AuthProvider extends ChangeNotifier {
         password: password,
       );
 
-      if (_userData != null) {
+      if (_userData != null && _userData!['success'] == true) {
         Get.toNamed('/pageManager', arguments: _userData);
         debugPrint('Login successful: $_userData');
         return null;
       } else {
-        return 'Incorrect email or password';
+        return _userData?['message'] ?? 'Incorrect email or password';
       }
     } catch (e) {
-      print('Error: $e');
+      debugPrint('Error: $e');
       return 'An unexpected error occurred';
     } finally {
       _isLoading = false;
