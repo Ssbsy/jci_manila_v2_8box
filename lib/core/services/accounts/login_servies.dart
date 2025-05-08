@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
 
-class LoginServies {
+class LoginServices {
   final BaseApiServices apiServices;
 
-  LoginServies(this.apiServices);
+  LoginServices(this.apiServices);
 
   //Login Method with Endpoint
   Future<Map<String, dynamic>> postLogin({

@@ -89,8 +89,6 @@ class _LoginPageState extends State<LoginPage> {
           behavior: SnackBarBehavior.fixed,
         ),
       );
-    } else {
-      Get.offNamed('/pageManager');
     }
   }
 

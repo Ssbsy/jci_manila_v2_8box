@@ -4,7 +4,7 @@ import 'package:jci_manila_v2/core/base_api/base_api.dart';
 import 'package:jci_manila_v2/core/services/accounts/login_servies.dart';
 
 class AuthProvider extends ChangeNotifier {
-  final LoginServies _authRepository = LoginServies(BaseApiServices());
+  final LoginServices _authRepository = LoginServices(BaseApiServices());
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
@@ -24,7 +24,9 @@ class AuthProvider extends ChangeNotifier {
         password: password,
       );
 
-      if (_userData != null && _userData!['success'] == true) {
+      if (_userData != null &&
+          _userData!.containsKey('token') &&
+          _userData!.containsKey('user')) {
         Get.toNamed('/pageManager', arguments: _userData);
         debugPrint('Login successful: $_userData');
         return null;
