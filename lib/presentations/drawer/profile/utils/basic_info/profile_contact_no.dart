@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
+import 'package:jci_manila_v2/core/providers/profile_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProfileContactNo extends StatelessWidget {
   const ProfileContactNo({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final profile = Provider.of<ProfileProvider>(context);
+
+    if (profile.isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
@@ -21,11 +28,19 @@ class ProfileContactNo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _col(isCentered: false, 'Contact Number 1', '0939-922-2730'),
-              WidgetText(title: 'Contact Number 2', isBold: true),
+              _col(
+                isCentered: false,
+                'Contact Number 1',
+                profile.contactNo.toString(),
+              ),
+              _col(
+                isCentered: false,
+                'Contact Number 2',
+                profile.contactNo2.toString(),
+              ),
             ],
           ),
-          WidgetText(title: 'Tel/Fax', isBold: true),
+          _col(isCentered: false, 'Tel/Fax', profile.telNoFax.toString()),
           const Gap(10),
         ],
       ),

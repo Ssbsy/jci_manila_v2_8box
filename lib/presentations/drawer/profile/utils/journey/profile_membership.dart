@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/providers/profile_provider.dart';
 import 'package:provider/provider.dart';
 
-class ProfileAboutYourself extends StatelessWidget {
-  const ProfileAboutYourself({super.key});
+class ProfileMembership extends StatelessWidget {
+  const ProfileMembership({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,32 +19,28 @@ class ProfileAboutYourself extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(color: Palette.neutralLightGray),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 10,
         children: [
-          WidgetText(
-            title: 'About yourself',
-            color: Palette.black,
-            isBold: true,
-            size: 14,
-          ),
-          const Gap(5),
-          WidgetText(
-            title:
-                "Motivational and leadership speaker in the Philippines. He is a certified John Maxwell team member and certified Reiss Profile Master.",
-            color: Palette.black,
-            maxLine: 10,
-          ),
-          const Gap(10),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            spacing: 70,
+            spacing: 60,
             children: [
-              _col('First Name', profile.firstName),
-              _col('Last Name', profile.lastName),
+              _col('Membership', profile.membership),
+              _col('Membership ID', profile.membershipID),
             ],
           ),
-          const Gap(15),
-          _col('Middle Name', profile.middleName, isCentered: false),
+          Row(
+            spacing: 60,
+            children: [
+              _col('JCI Phil ID', profile.jciPhilID),
+              _col('JCI Sen No.', profile.jciSenNo),
+            ],
+          ),
+          _col('Care Group', profile.careGroup),
+          _col('Current Position', profile.currentPosition),
+          _col(
+            'Current Position Directorate',
+            profile.currentPositionDirectorate,
+          ),
         ],
       ),
     );

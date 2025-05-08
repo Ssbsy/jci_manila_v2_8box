@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
+import 'package:jci_manila_v2/core/providers/profile_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProfileProfession extends StatelessWidget {
   const ProfileProfession({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final profile = Provider.of<ProfileProvider>(context);
+
+    if (profile.isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
@@ -18,19 +25,19 @@ class ProfileProfession extends StatelessWidget {
           Row(
             spacing: 60,
             children: [
-              _col('Profession', 'CEO/Founder'),
-              _col('Employment Status', 'Self-Employed'),
+              _col('Profession', profile.profession),
+              _col('Employment Status', profile.employementStatus),
             ],
           ),
           Row(
             spacing: 70,
             children: [
-              _col('Company', 'SEO Hacker'),
-              _col('Industry', 'Digital Marketing'),
+              _col('Company', profile.company),
+              _col('Industry', profile.industry),
             ],
           ),
-          _col('Office Address', "3/F C&C Business Center, Aguire Avenue, BF"),
-          _col('Office City', "Parañaque City"),
+          _col('Office Address', profile.officeAddress),
+          _col('Office City', profile.officeCity),
         ],
       ),
     );

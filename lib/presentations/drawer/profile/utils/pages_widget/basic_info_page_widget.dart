@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_about_yourself.dart';
-import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_civil_status.dart';
-import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_contact_no.dart';
-import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_highschool.dart';
-import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_home_address.dart';
-import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_profession.dart';
-import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_shipping_address.dart';
-import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_sports.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/basic_info/profile_about_yourself.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/basic_info/profile_civil_status.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/basic_info/profile_contact_no.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/basic_info/profile_highschool.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/basic_info/profile_home_address.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/basic_info/profile_profession.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/basic_info/profile_shipping_address.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/basic_info/profile_sports.dart';
 
 class BasicInfoPageWidget extends StatelessWidget {
   const BasicInfoPageWidget({super.key});
