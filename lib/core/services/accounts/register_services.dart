@@ -1,5 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
+// ignore: depend_on_referenced_packages
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
 
 class RegisterServices {
@@ -7,68 +11,63 @@ class RegisterServices {
 
   RegisterServices(this.apiServices);
 
-  //Register Method with Endpoint
   Future<Map<String, dynamic>> postRegister({
-    required String photo,
-    required String fullName,
-    required String firstName,
-    required String lastName,
-    required String nickname,
-    required String birthday,
-    required String address,
-    required String contactNo,
-    required String school,
-    required String profession,
-    required String industry,
-    required String email,
-    required String password,
-    required String resume,
-    required String sponsorID,
-    required String sponsorName,
+    required Map<String, dynamic> data,
+    File? photoFile,
+    File? resumeFile,
   }) async {
-    const endpoint = 'v2.2/register';
-    final body = {
-      'photo': photo,
-      'fullname': fullName,
-      'fname': firstName,
-      'lname': lastName,
-      'nickname': nickname,
-      'bday': birthday,
-      'address': address,
-      'contactno': contactNo,
-      'school': school,
-      'profession': profession,
-      'industry': industry,
-      'email': email,
-      'password': password,
-      'resume': resume,
-      'sponsor_id': sponsorID,
-      'sponsor_name': sponsorName,
-    };
-
+    const endpoint = '/v2.2/register';
     try {
       final headers = await apiServices.getHeaders();
-      final response = await http.post(
-        Uri.parse('${apiServices.baseUrl}$endpoint'),
-        headers: headers,
-        body: jsonEncode(body),
-      );
+      final uri = Uri.parse('${apiServices.baseUrl}$endpoint');
+      final request = http.MultipartRequest('POST', uri)
+        ..headers.addAll(headers);
 
-      print("Raw API response: ${response.body}");
+      data.forEach((key, value) {
+        if (value != null) {
+          request.fields[key] = value.toString();
+        }
+      });
+
+      if (photoFile != null) {
+        final mimeType = lookupMimeType(photoFile.path);
+        if (mimeType != null) {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'photo',
+              photoFile.path,
+              contentType: MediaType.parse(mimeType),
+            ),
+          );
+        }
+      }
+
+      if (resumeFile != null) {
+        final mimeType = lookupMimeType(resumeFile.path);
+        if (mimeType != null) {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'resume',
+              resumeFile.path,
+              contentType: MediaType.parse(mimeType),
+            ),
+          );
+        }
+      }
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
 
       if (response.statusCode < 600) {
-        final Map<String, dynamic> responseData = jsonDecode(response.body);
-        return responseData;
+        return jsonDecode(response.body);
       } else {
-        print("Server error: ${response.statusCode} - ${response.body}");
         return {
-          "success": false,
-          "message": "Server error: ${response.statusCode}",
+          'success': false,
+          'message': 'Server error: ${response.statusCode}',
         };
       }
     } catch (e) {
-      print(e);
-      return {"success": false, "message": "An error occurred: $e"};
+      return {'success': false, 'message': 'Exception: $e'};
     }
   }
 }
