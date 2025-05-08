@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
+import 'package:jci_manila_v2/core/providers/profile_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProfileHomeAddress extends StatelessWidget {
   const ProfileHomeAddress({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final profile = Provider.of<ProfileProvider>(context);
+
+    if (profile.isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
@@ -15,13 +22,9 @@ class ProfileHomeAddress extends StatelessWidget {
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _col(
-            isCentered: false,
-            'Home Address',
-            '3/F C&C Business Center, Aguire Avenue, BF',
-          ),
-          _col(isCentered: false, 'City', 'Parañaque'),
-          _col(isCentered: false, 'Contact', '0939-922-2730'),
+          _col(isCentered: false, 'Home Address', profile.homeAddress),
+          _col(isCentered: false, 'City', profile.city),
+          _col(isCentered: false, 'Contact', profile.contact),
         ],
       ),
     );
