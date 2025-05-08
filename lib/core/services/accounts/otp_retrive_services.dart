@@ -12,7 +12,7 @@ class OTPRetriveService {
     required String email,
     required int otp,
   }) async {
-    const endpoint = '/OTPRetrive';
+    const endpoint = 'OTPRetrive';
     final body = {'email': email, 'otp': otp};
 
     try {
@@ -27,9 +27,18 @@ class OTPRetriveService {
 
       debugPrint("OTP Retrieve Response: ${response.body}");
 
-      if (response.statusCode < 600) {
-        return jsonDecode(response.body);
-      } else {
+     if (response.statusCode < 600) {
+  final decoded = jsonDecode(response.body);
+  debugPrint('Decoded OTP Response: $decoded');
+  if (decoded is Map<String, dynamic>) {
+    return decoded;
+  } else if (decoded is List && decoded.isNotEmpty && decoded.first is Map<String, dynamic>) {
+    return decoded.first;
+  } else {
+    return {'error': 'Unexpected response format'};
+  }
+}
+ else {
         return {
           'success': false,
           'message': 'Server error: ${response.statusCode}',

@@ -13,7 +13,7 @@ class UpdatePasswordService {
     required String password,
     required int otp,
   }) async {
-    const endpoint = '/UpdatePassword';
+    const endpoint = 'UpdatePassword';
     final body = {'email': email, 'password': password, 'otp': otp};
 
     try {
