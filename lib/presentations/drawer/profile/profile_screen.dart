@@ -15,9 +15,14 @@ import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_shippin
 import 'package:jci_manila_v2/presentations/drawer/profile/utils/profile_sports.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
