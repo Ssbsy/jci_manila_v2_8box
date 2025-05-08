@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
+import 'package:jci_manila_v2/core/services/accounts/register_services.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
