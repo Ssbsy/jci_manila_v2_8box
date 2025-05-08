@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
+import 'package:jci_manila_v2/core/base_api/base_api.dart';
+import 'package:jci_manila_v2/core/services/accounts/forgot_password_services.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -12,14 +13,60 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
+  bool isLoading = false;
 
-  final Color gradientStart = Color(0xFF1B1C2B);
-  final Color gradientEnd = Color(0xFF1B3C63);
-  final Color neutral50 = Color(0xFFFFFFFF);
-  final Color neutral100 = Color(0xFFF5F5F5);
-  final Color neutral300 = Color(0xFFBDBDBD);
-  final Color neutral900 = Color(0xFF121212);
-  final Color accent500 = Color(0xFF145FB0);
+  final Color gradientStart = const Color(0xFF1B1C2B);
+  final Color gradientEnd = const Color(0xFF1B3C63);
+  final Color neutral50 = const Color(0xFFFFFFFF);
+  final Color neutral100 = const Color(0xFFF5F5F5);
+  final Color neutral300 = const Color(0xFFBDBDBD);
+  final Color neutral900 = const Color(0xFF121212);
+  final Color accent500 = const Color(0xFF145FB0);
+
+Future<void> submitForgotPassword() async {
+  if (!_formKey.currentState!.validate()) return;
+
+  setState(() => isLoading = true);
+
+  try {
+    final response = await ForgotPasswordServices(BaseApiServices())
+        .postForgotPassword(email: emailController.text.trim());
+
+    debugPrint('Forgot Password API Response: $response');
+
+    if (response.containsKey('message')) {
+      Get.snackbar(
+        'Success',
+        'A verification code has been sent to your email.',
+      );
+
+
+      Get.offAllNamed(
+  '/verification',
+  arguments: {'email': emailController.text.trim()},
+);
+
+    } else if (response.containsKey('error')) {
+      Get.snackbar(
+        'Error',
+        response['error'].toString(),
+      );
+    } else {
+      Get.snackbar(
+        'Error',
+        'Unexpected response from server.',
+      );
+    }
+  } catch (e) {
+    Get.snackbar(
+      'Error',
+      e.toString(),
+    );
+  } finally {
+    setState(() => isLoading = false);
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +88,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   'assets/icons/jci_manila_logo_white_1.png',
                   height: 100,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
 
                 // Card
                 Card(
@@ -65,13 +112,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               color: neutral900,
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Text(
                             "Please provide your email address to initiate\nthe password reset process.",
                             textAlign: TextAlign.center,
                             style: TextStyle(color: neutral900),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
 
                           TextFormField(
                             controller: emailController,
@@ -103,38 +150,39 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               return null;
                             },
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
 
                           ElevatedButton(
-                            onPressed: () {
-                              // if (_formKey.currentState!.validate()) {
-                              //   Navigator.of(context).push(
-                              //     MaterialPageRoute(
-                              //       builder: (context) => VerificationPage(),
-                              //     ),
-                              //   );
-                              // }
-                              Get.offAllNamed('/verification');
-                            },
+                            onPressed: isLoading ? null : submitForgotPassword,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: accent500,
-                              minimumSize: Size.fromHeight(45),
+                              minimumSize: const Size.fromHeight(45),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
-                            child: Text(
-                              "Confirm",
-                              style: TextStyle(color: neutral50),
-                            ),
+                            child:
+                                isLoading
+                                    ? const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                    : Text(
+                                      "Confirm",
+                                      style: TextStyle(color: neutral50),
+                                    ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
                           OutlinedButton(
-                            onPressed: () => Navigator.pop(context),
+                             onPressed: () => Get.offAllNamed('/login'),
                             style: OutlinedButton.styleFrom(
                               side: BorderSide(color: accent500),
-                              minimumSize: Size.fromHeight(45),
+                              minimumSize: const Size.fromHeight(45),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),

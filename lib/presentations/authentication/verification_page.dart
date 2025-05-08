@@ -2,20 +2,63 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
-import 'package:jci_manila_v2/presentations/authentication/login_page.dart';
+import 'package:jci_manila_v2/core/base_api/base_api.dart';
+import 'package:jci_manila_v2/core/services/accounts/otp_retrive_services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class VerificationPage extends StatelessWidget {
+class VerificationPage extends StatefulWidget {
+  const VerificationPage({super.key});
+
+  @override
+  State<VerificationPage> createState() => _VerificationPageState();
+}
+
+class _VerificationPageState extends State<VerificationPage> {
+  final TextEditingController pinController = TextEditingController();
+  final FocusNode pinFocusNode = FocusNode();
+  bool isLoading = false;
+  late final String email;
+
   final Color gradientStart = const Color(0xFF1B1C2B);
   final Color gradientEnd = const Color(0xFF1B3C63);
   final Color neutral50 = const Color(0xFFFFFFFF);
   final Color accent500 = const Color(0xFF145FB0);
   final Color neutral300 = const Color(0xFFBDBDBD);
 
-  final TextEditingController pinController = TextEditingController();
-  final FocusNode pinFocusNode = FocusNode();
+  @override
+  void initState() {
+    super.initState();
+    email = Get.arguments['email'] ?? '';
+  }
 
-  VerificationPage({super.key});
+  Future<void> verifyOTP() async {
+    final code = pinController.text;
+    if (code.length != 6) {
+      Get.snackbar('Incomplete Code', 'Please enter the 6-digit code');
+      return;
+    }
+
+    setState(() => isLoading = true);
+
+    final response = await OTPRetriveService(BaseApiServices()).postOtpRetrieve(
+      email: email,
+      otp: int.tryParse(code) ?? 0,
+    );
+
+    setState(() => isLoading = false);
+
+final message = response['message'];
+final error = response['error'];
+
+if (message != null) {
+  Get.snackbar('Verified', message.toString());
+  await Future.delayed(const Duration(seconds: 1));
+  Get.offAllNamed('/newpass', arguments: {'email': email});
+} else {
+  Get.snackbar('Error', error.toString());
+}
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,28 +138,16 @@ class VerificationPage extends StatelessWidget {
                             enableActiveFill: true,
                             autoFocus: true,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            onCompleted: (pin) {
-                              Get.offAllNamed('/newpass');
-                            },
+                            onCompleted: (pin) => verifyOTP(),
                             onChanged: (value) {},
                             beforeTextPaste: (text) {
-                              return RegExp(r'^[0-9]+$').hasMatch(text!);
+                              return RegExp(r'^[0-9]+\$').hasMatch(text!);
                             },
                           ),
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: () {
-                                if (pinController.text.length == 6) {
-                                  Get.offAllNamed('/newpass');
-                                } else {
-                                  Get.snackbar(
-                                    'Incomplete Code',
-                                    'Please enter the 6-digit verification code',
-                                    snackPosition: SnackPosition.BOTTOM,
-                                  );
-                                }
-                              },
+                              onPressed: isLoading ? null : verifyOTP,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: accent500,
                                 foregroundColor: neutral50,
@@ -128,16 +159,23 @@ class VerificationPage extends StatelessWidget {
                                   vertical: 12,
                                 ),
                               ),
-                              child: const Text("Continue"),
+                              child: isLoading
+                                  ? const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : const Text("Continue"),
                             ),
                           ),
                           const SizedBox(height: 10),
                           SizedBox(
                             width: double.infinity,
                             child: OutlinedButton(
-                              onPressed: () {
-                                Get.offAll(() => LoginPage());
-                              },
+                              onPressed: () => Get.offAllNamed('/login'),
                               style: OutlinedButton.styleFrom(
                                 side: BorderSide(color: accent500),
                                 minimumSize: const Size.fromHeight(45),
