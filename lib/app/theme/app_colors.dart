@@ -37,4 +37,13 @@ class Palette {
 
   //AppBar
   static const Color veryDarkBluishGray = Color(0xFF1B1C2B);
+
+  //--------------//
+
+  static final Color neutral900 = Color(0xFF121212); // Text black
+  static final Color neutral50 = Color(0xFFFFFFFF); // Card background
+  static final Color accent500 = Color(0xFF145FB0); // New blue button color
+  static final Color neutral300 = Color(0xFFBDBDBD); // Label/hint grey
+  static final Color neutral100 = Color(0xFFF5F5F5); // Input background
+  static final Color primary300 = Color(0xFF64B5F6); // Link blue
 }

@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
-import 'package:jci_manila_v2/presentations/authentication/forgot_password_page.dart';
-import 'package:jci_manila_v2/presentations/authentication/register_page.dart';
+import 'package:jci_manila_v2/core/constants/font_manager.dart';
+import 'package:jci_manila_v2/core/providers/auth_provider.dart';
+import 'package:jci_manila_v2/core/utils/credentianl_manager.dart';
+import 'package:jci_manila_v2/core/utils/login_secure_storage.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -18,15 +22,75 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool rememberMe = false;
+  bool isLoading = false;
 
-  final Color gradientStart = Color(0xFF1B1C2B); // Top background
-  final Color gradientEnd = Color(0xFF1B3C63); // Bottom background
-  final Color neutral900 = Color(0xFF121212); // Text black
-  final Color neutral50 = Color(0xFFFFFFFF); // Card background
-  final Color accent500 = Color(0xFF145FB0); // New blue button color
-  final Color neutral300 = Color(0xFFBDBDBD); // Label/hint grey
-  final Color neutral100 = Color(0xFFF5F5F5); // Input background
-  final Color primary300 = Color(0xFF64B5F6); // Link blue
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedCredentials();
+  }
+
+  void _loadSavedCredentials() async {
+    final credentials = await LoginSecureStorage.getCredentials();
+
+    if (credentials.isNotEmpty) {
+      setState(() {
+        _emailController.text = credentials[0] ?? '';
+        _passwordController.text = credentials[1] ?? '';
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _setCheck(bool? value) async {
+    CredentialManager(
+      emailController: _emailController,
+      passwordController: _passwordController,
+      context: context,
+      setRememberMeState: (bool newValue) {
+        setState(() {
+          rememberMe = newValue;
+        });
+      },
+    ).setCheck(value);
+  }
+
+  void _loginBtn() async {
+    debugPrint('attempting to login...'); //Debug
+    FocusScope.of(context).unfocus();
+
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    setState(() {
+      isLoading = true;
+    });
+
+    String? errorMessage = await authProvider.login(
+      username: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+
+    if (!mounted) return;
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (errorMessage != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage, style: FontManager.normalWhiteMedium),
+          behavior: SnackBarBehavior.fixed,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [gradientStart, gradientEnd],
+              colors: [Palette.gradientStart, Palette.gradientEnd],
             ),
           ),
           child: Center(
@@ -54,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                   Text(
                     "We are a University of Leaders",
                     style: TextStyle(
-                      color: neutral50,
+                      color: Palette.neutral50,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -66,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                         "aiming to create positive changes in the community"
                         "as a whole.",
                     maxLine: 4,
-                    color: neutral300,
+                    color: Palette.neutral300,
                     isCentered: true,
                     size: 14,
                   ),
@@ -74,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   // Login
                   Card(
-                    color: neutral50,
+                    color: Palette.neutral50,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -90,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: neutral900,
+                                color: Palette.neutral900,
                               ),
                             ),
                             SizedBox(height: 20),
@@ -100,15 +164,17 @@ class _LoginPageState extends State<LoginPage> {
                               controller: _emailController,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: neutral100,
+                                fillColor: Palette.neutral100,
                                 prefixIcon: Icon(
                                   Icons.email_outlined,
-                                  color: neutral300,
+                                  color: Palette.neutral300,
                                 ),
                                 labelText: "Email",
                                 hintText: "example@example.com",
-                                labelStyle: TextStyle(color: neutral300),
-                                hintStyle: TextStyle(color: neutral300),
+                                labelStyle: TextStyle(
+                                  color: Palette.neutral300,
+                                ),
+                                hintStyle: TextStyle(color: Palette.neutral300),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide.none,
@@ -134,15 +200,17 @@ class _LoginPageState extends State<LoginPage> {
                               obscureText: true,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: neutral100,
+                                fillColor: Palette.neutral100,
                                 prefixIcon: Icon(
                                   Icons.vpn_key_outlined,
-                                  color: neutral300,
+                                  color: Palette.neutral300,
                                 ),
                                 labelText: "Password",
                                 hintText: "Enter your password here",
-                                labelStyle: TextStyle(color: neutral300),
-                                hintStyle: TextStyle(color: neutral300),
+                                labelStyle: TextStyle(
+                                  color: Palette.neutral300,
+                                ),
+                                hintStyle: TextStyle(color: Palette.neutral300),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide.none,
@@ -165,19 +233,15 @@ class _LoginPageState extends State<LoginPage> {
                                   children: [
                                     Transform.scale(
                                       scale: 0.8,
-                                      child: Checkbox(
+                                      child: Checkbox.adaptive(
                                         value: rememberMe,
-                                        onChanged: (val) {
-                                          setState(() {
-                                            rememberMe = val!;
-                                          });
-                                        },
+                                        onChanged: _setCheck,
                                       ),
                                     ),
                                     WidgetText(
                                       title: 'Remember me',
                                       size: 10,
-                                      color: neutral300,
+                                      color: Palette.neutral300,
                                     ),
                                   ],
                                 ),
@@ -186,7 +250,7 @@ class _LoginPageState extends State<LoginPage> {
                                   child: WidgetText(
                                     title: 'Forgot Password',
                                     size: 10,
-                                    color: primary300,
+                                    color: Palette.primary300,
                                   ),
                                 ),
                               ],
@@ -196,13 +260,12 @@ class _LoginPageState extends State<LoginPage> {
                             // Login Button
                             ElevatedButton(
                               onPressed: () {
-                                // if (_formKey.currentState!.validate()) {
-                                //   Get.offAllNamed('/pageManager');
-                                // }
-                                Get.offAllNamed('/pageManager');
+                                if (_formKey.currentState!.validate()) {
+                                  _loginBtn();
+                                }
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: accent500,
+                                backgroundColor: Palette.accent500,
                                 minimumSize: Size.fromHeight(45),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -210,7 +273,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               child: WidgetText(
                                 title: 'Login',
-                                color: neutral50,
+                                color: Palette.neutral50,
                                 isBold: true,
                                 size: 14,
                               ),
@@ -223,7 +286,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Get.offAllNamed('/register');
                               },
                               style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: accent500),
+                                side: BorderSide(color: Palette.accent500),
                                 minimumSize: Size.fromHeight(45),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -231,7 +294,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               child: WidgetText(
                                 title: 'Register as an Applicant',
-                                color: accent500,
+                                color: Palette.accent500,
                                 size: 14,
                               ),
                             ),
