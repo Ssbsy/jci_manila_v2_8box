@@ -30,6 +30,7 @@ class AuthProvider extends ChangeNotifier {
           _userData!.containsKey('user')) {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('auth_token', _userData!['token']);
+        await prefs.setInt('user_id', _userData!['user']['id']);
 
         Get.toNamed('/pageManager', arguments: _userData);
         debugPrint('Login successful: $_userData');
