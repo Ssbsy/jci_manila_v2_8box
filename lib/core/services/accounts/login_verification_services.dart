@@ -40,4 +40,20 @@ class LoginVerificationServices {
       return {"success": false, "message": "An error occurred: $e"};
     }
   }
+
+  Future<Map<String, dynamic>> resendOTP(String email) async {
+    final headers = await apiServices.getHeaders();
+
+    final response = await http.post(
+      Uri.parse('${apiServices.baseUrl}v2.2/resend-otp'),
+      headers: headers,
+      body: json.encode({'email': email, 'otp': ''}),
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return {'success': false, 'message': 'Failed to resend OTP'};
+    }
+  }
 }

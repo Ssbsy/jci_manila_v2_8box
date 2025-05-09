@@ -83,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     if (errorMessage != null) {
+      debugPrint('Error during login: $errorMessage');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(errorMessage, style: FontManager.normalWhiteMedium),

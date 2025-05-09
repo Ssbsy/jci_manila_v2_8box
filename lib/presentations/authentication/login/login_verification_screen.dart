@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
+import 'package:jci_manila_v2/core/providers/auth_provider.dart';
 import 'package:jci_manila_v2/core/services/accounts/login_verification_services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 
 class LoginVerificationScreen extends StatefulWidget {
   const LoginVerificationScreen({super.key});
@@ -18,7 +21,9 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
   final TextEditingController pinController = TextEditingController();
   final FocusNode pinFocusNode = FocusNode();
   bool isLoading = false;
+  bool isResendingOtp = false;
   late final String email;
+  late final String password;
 
   final Color gradientStart = const Color(0xFF1B1C2B);
   final Color gradientEnd = const Color(0xFF1B3C63);
@@ -31,7 +36,14 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
   @override
   void initState() {
     super.initState();
-    email = Get.arguments['email'] ?? '';
+
+    final args = Get.arguments as Map<String, dynamic>?;
+
+    if (args != null) {
+      email = args['email'] ?? '';
+      password = args['password'] ?? '';
+    }
+
     verificationService = LoginVerificationServices(BaseApiServices());
   }
 
@@ -44,24 +56,41 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
 
     setState(() => isLoading = true);
 
-    final result = await verificationService.postVerify(
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final result = await authProvider.loginVerification(
       otp: code,
       email: email,
+      password: password,
     );
 
     setState(() => isLoading = false);
 
-    if (result['success'] == true) {
-      Get.snackbar(
-        'Verification Successful',
-        'You have been successfully verified!',
-      );
-      Get.offAllNamed('/pageManager');
+    if (result == null) {
     } else {
-      Get.snackbar(
-        'Verification Failed',
-        result['message'] ?? 'An error occurred',
-      );
+      Get.snackbar('Verification Failed', result);
+    }
+  }
+
+  Future<void> resendOTP() async {
+    if (email.isEmpty) {
+      Get.snackbar('Error', 'Email is missing');
+      return;
+    }
+
+    setState(() => isLoading = true);
+
+    try {
+      final response = await verificationService.resendOTP(email);
+
+      if (response['success']) {
+        Get.snackbar('Success', 'OTP has been resent to your email.');
+      } else {
+        Get.snackbar('Error', response['message']);
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Something went wrong: $e');
+    } finally {
+      setState(() => isLoading = false);
     }
   }
 
@@ -109,12 +138,13 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
                           const SizedBox(height: 16),
                           WidgetText(
                             title:
-                                "We've sent a verification code to your email. If you don't see it in your inbox, please check your spam folder.",
+                                "We've sent a verification code to your email."
+                                "If you don't see it in your inbox, please check your spam folder.",
                             isCentered: true,
                             color: Palette.black,
                             maxLine: 10,
                           ),
-                          const SizedBox(height: 24),
+                          const Gap(24),
                           PinCodeTextField(
                             appContext: context,
                             length: 6,
@@ -149,6 +179,22 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
                               return RegExp(r'^[0-9]+\$').hasMatch(text!);
                             },
                           ),
+                          const Gap(5),
+                          GestureDetector(
+                            onTap:
+                                isResendingOtp
+                                    ? null
+                                    : () {
+                                      debugPrint('Resending OTP...');
+                                      resendOTP();
+                                    },
+                            child: WidgetText(
+                              title: 'Resend OTP',
+                              color: Palette.accentBlue,
+                              isUnderlined: true,
+                            ),
+                          ),
+                          const Gap(15),
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
