@@ -4,8 +4,8 @@ import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/providers/profile_provider.dart';
 import 'package:provider/provider.dart';
 
-class ProfileProfession extends StatelessWidget {
-  const ProfileProfession({super.key});
+class BjcStartDate extends StatelessWidget {
+  const BjcStartDate({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,29 +15,19 @@ class ProfileProfession extends StatelessWidget {
       return Center(child: CircularProgressIndicator());
     }
     return Container(
-      width: double.infinity,
       padding: const EdgeInsets.all(10),
+      width: double.infinity,
       decoration: BoxDecoration(color: Palette.neutralLightGray),
       child: Column(
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            spacing: 60,
-            children: [
-              _col('Profession', profile.profession),
-              _col('Employment Status', profile.employementStatus),
-            ],
-          ),
-          Row(
-            spacing: 40,
-            children: [
-              _col('Company', profile.company),
-              _col('Industry', profile.industry),
-            ],
-          ),
-          _col('Office Address', profile.officeAddress),
-          _col('Office City', profile.officeCity),
+          _col('BJC Start Date', 'null'),
+          _col('Sponsor Name', profile.sponsorName),
+          _col('JCI Area Conference Events', profile.jciAreaConferenceEvents),
+          _col('JCI Asia Pacific Conference', profile.jciAsiaPacificConference),
+          _col('JCI World Congress', profile.jciWorldCongress),
+          _col('JCI National Convention', profile.jcipNationalConvention),
         ],
       ),
     );

@@ -64,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               const Gap(30),
-              Expanded(
+              Flexible(
                 child: Container(
                   padding: const EdgeInsets.all(15),
                   width: double.infinity,

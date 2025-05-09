@@ -44,16 +44,15 @@ class ProfileAboutYourself extends StatelessWidget {
             ],
           ),
           const Gap(15),
-          _col('Middle Name', profile.middleName, isCentered: false),
+          _col('Middle Name', profile.middleName),
         ],
       ),
     );
   }
 
-  Column _col(String title, String subTitle, {bool isCentered = true}) {
+  Column _col(String title, String subTitle) {
     return Column(
-      crossAxisAlignment:
-          isCentered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         WidgetText(title: title, isBold: true),
         WidgetText(title: subTitle),

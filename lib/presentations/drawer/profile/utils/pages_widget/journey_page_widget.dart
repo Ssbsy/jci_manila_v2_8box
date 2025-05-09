@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/journey/bjc_start_date.dart';
+import 'package:jci_manila_v2/presentations/drawer/profile/utils/journey/director.dart';
 import 'package:jci_manila_v2/presentations/drawer/profile/utils/journey/profile_membership.dart';
 import 'package:jci_manila_v2/presentations/drawer/profile/utils/journey/profile_university_of_leaders_orientation_date.dart';
 
@@ -16,7 +18,9 @@ class JourneyPageWidget extends StatelessWidget {
           _divider(),
           ProfileUniversityOfLeadersOrientationDate(),
           _divider(),
-          Gap(10),
+          BjcStartDate(),
+          _divider(),
+          Director(),
         ],
       ),
     );

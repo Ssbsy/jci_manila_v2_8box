@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:jci_manila_v2/presentations/authentication/forgot_password_page.dart';
-import 'package:jci_manila_v2/presentations/authentication/login_page.dart';
+import 'package:jci_manila_v2/presentations/authentication/login/login_page.dart';
+import 'package:jci_manila_v2/presentations/authentication/login/login_verification_screen.dart';
 import 'package:jci_manila_v2/presentations/authentication/new_password_page.dart';
 import 'package:jci_manila_v2/presentations/authentication/register_page.dart';
 import 'package:jci_manila_v2/presentations/authentication/verification_page.dart';
@@ -29,6 +30,7 @@ class GetPages {
     GetPage(name: '/', page: () => SplashScreen()),
     GetPage(name: '/onboarding', page: () => OnboardingScreen()),
     GetPage(name: '/login', page: () => LoginPage()),
+    GetPage(name: '/loginVerification', page: () => LoginVerificationScreen()),
     GetPage(name: '/register', page: () => RegisterPage()),
     GetPage(name: '/forgot', page: () => ForgotPasswordPage()),
     GetPage(name: '/newpass', page: () => NewPasswordPage()),

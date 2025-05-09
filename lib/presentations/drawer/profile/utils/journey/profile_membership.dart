@@ -20,9 +20,10 @@ class ProfileMembership extends StatelessWidget {
       decoration: BoxDecoration(color: Palette.neutralLightGray),
       child: Column(
         spacing: 10,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            spacing: 60,
+            spacing: 50,
             children: [
               _col('Membership', profile.membership),
               _col('Membership ID', profile.membershipID),
@@ -46,10 +47,9 @@ class ProfileMembership extends StatelessWidget {
     );
   }
 
-  Column _col(String title, String subTitle, {bool isCentered = true}) {
+  Column _col(String title, String subTitle) {
     return Column(
-      crossAxisAlignment:
-          isCentered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         WidgetText(title: title, isBold: true),
         WidgetText(title: subTitle),

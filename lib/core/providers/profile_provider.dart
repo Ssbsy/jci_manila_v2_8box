@@ -48,14 +48,14 @@ class ProfileProvider with ChangeNotifier {
   int get shippingZip => _shippingZip;
 
   //Contact no
-  int _contactNo = 0;
-  int _contactNo2 = 0;
-  int _telNoFax = 0;
+  String _contactNumber = '';
+  String _contactNumber2 = '';
+  String _telNoFax = '';
 
   //Contact no - getters
-  int get contactNo => _contactNo;
-  int get contactNo2 => _contactNo2;
-  int get telNoFax => _telNoFax;
+  String get contactNumber => _contactNumber;
+  String get contactNumber2 => _contactNumber2;
+  String get telNoFax => _telNoFax;
 
   //Highschool
   String _highSchool = '';
@@ -145,6 +145,36 @@ class ProfileProvider with ChangeNotifier {
   int get yearInducted => _yearInducted;
   String get awardsReceived => _awardsReceived;
 
+  //BJC Project title
+  String _bjcProjectTitle = '';
+  String _sponsorName = '';
+  String _jciAreaConferenceEvents = '';
+  String _jciAsiaPacificConference = '';
+  String _jciWorldCongress = '';
+  String _jcipNationalConvention = '';
+
+  //BJC Project title - getters
+  String get bjcProjectTitle => _bjcProjectTitle;
+  String get sponsorName => _sponsorName;
+  String get jciAreaConferenceEvents => _jciAreaConferenceEvents;
+  String get jciAsiaPacificConference => _jciAsiaPacificConference;
+  String get jciWorldCongress => _jciWorldCongress;
+  String get jcipNationalConvention => _jcipNationalConvention;
+
+  //Board of Director
+  String _boardOfDirector = '';
+  String _commissionership = '';
+  String _chairmanship = '';
+  String _position = '';
+  String _previousProjects = '';
+
+  //Board of Director - getters
+  String get boardOfDirector => _boardOfDirector;
+  String get commissionership => _commissionership;
+  String get chairmanship => _chairmanship;
+  String get position => _position;
+  String get previousProjects => _previousProjects;
+
   Future<void> fetchProfile() async {
     try {
       _isLoading = true;
@@ -171,9 +201,9 @@ class ProfileProvider with ChangeNotifier {
       _shippingZip = data['shipping_zip'] ?? 0;
 
       //Contact no
-      _contactNo = data['contact_number'] ?? 0;
-      _contactNo2 = data['contact_no2'] ?? 0;
-      _telNoFax = data['tel_no_fax'] ?? 0;
+      _contactNumber = data['contact_number'] ?? '';
+      _contactNumber2 = data['contact_no2'] ?? '';
+      _telNoFax = data['tel_no_fax'] ?? '';
 
       //Highschool
       _highSchool = data['high_school'] ?? '';
@@ -220,11 +250,26 @@ class ProfileProvider with ChangeNotifier {
       //University of Leaders Orientation Date
       _uloDate = data['ulo_date'] ?? 'null';
       _launchPadDate = data['launch_pad_date'] ?? 'null';
-      _yearInductedBaby = data['year_inducted_baby'];
-      _bjcProjectPresentationDate = data['bjc_project_presentation_date'];
+      _yearInductedBaby = data['year_inducted_baby'] ?? 0;
+      _bjcProjectPresentationDate = data['bjc_project_presentation_date'] ?? 0;
       _inductionDate = data['induction_date'] ?? 'null';
-      _yearInducted = data['year_inducted'];
+      _yearInducted = data['year_inducted'] ?? 0;
       _awardsReceived = data['awards_received'] ?? 'null';
+
+      //BJC Project title
+      _bjcProjectTitle = data['bjc_project_title'] ?? 'null';
+      _sponsorName = data['sponsor_name'] ?? 'null';
+      _jciAreaConferenceEvents = data['jci_area_conference_events'] ?? 'null';
+      _jciAsiaPacificConference = data['jci_asia_pacific_conference'] ?? 'null';
+      _jciWorldCongress = data['jci_world_congress'] ?? 'null';
+      _jcipNationalConvention = data['jcip_national_convention'] ?? 'null';
+
+      //Board of Director
+      _boardOfDirector = data['board_of_director'] ?? 'null';
+      _commissionership = data['commissionership'] ?? 'null';
+      _chairmanship = data['chairmanship'] ?? 'null';
+      _position = data['position'] ?? 'null';
+      _previousProjects = data['previous_projects'] ?? 'null';
 
       debugPrint("Profile data fetched: $data"); //For debuggimng
 

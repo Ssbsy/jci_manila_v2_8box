@@ -19,11 +19,12 @@ class ProfileUniversityOfLeadersOrientationDate extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(color: Palette.neutralLightGray),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 10,
         children: [
           _col('University of Leaders Orientation Date', profile.uloDate),
           Row(
-            spacing: 60,
+            spacing: 35,
             children: [
               _col('Launch Pad Date', profile.launchPadDate),
               _col(
@@ -47,7 +48,7 @@ class ProfileUniversityOfLeadersOrientationDate extends StatelessWidget {
                 : profile.bjcProjectPresentationDate.toString(),
           ),
           Row(
-            spacing: 60,
+            spacing: 10,
             children: [
               _col('Induction Date', profile.inductionDate),
               _col('Year Inducted (Regular)', profile.inductionDate),
@@ -59,13 +60,12 @@ class ProfileUniversityOfLeadersOrientationDate extends StatelessWidget {
     );
   }
 
-  Column _col(String title, String subTitle, {bool isCentered = true}) {
+  Column _col(String title, String subTitle) {
     return Column(
-      crossAxisAlignment:
-          isCentered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        WidgetText(title: title, isBold: true),
-        WidgetText(title: subTitle),
+        WidgetText(title: title, isBold: true, size: 11),
+        WidgetText(title: subTitle, size: 9),
       ],
     );
   }
