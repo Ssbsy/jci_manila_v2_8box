@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
-import 'package:jci_manila_v2/core/services/accounts/otp_retrive_services.dart';
+import 'package:jci_manila_v2/core/services/accounts/login_verification_services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class LoginVerificationScreen extends StatefulWidget {
@@ -26,10 +26,13 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
   final Color accent500 = const Color(0xFF145FB0);
   final Color neutral300 = const Color(0xFFBDBDBD);
 
+  late final LoginVerificationServices verificationService;
+
   @override
   void initState() {
     super.initState();
     email = Get.arguments['email'] ?? '';
+    verificationService = LoginVerificationServices(BaseApiServices());
   }
 
   Future<void> verifyOTP() async {
@@ -41,22 +44,25 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
 
     setState(() => isLoading = true);
 
-    // final response = await OTPRetriveService(
-    //   BaseApiServices(),
-    // ).postOtpRetrieve(email: email, otp: int.tryParse(code) ?? 0);
+    final result = await verificationService.postVerify(
+      otp: code,
+      email: email,
+    );
 
     setState(() => isLoading = false);
 
-    // final message = response['message'];
-    // final error = response['error'];
-
-    // if (message != null) {
-    //   Get.snackbar('Verified', message.toString());
-    //   await Future.delayed(const Duration(seconds: 1));
-    //   Get.offAllNamed('/newpass', arguments: {'email': email});
-    // } else {
-    //   Get.snackbar('Error', error.toString());
-    // }
+    if (result['success'] == true) {
+      Get.snackbar(
+        'Verification Successful',
+        'You have been successfully verified!',
+      );
+      Get.offAllNamed('/pageManager');
+    } else {
+      Get.snackbar(
+        'Verification Failed',
+        result['message'] ?? 'An error occurred',
+      );
+    }
   }
 
   @override

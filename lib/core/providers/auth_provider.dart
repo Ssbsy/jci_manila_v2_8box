@@ -30,17 +30,21 @@ class AuthProvider extends ChangeNotifier {
         password: password,
       );
 
-      if (_userData != null && _userData!['success'] == true) {
+      debugPrint('Raw API response: ${_userData.toString()}');
+
+      if (_userData != null && _userData!['token'] != null) {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('auth_token', _userData!['token']);
+        debugPrint('Login successful, navigating to /loginVerification');
+
         Get.toNamed('/loginVerification', arguments: _userData);
-        debugPrint('Login successful: $_userData');
         return null;
       } else {
+        debugPrint('Login failed: ${_userData?['message']}');
         return _userData?['message'] ?? 'Incorrect email or password';
       }
     } catch (e) {
-      debugPrint('Error: $e');
+      debugPrint('Error during login: $e');
       return 'An unexpected error occurred';
     } finally {
       _isLoading = false;
@@ -58,17 +62,21 @@ class AuthProvider extends ChangeNotifier {
     try {
       _userData = await _authVerification.postVerify(otp: otp, email: email);
 
+      debugPrint('Login verification response: ${_userData.toString()}');
+
       if (_userData != null && _userData!['success'] == true) {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('auth_token', _userData!['token']);
+        debugPrint('Verification successful, navigating to /pageManager');
+
         Get.toNamed('/pageManager', arguments: _userData);
-        debugPrint('Login successful: $_userData');
         return null;
       } else {
+        debugPrint('Verification failed: ${_userData?['message']}');
         return _userData?['message'] ?? 'Verification failed';
       }
     } catch (e) {
-      debugPrint('Error: $e');
+      debugPrint('Error during verification: $e');
       return 'An unexpected error occurred';
     } finally {
       _isLoading = false;

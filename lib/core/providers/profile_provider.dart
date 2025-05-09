@@ -3,6 +3,7 @@ import 'package:jci_manila_v2/core/base_api/base_api.dart';
 import 'package:jci_manila_v2/core/services/accounts/get_profile_services.dart';
 
 class ProfileProvider with ChangeNotifier {
+  //-------------------------------//
   Map<dynamic, dynamic>? profileData;
   //about yourself
   String _firstName = '';
