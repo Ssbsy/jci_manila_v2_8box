@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
-import 'package:jci_manila_v2/core/services/accounts/otp_retrive_services.dart';
+import 'package:jci_manila_v2/core/services/accounts/otp_retrieve_services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class VerificationPage extends StatefulWidget {
@@ -40,24 +40,22 @@ class _VerificationPageState extends State<VerificationPage> {
 
     setState(() => isLoading = true);
 
-    final response = await OTPRetriveService(BaseApiServices()).postOtpRetrieve(
-      email: email,
-      otp: int.tryParse(code) ?? 0,
-    );
+    final response = await OTPRetrieveServices(
+      BaseApiServices(),
+    ).postOtpRetrieve(email: email, otp: int.tryParse(code) ?? 0);
 
     setState(() => isLoading = false);
 
-final message = response['message'];
-final error = response['error'];
+    final message = response['message'];
+    final error = response['error'];
 
-if (message != null) {
-  Get.snackbar('Verified', message.toString());
-  await Future.delayed(const Duration(seconds: 1));
-  Get.offAllNamed('/newpass', arguments: {'email': email});
-} else {
-  Get.snackbar('Error', error.toString());
-}
-
+    if (message != null) {
+      Get.snackbar('Verified', message.toString());
+      await Future.delayed(const Duration(seconds: 1));
+      Get.offAllNamed('/newpass', arguments: {'email': email});
+    } else {
+      Get.snackbar('Error', error.toString());
+    }
   }
 
   @override
@@ -159,16 +157,17 @@ if (message != null) {
                                   vertical: 12,
                                 ),
                               ),
-                              child: isLoading
-                                  ? const SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  : const Text("Continue"),
+                              child:
+                                  isLoading
+                                      ? const SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                      : const Text("Continue"),
                             ),
                           ),
                           const SizedBox(height: 10),

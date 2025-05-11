@@ -23,50 +23,39 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final Color neutral900 = const Color(0xFF121212);
   final Color accent500 = const Color(0xFF145FB0);
 
-Future<void> submitForgotPassword() async {
-  if (!_formKey.currentState!.validate()) return;
+  Future<void> submitForgotPassword() async {
+    if (!_formKey.currentState!.validate()) return;
 
-  setState(() => isLoading = true);
+    setState(() => isLoading = true);
 
-  try {
-    final response = await ForgotPasswordServices(BaseApiServices())
-        .postForgotPassword(email: emailController.text.trim());
+    try {
+      final response = await ForgotPasswordServices(
+        BaseApiServices(),
+      ).postForgotPassword(email: emailController.text.trim());
 
-    debugPrint('Forgot Password API Response: $response');
+      debugPrint('Forgot Password API Response: $response');
 
-    if (response.containsKey('message')) {
-      Get.snackbar(
-        'Success',
-        'A verification code has been sent to your email.',
-      );
+      if (response.containsKey('message')) {
+        Get.snackbar(
+          'Success',
+          'A verification code has been sent to your email.',
+        );
 
-
-      Get.offAllNamed(
-  '/verification',
-  arguments: {'email': emailController.text.trim()},
-);
-
-    } else if (response.containsKey('error')) {
-      Get.snackbar(
-        'Error',
-        response['error'].toString(),
-      );
-    } else {
-      Get.snackbar(
-        'Error',
-        'Unexpected response from server.',
-      );
+        Get.offAllNamed(
+          '/verification',
+          arguments: {'email': emailController.text.trim()},
+        );
+      } else if (response.containsKey('error')) {
+        Get.snackbar('Error', response['error'].toString());
+      } else {
+        Get.snackbar('Error', 'Unexpected response from server.');
+      }
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+    } finally {
+      setState(() => isLoading = false);
     }
-  } catch (e) {
-    Get.snackbar(
-      'Error',
-      e.toString(),
-    );
-  } finally {
-    setState(() => isLoading = false);
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -179,7 +168,7 @@ Future<void> submitForgotPassword() async {
                           const SizedBox(height: 10),
 
                           OutlinedButton(
-                             onPressed: () => Get.offAllNamed('/login'),
+                            onPressed: () => Get.offAllNamed('/login'),
                             style: OutlinedButton.styleFrom(
                               side: BorderSide(color: accent500),
                               minimumSize: const Size.fromHeight(45),

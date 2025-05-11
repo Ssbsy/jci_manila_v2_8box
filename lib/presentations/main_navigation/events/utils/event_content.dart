@@ -6,15 +6,17 @@ import 'package:jci_manila_v2/presentations/main_navigation/events/utils/event_d
 import 'package:jci_manila_v2/presentations/main_navigation/events/utils/my_event_detail.dart';
 
 class EventModel {
+  final int id;
   final String title;
   final String description;
   final String location;
   final String dateTime;
   final String imagePath;
-  final int? registrants; // Optional for general events
+  final int? registrants;
   final bool isMyEvent;
 
   EventModel({
+    required this.id,
     required this.title,
     required this.description,
     required this.location,
@@ -29,6 +31,15 @@ class EventContent extends StatelessWidget {
   final EventModel event;
 
   const EventContent({super.key, required this.event});
+
+  bool _isNetworkImage(String path) {
+    return path.startsWith('http://') || path.startsWith('https://');
+  }
+
+  String _sanitizeUrl(String url) {
+    // Fixes "/files/../" to just "/"
+    return url.replaceAll('/files/../', '/');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +59,38 @@ class EventContent extends StatelessWidget {
               // Image
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  event.imagePath,
-                  height: 200,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+                child:
+                    _isNetworkImage(event.imagePath)
+                        ? Image.network(
+                          _sanitizeUrl(event.imagePath),
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Container(
+                              height: 200,
+                              width: double.infinity,
+                              color: Colors.grey.shade200,
+                              child: const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          },
+                          errorBuilder:
+                              (_, __, ___) => Container(
+                                height: 200,
+                                width: double.infinity,
+                                color: Colors.grey.shade200,
+                                child: const Icon(Icons.broken_image, size: 40),
+                              ),
+                        )
+                        : Image.asset(
+                          event.imagePath,
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
               ),
               const Gap(12),
 
@@ -103,7 +140,7 @@ class EventContent extends StatelessWidget {
               ),
               const Gap(10),
 
-              // Registrants (only if My Events)
+              // Registrants (My Events only)
               if (event.isMyEvent && event.registrants != null) ...[
                 const Gap(6),
                 Row(
@@ -134,7 +171,8 @@ class EventContent extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const MyEventDetail(),
+                                builder:
+                                    (_) => MyEventDetail(eventId: event.id),
                               ),
                             );
                           },
@@ -157,7 +195,7 @@ class EventContent extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const EventDetail(),
+                                builder: (_) => EventDetail(eventId: event.id),
                               ),
                             );
                           },
