@@ -54,7 +54,10 @@ class AuthProvider extends ChangeNotifier {
       } else if (_userData?['token'] != null) {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('auth_token', _userData!['token']);
-        Get.offAllNamed('/pageManager', arguments: _userData);
+        await prefs.setInt('user_id', _userData!['user']['id']);
+
+        Get.toNamed('/pageManager', arguments: _userData);
+        debugPrint('Login successful: $_userData');
         return null;
       } else {
         return _userData?['message'] ?? 'Login failed';
