@@ -25,7 +25,7 @@ class LoginVerificationServices {
 
       debugPrint("Raw API response: ${response.body}");
 
-      if (response.statusCode == 200) {
+      if (response.statusCode < 600) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         return responseData;
       } else {
@@ -50,7 +50,7 @@ class LoginVerificationServices {
       body: json.encode({'email': email, 'otp': ''}),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode < 600) {
       return json.decode(response.body);
     } else {
       return {'success': false, 'message': 'Failed to resend OTP'};

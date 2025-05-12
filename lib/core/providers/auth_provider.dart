@@ -86,7 +86,8 @@ class AuthProvider extends ChangeNotifier {
       );
       debugPrint('OTP response: $otpResponse');
 
-      if (otpResponse != null && otpResponse['token'] != null) {
+      //for safety lang
+      if (otpResponse?['token'] != null) {
         _userData = await _authRepository.postLogin(
           username: email,
           password: password,
@@ -114,7 +115,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<String?> resendOTP({required String email}) async {
+  Future<String> resendOTP({required String email}) async {
     _isLoading = true;
     notifyListeners();
 
@@ -122,7 +123,8 @@ class AuthProvider extends ChangeNotifier {
       final resendResponse = await _authVerification.resendOTP(email);
       debugPrint('Resend OTP response: $resendResponse');
 
-      if (resendResponse != null && resendResponse['message'] != null) {
+      if (resendResponse?['message'] != null) {
+        //for safety lang
         return resendResponse['message'];
       } else {
         return 'Failed to resend OTP. Please try again later.';

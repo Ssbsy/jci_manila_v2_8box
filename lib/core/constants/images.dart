@@ -65,4 +65,9 @@ class Images {
     'assets/icons/badge_png.png',
     color: Palette.white,
   );
+
+  static final jciLogoWhite = Image.asset(
+    'assets/icons/jci_manila_logo_white_1.png',
+    height: 100,
+  );
 }

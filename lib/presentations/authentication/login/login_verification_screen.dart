@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
+import 'package:jci_manila_v2/core/constants/images.dart';
 import 'package:jci_manila_v2/core/providers/auth_provider.dart';
 import 'package:jci_manila_v2/core/services/accounts/login_verification_services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -36,14 +37,11 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
   @override
   void initState() {
     super.initState();
-
     final args = Get.arguments as Map<String, dynamic>?;
-
     if (args != null) {
       email = args['email'] ?? '';
       password = args['password'] ?? '';
     }
-
     verificationService = LoginVerificationServices(BaseApiServices());
   }
 
@@ -80,13 +78,10 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
     setState(() => isLoading = true);
 
     try {
-      final response = await verificationService.resendOTP(email);
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      final message = await authProvider.resendOTP(email: email);
 
-      if (response['success']) {
-        Get.snackbar('Success', 'OTP has been resent to your email.');
-      } else {
-        Get.snackbar('Error', response['message']);
-      }
+      Get.snackbar('Notice', message);
     } catch (e) {
       Get.snackbar('Error', 'Something went wrong: $e');
     } finally {
@@ -112,11 +107,8 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  Image.asset(
-                    'assets/icons/jci_manila_logo_white_1.png',
-                    height: 100,
-                  ),
-                  const SizedBox(height: 30),
+                  Images.jciLogoWhite,
+                  const Gap(30),
                   Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
