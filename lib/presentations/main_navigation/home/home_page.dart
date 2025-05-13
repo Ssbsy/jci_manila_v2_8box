@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/components/widget_custom_appbar.dart';
@@ -16,7 +15,38 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  SingleChildScrollView _body() {
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _initPageData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FABController.showFAB.value = true;
+      FABController.fabDesignType.value = FABDesignType.altFab;
+    });
+  }
+
+  Future<void> _initPageData() async {
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FABController.showFAB.value = false;
+    });
+    super.dispose();
+  }
+
+  Widget _body() {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,27 +70,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const Gap(20),
-          HomePageFeed(),
+          const HomePageFeed(),
         ],
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      FABController.showFAB.value = true;
-      FABController.fabDesignType.value = FABDesignType.altFab;
-    });
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      FABController.showFAB.value = false;
-    });
-    super.dispose();
   }
 
   @override

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:jci_manila_v2/core/constants/images.dart';
-import 'package:jci_manila_v2/presentations/main_navigation/home/const/assets.dart';
+import 'package:jci_manila_v2/core/providers/events_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePageAutochangingTile extends StatefulWidget {
@@ -18,19 +18,24 @@ class _HomePageAutochangingTileState extends State<HomePageAutochangingTile> {
   int _currentPage = 0;
   late Timer _timer;
 
-  late List<Widget> _tiles;
+  List<Widget> _tiles = [];
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _startAutoScroll();
+        _fetchEventsOnce();
+      }
+    });
+  }
 
-    _tiles = [
-      _buildLogoTile(Images.autochanging01),
-      _buildLogoTile(Images.autochanging02),
-      _buildLogoTile(Images.autochanging03),
-    ];
-
-    _startAutoScroll();
+  void _fetchEventsOnce() {
+    final provider = Provider.of<EventsProvider>(context, listen: false);
+    if (provider.homeEvents.isEmpty) {
+      provider.getHomeEvents();
+    }
   }
 
   void _startAutoScroll() {
@@ -40,11 +45,13 @@ class _HomePageAutochangingTileState extends State<HomePageAutochangingTile> {
       } else {
         _currentPage = 0;
       }
-      _pageController.animateToPage(
-        _currentPage,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
+      if (_pageController.hasClients) {
+        _pageController.animateToPage(
+          _currentPage,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      }
     });
   }
 
@@ -55,47 +62,75 @@ class _HomePageAutochangingTileState extends State<HomePageAutochangingTile> {
     super.dispose();
   }
 
-  Widget _buildLogoTile(Widget imageWidget) {
+  Widget _buildEventTile(Map<String, dynamic> event) {
+    final imageUrl =
+        event['banner_picture'] ?? 'https://via.placeholder.com/150';
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
-      child: imageWidget,
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return const Center(child: Text('Image not available'));
+        },
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.27,
-          width: double.infinity,
-          child: PageView.builder(
-            controller: _pageController,
-            itemCount: _tiles.length,
-            onPageChanged: (index) {
-              setState(() {
-                _currentPage = index;
-              });
-            },
-            itemBuilder: (context, index) {
-              return _tiles[index];
-            },
-          ),
-        ),
-        const Gap(8),
-        SmoothPageIndicator(
-          controller: _pageController,
-          count: _tiles.length,
-          effect: ExpandingDotsEffect(
-            dotHeight: 8,
-            dotWidth: 8,
-            spacing: 6,
-            activeDotColor: Colors.white,
-            dotColor: Colors.white,
-          ),
-        ),
-      ],
+    return Consumer<EventsProvider>(
+      builder: (context, provider, child) {
+        if (provider.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final events = provider.homeEvents;
+
+        _tiles =
+            events.map((event) {
+              return _buildEventTile(event);
+            }).toList();
+
+        if (_tiles.isEmpty) {
+          return const Center(child: Text('No events available'));
+        }
+
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.27,
+              width: double.infinity,
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: _tiles.length,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  return _tiles[index];
+                },
+              ),
+            ),
+            const Gap(8),
+            SmoothPageIndicator(
+              controller: _pageController,
+              count: _tiles.length,
+              effect: ExpandingDotsEffect(
+                dotHeight: 8,
+                dotWidth: 8,
+                spacing: 6,
+                activeDotColor: Colors.white,
+                dotColor: Colors.white,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
