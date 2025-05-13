@@ -17,16 +17,16 @@ class _CommentsScreenState extends State<CommentsScreen> {
   bool isLiked = CommentReaction.like;
   @override
   Widget build(BuildContext context) {
-    final List<Comment> comments = [
-      Comment(
-        id: widget.feed.id,
-        user: 'Heather Auer',
-        userPhoto: widget.feed.userPhoto,
-        time: '1 mins',
-        comment:
-            'Wow! How about you help me train how to swing? Who knows, I might be your opponent in the future.',
-      ),
-    ];
+    // final List<Comment> comments = [
+    //   Comment(
+    //     id: widget.feed.id,
+    //     user: 'Heather Auer',
+    //     userPhoto: widget.feed.userPhoto,
+    //     time: '1 mins',
+    //     comment:
+    //         'Wow! How about you help me train how to swing? Who knows, I might be your opponent in the future.',
+    //   ),
+    // ];
 
     String reaction = widget.feed.reactions.toString();
     return SafeArea(
@@ -35,50 +35,50 @@ class _CommentsScreenState extends State<CommentsScreen> {
           children: [
             _header(reaction, context),
             const Divider(),
-            ...comments.map(
-              (comment) => ListTile(
-                leading: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [comment.userPhoto],
-                ),
-                title: WidgetText(title: comment.user),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: 0.5),
-                      ),
-                      child: WidgetText(title: comment.comment, maxLine: 10),
-                    ),
+            // ...comments.map(
+            //   (comment) => ListTile(
+            //     leading: Column(
+            //       mainAxisAlignment: MainAxisAlignment.start,
+            //       children: [comment.userPhoto],
+            //     ),
+            //     title: WidgetText(title: comment.user),
+            //     subtitle: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Container(
+            //           padding: const EdgeInsets.all(10),
+            //           decoration: BoxDecoration(
+            //             border: Border.all(color: Colors.grey, width: 0.5),
+            //           ),
+            //           child: WidgetText(title: comment.comment, maxLine: 10),
+            //         ),
 
-                    Row(
-                      spacing: 10,
-                      children: [
-                        WidgetText(title: comment.time),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isLiked = !isLiked;
-                              CommentReaction.like = isLiked;
-                            });
-                          },
-                          child: WidgetText(
-                            title: 'Like',
-                            color:
-                                CommentReaction.like
-                                    ? Colors.red
-                                    : Palette.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            //         Row(
+            //           spacing: 10,
+            //           children: [
+            //             WidgetText(title: comment.time),
+            //             GestureDetector(
+            //               onTap: () {
+            //                 setState(() {
+            //                   isLiked = !isLiked;
+            //                   CommentReaction.like = isLiked;
+            //                 });
+            //               },
+            //               child: WidgetText(
+            //                 title: 'Like',
+            //                 color:
+            //                     CommentReaction.like
+            //                         ? Colors.red
+            //                         : Palette.black,
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

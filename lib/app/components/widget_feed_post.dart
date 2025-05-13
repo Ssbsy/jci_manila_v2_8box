@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
-import 'package:jci_manila_v2/core/constants/feed_reaction.dart';
 import 'package:jci_manila_v2/core/constants/feed_reaction.dart'
     as FeedReaction;
 import 'package:jci_manila_v2/core/models/feed.dart';
@@ -26,9 +25,11 @@ class WidgetFeedPost extends StatefulWidget {
 
 class _WidgetFeedPostState extends State<WidgetFeedPost> {
   bool isLiked = FeedReaction.like;
+
   @override
   Widget build(BuildContext context) {
     String reaction = widget.feed.reactions.toString();
+
     return Container(
       decoration: BoxDecoration(),
       child: Column(
@@ -38,10 +39,12 @@ class _WidgetFeedPostState extends State<WidgetFeedPost> {
           const Gap(10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: WidgetText(title: widget.feed.post!, maxLine: 10),
+            child: WidgetText(title: widget.feed.content, maxLine: 10),
           ),
           const Gap(10),
-          widget.feed.img ?? const SizedBox.shrink(),
+          widget.feed.imageUrls.isNotEmpty
+              ? Image.network(widget.feed.imageUrls[0])
+              : const SizedBox.shrink(),
           const Gap(10),
           _bottom(reaction),
         ],
@@ -106,12 +109,14 @@ class _WidgetFeedPostState extends State<WidgetFeedPost> {
           Row(
             spacing: 10,
             children: [
-              widget.feed.userPhoto,
+              CircleAvatar(
+                backgroundImage: NetworkImage(widget.feed.userPhotoUrl),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  WidgetText(title: widget.feed.user, isBold: true),
-                  WidgetText(title: widget.feed.time, color: Colors.grey),
+                  WidgetText(title: widget.feed.userName, isBold: true),
+                  WidgetText(title: widget.feed.createdAt, color: Colors.grey),
                 ],
               ),
             ],

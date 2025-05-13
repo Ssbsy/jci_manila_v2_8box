@@ -1,74 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:jci_manila_v2/core/providers/auth_provider.dart';
+import 'package:jci_manila_v2/core/providers/posts/create_posts_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:jci_manila_v2/app/components/widget_feed_post.dart';
 import 'package:jci_manila_v2/core/models/feed.dart';
-import 'package:jci_manila_v2/presentations/main_navigation/home/const/assets.dart';
+import 'package:jci_manila_v2/core/providers/posts/get_all_posts_provider.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/screens/comments_screen.dart';
 
 class HomePageFeed extends StatefulWidget {
-  final Feed? feed;
-  const HomePageFeed({super.key, this.feed});
+  const HomePageFeed({super.key});
 
   @override
   State<HomePageFeed> createState() => _HomePageFeedState();
 }
 
 class _HomePageFeedState extends State<HomePageFeed> {
-  final List<Feed> feeds = [
-    Feed(
-      id: 1,
-      user: 'Earl Huel',
-      reactions: 8,
-      post: 'Practicing my shot for the event.',
-      time: '1 min',
-      userPhoto: Assets.earlHuelPng,
-      img: Assets.golfSwing1,
-    ),
-    Feed(
-      id: 2,
-      user: 'Roy Dickens',
-      reactions: 20,
-      post:
-          'Has anyone here wants to join our group? if you want to join just contact me.',
-      time: '20 mins',
-      userPhoto: Assets.earlHuelPng,
-    ),
-    Feed(
-      id: 3,
-      user: 'Alyssa White',
-      reactions: 425,
-      post: 'I am new here! Can anyone teach me how to use this app?',
-      time: '1 hr',
-      userPhoto: Assets.earlHuelPng,
-    ),
-    Feed(
-      id: 4,
-      user: 'Matthew Hill',
-      reactions: 8,
-      post:
-          'Hello guys! Anyone here excited about the upcoming ASPAC Mongolia?! I am already here at my hotel.',
-      time: '15 mins',
-      userPhoto: Assets.earlHuelPng,
-      img: Assets.golfSwing1,
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+      () => Provider.of<GetAllPostsProvider>(context, listen: false).getPosts(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final postProvider = Provider.of<GetAllPostsProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
+    final posts = postProvider.postData;
+
+    final currentUserId = authProvider.userData?['user']['id'];
+
+    if (currentUserId == null) {
+      return Center(child: Text('Please log in to view posts.'));
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25),
           child: Text(
             'Feeds',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ),
         const Gap(10),
-        ...List.generate(
-          feeds.length,
-          (index) => _buildFeed(context, feeds[index]),
-        ),
+        if (postProvider.isLoading)
+          const Center(child: CircularProgressIndicator())
+        else if (posts.isEmpty)
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25),
+            child: Text('No posts available.'),
+          )
+        else
+          ...posts.map((data) {
+            final feed = Feed.fromMap(data!, currentUserId.toString());
+            return _buildFeed(context, feed);
+          }).toList(),
       ],
     );
   }
@@ -77,7 +67,6 @@ class _HomePageFeedState extends State<HomePageFeed> {
     return GestureDetector(
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(0),
         margin: const EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -92,12 +81,11 @@ class _HomePageFeedState extends State<HomePageFeed> {
                     context: context,
                     isScrollControlled: true,
                     backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        child: CommentsScreen(feed: feed),
-                      );
-                    },
+                    builder:
+                        (context) => SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          child: CommentsScreen(feed: feed),
+                        ),
                   ),
             ),
             const Gap(10),

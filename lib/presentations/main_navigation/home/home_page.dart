@@ -15,22 +15,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _isLoading = true;
-
   @override
   void initState() {
     super.initState();
-    _initPageData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FABController.showFAB.value = true;
       FABController.fabDesignType.value = FABDesignType.altFab;
-    });
-  }
-
-  Future<void> _initPageData() async {
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      _isLoading = false;
     });
   }
 
@@ -43,10 +33,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _body() {
-    if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
