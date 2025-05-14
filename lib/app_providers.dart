@@ -17,11 +17,20 @@ import 'package:provider/single_child_widget.dart';
 
 class AppProviders {
   static List<SingleChildWidget> providers = [
+    //Auth
     ChangeNotifierProvider(create: (_) => AuthProvider()),
+
+    //Profile
     ChangeNotifierProvider(create: (_) => ProfileProvider()),
     ChangeNotifierProvider(create: (_) => UpdateProfileProvider()),
+
+    //Games
     ChangeNotifierProvider(create: (_) => GamesProvider()),
+
+    //Events
     ChangeNotifierProvider(create: (_) => EventsProvider()),
+
+    //Posts
     ChangeNotifierProvider(create: (_) => GetAllPostsProvider()),
     ChangeNotifierProvider(create: (_) => CreatePostsProvider()),
     ChangeNotifierProvider(create: (_) => CreateCommentProvider()),
