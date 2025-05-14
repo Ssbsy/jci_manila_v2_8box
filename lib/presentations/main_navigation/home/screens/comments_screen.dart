@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/constants/comment_reaction.dart';
@@ -21,82 +22,111 @@ class _CommentsScreenState extends State<CommentsScreen> {
   Widget build(BuildContext context) {
     String reaction = widget.feed.reactions.toString();
 
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            _header(reaction, context),
-            const Divider(),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: SafeArea(
+        child: Scaffold(
+          body: Column(
+            children: [
+              _header(reaction, context),
+              const Divider(),
 
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Consumer<CreateCommentProvider>(
+              const Expanded(
+                child: Center(
+                  child: WidgetText(
+                    title: 'No comments yet',
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+
+              Consumer<CreateCommentProvider>(
                 builder:
-                    (context, provider, _) => Column(
-                      children: [
-                        TextField(
-                          controller: _commentController,
-                          decoration: const InputDecoration(
-                            hintText: 'Write a comment...',
-                            border: OutlineInputBorder(),
+                    (context, provider, _) => Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade300,
+                            offset: const Offset(0, -1),
+                            blurRadius: 4,
                           ),
-                          maxLines: 3,
-                        ),
-                        const SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed:
-                              provider.isLoading
-                                  ? null
-                                  : () async {
-                                    final commentText =
-                                        _commentController.text.trim();
-                                    if (commentText.isEmpty) return;
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _commentController,
+                              decoration: const InputDecoration(
+                                hintText: 'Write a comment...',
+                                border: InputBorder.none,
+                              ),
+                              minLines: 1,
+                              maxLines: 3,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed:
+                                provider.isLoading
+                                    ? null
+                                    : () async {
+                                      final commentText =
+                                          _commentController.text.trim();
+                                      if (commentText.isEmpty) return;
 
-                                    final response = await provider.createPost(
-                                      postID: widget.feed.id.toString(),
-                                      comment: commentText,
-                                    );
+                                      final response = await provider
+                                          .createPost(
+                                            postID: widget.feed.id.toString(),
+                                            comment: commentText,
+                                          );
 
-                                    if (response['success']) {
-                                      _commentController.clear();
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        const SnackBar(
-                                          content: Text('Comment posted'),
-                                        ),
-                                      );
-                                    } else {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            response['message'] ??
-                                                'Failed to post comment',
+                                      if (response['success']) {
+                                        _commentController.clear();
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          const SnackBar(
+                                            content: Text('Comment posted'),
                                           ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                          child:
-                              provider.isLoading
-                                  ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )
-                                  : const Text('Post Comment'),
-                        ),
-                      ],
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              response['message'] ??
+                                                  'Failed to post comment',
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                            icon:
+                                provider.isLoading
+                                    ? const SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                    : const Icon(
+                                      Icons.send,
+                                      color: Palette.primary,
+                                    ),
+                          ),
+                        ],
+                      ),
                     ),
               ),
-            ),
-
-            const Expanded(
-              child: Center(
-                child: WidgetText(title: 'No comments yet', color: Colors.grey),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

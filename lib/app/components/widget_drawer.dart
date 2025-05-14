@@ -5,7 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/constants/images.dart';
-import 'package:jci_manila_v2/core/providers/profile_provider.dart';
+import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
 import 'package:provider/provider.dart';
 
 class WidgetDrawer extends StatelessWidget {

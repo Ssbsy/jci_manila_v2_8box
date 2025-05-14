@@ -6,7 +6,7 @@ import 'package:jci_manila_v2/core/providers/posts/create_posts_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/get_all_posts_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/like_comment_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/reaction_provider.dart';
-import 'package:jci_manila_v2/core/providers/profile_provider.dart';
+import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
 import 'package:jci_manila_v2/core/providers/update_profile_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';

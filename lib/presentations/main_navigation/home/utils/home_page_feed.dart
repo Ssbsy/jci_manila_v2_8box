@@ -20,9 +20,9 @@ class _HomePageFeedState extends State<HomePageFeed> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => Provider.of<GetAllPostsProvider>(context, listen: false).getPosts(),
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GetAllPostsProvider>(context, listen: false).getPosts();
+    });
   }
 
   @override
@@ -53,10 +53,7 @@ class _HomePageFeedState extends State<HomePageFeed> {
             child: WidgetText(title: 'No posts available.'),
           )
         else
-          ...posts.map((data) {
-            final feed = Feed.fromMap(data!, currentUserId.toString());
-            return _buildFeed(context, feed);
-          }).toList(),
+          ..._buildFeeds(posts, currentUserId.toString()),
       ],
     );
   }
@@ -92,5 +89,15 @@ class _HomePageFeedState extends State<HomePageFeed> {
         ),
       ),
     );
+  }
+
+  List<Widget> _buildFeeds(List<dynamic?> posts, String currentUserId) {
+    final feeds =
+        posts
+            .whereType<Map<String, dynamic>>()
+            .map((data) => Feed.fromMap(data, currentUserId))
+            .toList();
+
+    return feeds.map((feed) => _buildFeed(context, feed)).toList();
   }
 }
