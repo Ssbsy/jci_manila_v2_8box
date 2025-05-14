@@ -6,7 +6,7 @@ import 'package:jci_manila_v2/core/providers/posts/create_posts_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/get_all_posts_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/like_comment_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/reaction_provider.dart';
-import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
+// import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
 import 'package:jci_manila_v2/core/providers/update_profile_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -14,7 +14,7 @@ import 'package:provider/single_child_widget.dart';
 class AppProviders {
   static List<SingleChildWidget> providers = [
     ChangeNotifierProvider(create: (_) => AuthProvider()),
-    ChangeNotifierProvider(create: (_) => ProfileProvider()),
+    // ChangeNotifierProvider(create: (_) => ProfileProvider()),
     ChangeNotifierProvider(create: (_) => UpdateProfileProvider()),
     ChangeNotifierProvider(create: (_) => GamesProvider()),
     ChangeNotifierProvider(create: (_) => EventsProvider()),
