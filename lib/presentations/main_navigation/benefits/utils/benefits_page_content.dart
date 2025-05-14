@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:jci_manila_v2/core/providers/benefits_provider/benefits_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
-import 'package:jci_manila_v2/core/constants/images.dart';
-import 'package:jci_manila_v2/core/models/benefits.dart';
 
 class BenefitsPageContent extends StatefulWidget {
   const BenefitsPageContent({super.key});
@@ -12,51 +12,29 @@ class BenefitsPageContent extends StatefulWidget {
 }
 
 class _BenefitsPageContentState extends State<BenefitsPageContent> {
-  final List<Benefits> benefits = [
-    Benefits(
-      image: Images.jollibeeLogo,
-      discount: 20,
-      title: 'Jollibee',
-      discountDescription:
-          'Any members can use this voucher on any Jollibee branches',
-      category: 'Food and Beverage',
-    ),
-    Benefits(
-      image: Images.mangInasalLogo,
-      discount: 20,
-      title: 'Mang Inasal',
-      discountDescription:
-          'Any members can use this voucher on any Jollibee branches',
-      category: 'Food and Beverage',
-    ),
-    Benefits(
-      image: Images.redRibbonLogo,
-      discount: 20,
-      title: 'Red Ribbon',
-      discountDescription:
-          'Any members can use this voucher on any Jollibee branches',
-      category: 'Food and Beverage',
-    ),
-    Benefits(
-      image: Images.johnsonsLogo,
-      discount: 20,
-      title: 'Johnson Fitness & Well Being',
-      discountDescription:
-          'Any members can use this voucher on any Jollibee branches',
-      category: 'Health and Wellness',
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<BenefitsProvider>(context, listen: false).fetchBenefits();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<BenefitsProvider>(context);
     final List<String> shownCategories = [];
+
+    if (provider.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children:
-            benefits.map((benefit) {
-              String category = benefit.category ?? 'Others';
+            provider.benefits.map((benefit) {
+              final String category = benefit['category'] ?? 'Others';
               String? header;
 
               if (!shownCategories.contains(category)) {
@@ -72,7 +50,7 @@ class _BenefitsPageContentState extends State<BenefitsPageContent> {
 
   Widget _buildBenefitCard(
     BuildContext context,
-    Benefits benefits,
+    dynamic benefit,
     String? header,
   ) {
     return GestureDetector(
@@ -96,18 +74,26 @@ class _BenefitsPageContentState extends State<BenefitsPageContent> {
             ),
             child: Row(
               children: [
-                benefits.image,
+                Image.network(
+                  benefit['image'] ?? '',
+                  width: 60,
+                  height: 60,
+                  errorBuilder: (_, __, ___) => const Icon(Icons.image),
+                ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      WidgetText(title: benefits.title, isBold: true, size: 16),
-                      WidgetText(title: benefits.discountDescription, size: 14),
+                      WidgetText(
+                        title: benefit['title'],
+                        isBold: true,
+                        size: 16,
+                      ),
+                      WidgetText(title: benefit['description'], size: 14),
                       const Gap(10),
                       WidgetText(
-                        title:
-                            '${benefits.discount.toStringAsFixed(0)}% Discount',
+                        title: "${benefit['discount']}% Discount",
                         size: 16,
                         color: Colors.blue,
                       ),

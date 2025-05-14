@@ -1,4 +1,5 @@
 import 'package:jci_manila_v2/core/providers/auth/auth_provider.dart';
+import 'package:jci_manila_v2/core/providers/benefits_provider/benefits_provider.dart';
 import 'package:jci_manila_v2/core/providers/games_provider.dart';
 import 'package:jci_manila_v2/core/providers/events_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/create_comment_provider.dart';
@@ -27,9 +28,12 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => ReactionProvider()),
     ChangeNotifierProvider(create: (_) => LikeCommentProvider()),
 
-    //project provider
+    //project
     ChangeNotifierProvider(create: (_) => AddProjectProvider()),
     ChangeNotifierProvider(create: (_) => ProjectInformationProvider()),
     ChangeNotifierProvider(create: (_) => CommitteeMemberProvider()),
+
+    //benefits
+    ChangeNotifierProvider(create: (_) => BenefitsProvider()),
   ];
 }
