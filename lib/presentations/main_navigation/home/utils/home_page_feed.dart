@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:jci_manila_v2/core/providers/auth_provider.dart';
+import 'package:jci_manila_v2/app/theme/app_colors.dart';
+import 'package:jci_manila_v2/app/widgets/widget_text.dart';
+import 'package:jci_manila_v2/core/providers/auth/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jci_manila_v2/app/components/widget_feed_post.dart';
 import 'package:jci_manila_v2/core/models/feed.dart';
@@ -32,7 +34,7 @@ class _HomePageFeedState extends State<HomePageFeed> {
     final currentUserId = authProvider.userData?['user']['id'];
 
     if (currentUserId == null) {
-      return Center(child: Text('Please log in to view posts.'));
+      return Center(child: WidgetText(title: 'Please log in to view posts.'));
     }
 
     return Column(
@@ -40,10 +42,7 @@ class _HomePageFeedState extends State<HomePageFeed> {
       children: [
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 25),
-          child: Text(
-            'Feeds',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
+          child: WidgetText(title: 'Feeds', size: 18, isBold: true),
         ),
         const Gap(10),
         if (postProvider.isLoading)
@@ -51,7 +50,7 @@ class _HomePageFeedState extends State<HomePageFeed> {
         else if (posts.isEmpty)
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
-            child: Text('No posts available.'),
+            child: WidgetText(title: 'No posts available.'),
           )
         else
           ...posts.map((data) {
@@ -68,7 +67,7 @@ class _HomePageFeedState extends State<HomePageFeed> {
         width: double.infinity,
         margin: const EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Palette.white,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(

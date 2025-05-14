@@ -6,79 +6,75 @@ import 'package:jci_manila_v2/presentations/main_navigation/home/const/assets.da
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class HomePageHeaderContainer extends StatefulWidget {
+class HomePageHeaderContainer extends StatelessWidget {
   const HomePageHeaderContainer({super.key});
 
   @override
-  State<HomePageHeaderContainer> createState() =>
-      _HomePageHeaderContainerState();
-}
-
-class _HomePageHeaderContainerState extends State<HomePageHeaderContainer> {
-  @override
   Widget build(BuildContext context) {
     final profile = Provider.of<ProfileProvider>(context);
+
     if (profile.isLoading) {
-      return CircularProgressIndicator();
-    } else {
-      return Container(
-        padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              spacing: 5,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  spacing: 5,
-                  children: [
-                    Text(
-                      'Hi,',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    WidgetText(
-                      title: profile.firstName,
-                      size: 18,
-                      color: Color(0xFFE9A101),
-                      isBold: true,
-                    ),
-                  ],
-                ),
-
-                WidgetText(title: profile.membershipID),
-
-                const Gap(5),
-
-                Row(
-                  spacing: 5,
-                  children: [
-                    _logo(Assets.jciBlackLogo, Colors.amber),
-                    _logo(
-                      Icon(Icons.verified_user, color: Colors.white, size: 15),
-                      Colors.lightGreen,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-
-            QrImageView(
-              data: '1234567890',
-              version: QrVersions.auto,
-              size: 100.0,
-            ),
-          ],
-        ),
-      );
+      return const Center(child: CircularProgressIndicator());
     }
+
+    if (profile.firstName == null || profile.membershipID == null) {
+      return const Center(child: Text('Error loading profile.'));
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            spacing: 5,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                spacing: 5,
+                children: [
+                  const Text(
+                    'Hi,',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  WidgetText(
+                    title: profile.firstName ?? '',
+                    size: 18,
+                    color: const Color(0xFFE9A101),
+                    isBold: true,
+                  ),
+                ],
+              ),
+              WidgetText(title: profile.membershipID ?? ''),
+              const Gap(5),
+              Row(
+                spacing: 5,
+                children: [
+                  _logo(Assets.jciBlackLogo, Colors.amber),
+                  _logo(
+                    const Icon(
+                      Icons.verified_user,
+                      color: Colors.white,
+                      size: 15,
+                    ),
+                    Colors.lightGreen,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          QrImageView(
+            data: profile.membershipID ?? '1234567890',
+            version: QrVersions.auto,
+            size: 100.0,
+          ),
+        ],
+      ),
+    );
   }
 
   Container _logo(Widget asset, Color color, {Icon? icon}) {

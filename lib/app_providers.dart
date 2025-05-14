@@ -1,4 +1,4 @@
-import 'package:jci_manila_v2/core/providers/auth_provider.dart';
+import 'package:jci_manila_v2/core/providers/auth/auth_provider.dart';
 import 'package:jci_manila_v2/core/providers/games_provider.dart';
 import 'package:jci_manila_v2/core/providers/events_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/create_comment_provider.dart';

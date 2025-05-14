@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:jci_manila_v2/presentations/authentication/forgot_password_page.dart';
-import 'package:jci_manila_v2/presentations/authentication/login_page.dart';
-import 'package:jci_manila_v2/presentations/authentication/verification_screen.dart';
-import 'package:jci_manila_v2/presentations/authentication/new_password_page.dart';
-import 'package:jci_manila_v2/presentations/authentication/register_page.dart';
+import 'package:jci_manila_v2/presentations/authentication/forgot%20password/forgot_password_page.dart';
+import 'package:jci_manila_v2/presentations/authentication/login/login_page.dart';
+import 'package:jci_manila_v2/presentations/authentication/login/verification_screen.dart';
+import 'package:jci_manila_v2/presentations/authentication/forgot%20password/new_password_page.dart';
+import 'package:jci_manila_v2/presentations/authentication/register/register_page.dart';
 import 'package:jci_manila_v2/presentations/drawer/business_directory/business_directory_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/members_database/members_database_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/official_groups/official_groups_screen.dart';

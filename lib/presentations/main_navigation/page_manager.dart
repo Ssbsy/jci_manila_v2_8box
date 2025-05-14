@@ -19,7 +19,6 @@ class PageManager extends StatefulWidget {
 }
 
 class _PageManagerState extends State<PageManager> {
-  bool _isLoading = true;
   late int currentIndex;
 
   final List<Widget> pages = [
@@ -30,25 +29,14 @@ class _PageManagerState extends State<PageManager> {
     CalendarPage(),
   ];
 
-  Future<void> _initPageData() async {
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    _initPageData();
     currentIndex = widget.initialPage;
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
