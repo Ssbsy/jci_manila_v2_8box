@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:jci_manila_v2/app/animation/animated_widgets.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
-import 'package:jci_manila_v2/app/widgets/widget_image_container.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

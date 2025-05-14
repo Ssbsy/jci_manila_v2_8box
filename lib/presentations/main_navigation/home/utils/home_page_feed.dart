@@ -27,34 +27,33 @@ class _HomePageFeedState extends State<HomePageFeed> {
 
   @override
   Widget build(BuildContext context) {
-    final postProvider = Provider.of<GetAllPostsProvider>(context);
     final authProvider = Provider.of<AuthProvider>(context);
-    final posts = postProvider.postData;
-
     final currentUserId = authProvider.userData?['user']['id'];
 
-    if (currentUserId == null) {
-      return Center(child: WidgetText(title: 'Please log in to view posts.'));
-    }
+    return Consumer<GetAllPostsProvider>(
+      builder: (context, postProvider, _) {
+        final posts = postProvider.postData;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25),
-          child: WidgetText(title: 'Feeds', size: 18, isBold: true),
-        ),
-        const Gap(10),
-        if (postProvider.isLoading)
-          const Center(child: CircularProgressIndicator())
-        else if (posts.isEmpty)
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
-            child: WidgetText(title: 'No posts available.'),
-          )
-        else
-          ..._buildFeeds(posts, currentUserId.toString()),
-      ],
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25),
+              child: WidgetText(title: 'Feeds', size: 18, isBold: true),
+            ),
+            const Gap(10),
+            if (postProvider.isLoading)
+              const Center(child: CircularProgressIndicator())
+            else if (posts.isEmpty)
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
+                child: WidgetText(title: 'No posts available.'),
+              )
+            else
+              ..._buildFeeds(posts, currentUserId.toString()),
+          ],
+        );
+      },
     );
   }
 

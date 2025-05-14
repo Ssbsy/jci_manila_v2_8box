@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/core/providers/events_provider.dart';
@@ -13,52 +14,64 @@ class HomePageAutochangingTile extends StatefulWidget {
       _HomePageAutochangingTileState();
 }
 
-class _HomePageAutochangingTileState extends State<HomePageAutochangingTile> {
+class _HomePageAutochangingTileState extends State<HomePageAutochangingTile>
+    with AutomaticKeepAliveClientMixin {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-  late Timer _timer;
-
+  Timer? _timer;
   List<Widget> _tiles = [];
+  bool _eventsLoaded = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _startAutoScroll();
-        _fetchEventsOnce();
-      }
+      if (mounted) _fetchEventsOnce();
     });
   }
 
-  void _fetchEventsOnce() {
+  void _fetchEventsOnce() async {
     final provider = Provider.of<EventsProvider>(context, listen: false);
     if (provider.homeEvents.isEmpty) {
-      provider.getHomeEvents();
+      await provider.getHomeEvents();
+    }
+
+    if (!mounted) return;
+
+    final events = provider.homeEvents;
+    setState(() {
+      _tiles = events.map((event) => _buildEventTile(event)).toList();
+      _eventsLoaded = true;
+    });
+
+    if (_tiles.isNotEmpty) {
+      _startAutoScroll();
     }
   }
 
   void _startAutoScroll() {
+    _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if (_tiles.isEmpty || !_pageController.hasClients) return;
+
       if (_currentPage < _tiles.length - 1) {
         _currentPage++;
       } else {
         _currentPage = 0;
       }
-      if (_pageController.hasClients) {
-        _pageController.animateToPage(
-          _currentPage,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-        );
-      }
+
+      _pageController.animateToPage(
+        _currentPage,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
     });
   }
 
   @override
   void dispose() {
     _pageController.dispose();
-    _timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -68,30 +81,27 @@ class _HomePageAutochangingTileState extends State<HomePageAutochangingTile> {
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
-      child: Image.network(
-        imageUrl,
+      child: CachedNetworkImage(
+        imageUrl: imageUrl,
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) {
-          return const Center(child: Text('Image not available'));
-        },
+        placeholder:
+            (context, url) => const Center(child: CircularProgressIndicator()),
+        errorWidget:
+            (context, url, error) =>
+                const Center(child: Text('Image not available')),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Consumer<EventsProvider>(
       builder: (context, provider, child) {
-        if (provider.isLoading) {
+        if (provider.isLoading && !_eventsLoaded) {
           return const Center(child: CircularProgressIndicator());
         }
-
-        final events = provider.homeEvents;
-
-        _tiles =
-            events.map((event) {
-              return _buildEventTile(event);
-            }).toList();
 
         if (_tiles.isEmpty) {
           return const Center(child: Text('No events available'));
@@ -111,9 +121,7 @@ class _HomePageAutochangingTileState extends State<HomePageAutochangingTile> {
                     _currentPage = index;
                   });
                 },
-                itemBuilder: (context, index) {
-                  return _tiles[index];
-                },
+                itemBuilder: (context, index) => _tiles[index],
               ),
             ),
             const Gap(8),
@@ -133,4 +141,7 @@ class _HomePageAutochangingTileState extends State<HomePageAutochangingTile> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
