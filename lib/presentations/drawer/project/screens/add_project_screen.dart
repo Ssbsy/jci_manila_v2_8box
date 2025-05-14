@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:jci_manila_v2/core/providers/project_provider/add_project.dart';
+import 'package:provider/provider.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text_field.dart';
-import 'package:jci_manila_v2/core/base_api/base_api.dart';
-import 'package:jci_manila_v2/core/services/projects/add_projects_services.dart';
+import 'package:jci_manila_v2/core/constants/project_form_controller.dart';
 
 class AddProjectScreen extends StatefulWidget {
   const AddProjectScreen({super.key});
@@ -16,33 +17,9 @@ class AddProjectScreen extends StatefulWidget {
 class _AddProjectScreenState extends State<AddProjectScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final titleController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final startController = TextEditingController();
-  final endController = TextEditingController();
-  final overviewController = TextEditingController();
-  final objectiveController = TextEditingController();
-  final chairmanController = TextEditingController();
-  final commissionerController = TextEditingController();
-  final directoratesController = TextEditingController();
-  final committeeNameController = TextEditingController();
-  final committeeIDController = TextEditingController();
-  final memberTypeController = TextEditingController();
-
   @override
   void dispose() {
-    titleController.dispose();
-    descriptionController.dispose();
-    startController.dispose();
-    endController.dispose();
-    overviewController.dispose();
-    objectiveController.dispose();
-    chairmanController.dispose();
-    commissionerController.dispose();
-    directoratesController.dispose();
-    committeeNameController.dispose();
-    committeeIDController.dispose();
-    memberTypeController.dispose();
+    ProjectFormController.disposeAll();
     super.dispose();
   }
 
@@ -58,41 +35,19 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
     }
   }
 
-  Future<void> _submitProject() async {
+  Future<void> _handleSubmit(BuildContext context) async {
     if (!_formKey.currentState!.validate()) return;
 
-    final payload = {
-      "title": titleController.text,
-      "description": descriptionController.text,
-      "start_date": startController.text,
-      "end_date": endController.text,
-      "overview": overviewController.text,
-      "objective": objectiveController.text,
-      "chairman": int.tryParse(chairmanController.text) ?? 0,
-      "directorates": int.tryParse(directoratesController.text) ?? 0,
-      "committees": [
-        {
-          "member_id": int.tryParse(committeeIDController.text) ?? 0,
-          "member_type": memberTypeController.text,
-          "name": committeeNameController.text,
-        },
-      ],
-    };
-
-    // Optional commissioner
-    if (commissionerController.text.trim().isNotEmpty) {
-      payload["commissioner"] =
-          int.tryParse(commissionerController.text.trim()) ?? 0;
-    }
-
-    final service = AddProjectService(BaseApiServices());
-    final response = await service.postProject(payload);
+    final provider = Provider.of<AddProjectProvider>(context, listen: false);
+    final response = await provider.submitProject();
 
     if (!mounted) return;
 
     if (response['success'] == true) {
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     } else {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(response['message'] ?? 'Something went wrong')),
       );
@@ -101,6 +56,8 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = context.watch<AddProjectProvider>().isLoading;
+
     return Scaffold(
       backgroundColor: Palette.neutralWhite,
       appBar: AppBar(
@@ -121,14 +78,14 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               _buildFormField(
                 'Project Title',
                 'Add Project Title',
-                titleController,
+                ProjectFormController.title,
                 isRequired: true,
               ),
               const Gap(12),
               _buildFormField(
                 'Project Description',
                 'Add Project Description',
-                descriptionController,
+                ProjectFormController.description,
                 maxLines: 3,
                 isRequired: true,
               ),
@@ -136,25 +93,25 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               _buildFormField(
                 'Start Date',
                 'Add Start Date',
-                startController,
+                ProjectFormController.startDate,
                 isDate: true,
-                onTap: () => _selectDate(startController),
                 isRequired: true,
+                onTap: () => _selectDate(ProjectFormController.startDate),
               ),
               const Gap(12),
               _buildFormField(
                 'End Date',
                 'Add End Date',
-                endController,
+                ProjectFormController.endDate,
                 isDate: true,
-                onTap: () => _selectDate(endController),
                 isRequired: true,
+                onTap: () => _selectDate(ProjectFormController.endDate),
               ),
               const Gap(12),
               _buildFormField(
                 'Overview/Background',
                 'Add Overview',
-                overviewController,
+                ProjectFormController.overview,
                 maxLines: 3,
                 isRequired: true,
               ),
@@ -162,7 +119,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               _buildFormField(
                 'Objectives',
                 'Add Objectives',
-                objectiveController,
+                ProjectFormController.objective,
                 maxLines: 3,
                 isRequired: true,
               ),
@@ -170,20 +127,20 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               _buildFormField(
                 'Chairman',
                 'Add Chairman ID',
-                chairmanController,
+                ProjectFormController.chairman,
                 isRequired: true,
               ),
               const Gap(12),
               _buildFormField(
                 'Commissioner',
                 'Auto-filled in backend',
-                commissionerController,
+                ProjectFormController.commissioner,
               ),
               const Gap(12),
               _buildFormField(
                 'Directorates',
                 'Add Directorate ID',
-                directoratesController,
+                ProjectFormController.directorates,
                 isRequired: true,
               ),
               const Gap(24),
@@ -191,27 +148,27 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               _buildFormField(
                 'Committee Name',
                 'Add Committee Name',
-                committeeNameController,
+                ProjectFormController.committeeName,
                 isRequired: true,
               ),
               const Gap(12),
               _buildFormField(
                 'Committee ID',
                 'Add Committee ID',
-                committeeIDController,
+                ProjectFormController.committeeId,
                 isRequired: true,
               ),
               const Gap(12),
               _buildFormField(
                 'Member Type',
                 'Add Member Type',
-                memberTypeController,
+                ProjectFormController.memberType,
                 isRequired: true,
               ),
               const Gap(16),
               _buildOutlineButton('Add Committee'),
               const Gap(30),
-              _buildFormActions(),
+              _buildFormActions(isLoading),
               const Gap(30),
             ],
           ),
@@ -282,12 +239,11 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                 ),
               ),
               style: const TextStyle(color: Palette.neutralBlack),
-              validator: (value) {
-                if (isRequired && (value == null || value.trim().isEmpty)) {
-                  return 'This field is required';
-                }
-                return null;
-              },
+              validator:
+                  (value) =>
+                      isRequired && (value == null || value.trim().isEmpty)
+                          ? 'This field is required'
+                          : null,
             ),
       ],
     );
@@ -316,13 +272,14 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
     );
   }
 
-  Widget _buildFormActions() {
+  Widget _buildFormActions(bool isLoading) {
     return Row(
       children: [
         Expanded(child: _buildOutlineButton('Cancel')),
         const Gap(12),
         Expanded(
           child: ElevatedButton(
+            onPressed: isLoading ? null : () => _handleSubmit(context),
             style: ElevatedButton.styleFrom(
               backgroundColor: Palette.accentBlue,
               foregroundColor: Palette.neutralWhite,
@@ -331,11 +288,13 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            onPressed: _submitProject,
-            child: const Text(
-              'Save',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            child:
+                isLoading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text(
+                      'Save',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
           ),
         ),
       ],

@@ -21,8 +21,9 @@ class _ProjectScreenState extends State<ProjectScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    FABController.showFAB.value = true;
-    FABController.fabDesignType.value = FABDesignType.altFab;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FABController.showFAB.value = true;
+    });
   }
 
   @override
