@@ -5,20 +5,19 @@ import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
 import 'package:jci_manila_v2/core/constants/images.dart';
-import 'package:jci_manila_v2/core/providers/auth_provider.dart';
+import 'package:jci_manila_v2/core/providers/verfication_provider.dart';
 import 'package:jci_manila_v2/core/services/accounts/login_verification_services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
-class LoginVerificationScreen extends StatefulWidget {
-  const LoginVerificationScreen({super.key});
+class VerificationScreen extends StatefulWidget {
+  const VerificationScreen({super.key});
 
   @override
-  State<LoginVerificationScreen> createState() =>
-      _LoginVerificationScreenState();
+  State<VerificationScreen> createState() => _VerificationScreenState();
 }
 
-class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
+class _VerificationScreenState extends State<VerificationScreen> {
   final TextEditingController pinController = TextEditingController();
   final FocusNode pinFocusNode = FocusNode();
   bool isLoading = false;
@@ -54,8 +53,12 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
 
     setState(() => isLoading = true);
 
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final result = await authProvider.loginVerification(
+    final verificationProvider = Provider.of<VerificationProvider>(
+      context,
+      listen: false,
+    );
+
+    final result = await verificationProvider.verifyOtpAndLogin(
       otp: code,
       email: email,
       password: password,
@@ -63,8 +66,7 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
 
     setState(() => isLoading = false);
 
-    if (result == null) {
-    } else {
+    if (result != null) {
       Get.snackbar('Verification Failed', result);
     }
   }
@@ -75,17 +77,19 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
       return;
     }
 
-    setState(() => isLoading = true);
+    setState(() => isResendingOtp = true);
 
     try {
-      final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      final message = await authProvider.resendOTP(email: email);
-
+      final verificationProvider = Provider.of<VerificationProvider>(
+        context,
+        listen: false,
+      );
+      final message = await verificationProvider.resendOtp(email: email);
       Get.snackbar('Notice', message);
     } catch (e) {
       Get.snackbar('Error', 'Something went wrong: $e');
     } finally {
-      setState(() => isLoading = false);
+      setState(() => isResendingOtp = false);
     }
   }
 
@@ -130,7 +134,7 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
                           const SizedBox(height: 16),
                           WidgetText(
                             title:
-                                "We've sent a verification code to your email."
+                                "We've sent a verification code to your email. "
                                 "If you don't see it in your inbox, please check your spam folder.",
                             isCentered: true,
                             color: Palette.black,
@@ -166,20 +170,14 @@ class _LoginVerificationScreenState extends State<LoginVerificationScreen> {
                             autoFocus: true,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             onCompleted: (pin) => verifyOTP(),
-                            onChanged: (value) {},
+                            onChanged: (_) {},
                             beforeTextPaste: (text) {
-                              return RegExp(r'^[0-9]+\$').hasMatch(text!);
+                              return RegExp(r'^[0-9]+$').hasMatch(text!);
                             },
                           ),
                           const Gap(5),
                           GestureDetector(
-                            onTap:
-                                isResendingOtp
-                                    ? null
-                                    : () {
-                                      debugPrint('Resending OTP...');
-                                      resendOTP();
-                                    },
+                            onTap: isResendingOtp ? null : resendOTP,
                             child: WidgetText(
                               title: 'Resend OTP',
                               color: Palette.accentBlue,

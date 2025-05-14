@@ -37,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _emailController.text = credentials[0] ?? '';
         _passwordController.text = credentials[1] ?? '';
+        rememberMe = true;
       });
     }
   }
@@ -49,6 +50,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _setCheck(bool? value) async {
+    setState(() {
+      rememberMe = value ?? false;
+    });
     CredentialManager(
       emailController: _emailController,
       passwordController: _passwordController,

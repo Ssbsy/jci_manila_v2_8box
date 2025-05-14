@@ -16,13 +16,13 @@ class CredentialManager {
   });
 
   Future<void> setCheck(bool? value) async {
-    if (emailController.text.trim().isEmpty ||
-        passwordController.text.trim().isEmpty) {
-      _showSnackBar(
-        'Email or Password cannot be empty when saving credentials',
-      );
-      return;
-    }
+    // if (emailController.text.trim().isEmpty ||
+    //     passwordController.text.trim().isEmpty) {
+    //   _showSnackBar(
+    //     'Email or Password cannot be empty when saving credentials',
+    //   );
+    //   return;
+    // }
 
     bool rememberMe = value ?? false;
 
@@ -35,7 +35,7 @@ class CredentialManager {
       );
     } else {
       await LoginSecureStorage.clearCredentials();
-      print('Credentials have been removed');
+      debugPrint('Credentials have been removed');
     }
   }
 

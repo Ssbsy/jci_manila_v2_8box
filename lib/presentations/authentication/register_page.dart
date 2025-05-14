@@ -87,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'fname': firstNameController.text,
         'lname': lastNameController.text,
         'nickname': nicknameController.text,
-        //'bday': birthdayController.text,
+        'bday': birthdayController.text,
         'address': addressController.text,
         'contactno': contactController.text,
         'school': schoolController.text,
@@ -98,8 +98,8 @@ class _RegisterPageState extends State<RegisterPage> {
         'sponsor_id':
             sponsorIDController.text.isEmpty ? '0' : sponsorIDController.text,
         'sponsor_name': sponsorNameController.text,
-        // 'photo': _profilePic != null ? _profilePic!.path.split('/').last : '',
-        // 'resume': _resumeFile != null ? _resumeFile!.path.split('/').last : '',
+        'photo': _profilePic != null ? _profilePic!.path.split('/').last : '',
+        'resume': _resumeFile != null ? _resumeFile!.path.split('/').last : '',
       };
 
       final response = await registerServices.postRegister(
@@ -111,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
       debugPrint('API response: $response');
 
       if (response['success'] == true) {
-        Get.offAllNamed('/login');
+        Get.offAllNamed('/verification');
       } else {
         Get.snackbar('Error', response['message'] ?? 'Registration failed');
       }

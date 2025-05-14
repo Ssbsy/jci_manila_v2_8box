@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
 import 'package:jci_manila_v2/presentations/authentication/forgot_password_page.dart';
-import 'package:jci_manila_v2/presentations/authentication/login/login_page.dart';
-import 'package:jci_manila_v2/presentations/authentication/login/login_verification_screen.dart';
+import 'package:jci_manila_v2/presentations/authentication/login_page.dart';
+import 'package:jci_manila_v2/presentations/authentication/verification_screen.dart';
 import 'package:jci_manila_v2/presentations/authentication/new_password_page.dart';
 import 'package:jci_manila_v2/presentations/authentication/register_page.dart';
-import 'package:jci_manila_v2/presentations/authentication/verification_page.dart';
 import 'package:jci_manila_v2/presentations/drawer/business_directory/business_directory_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/members_database/members_database_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/official_groups/official_groups_screen.dart';
@@ -30,11 +29,10 @@ class GetPages {
     GetPage(name: '/', page: () => SplashScreen()),
     GetPage(name: '/onboarding', page: () => OnboardingScreen()),
     GetPage(name: '/login', page: () => LoginPage()),
-    GetPage(name: '/loginVerification', page: () => LoginVerificationScreen()),
+    GetPage(name: '/verification', page: () => VerificationScreen()),
     GetPage(name: '/register', page: () => RegisterPage()),
     GetPage(name: '/forgot', page: () => ForgotPasswordPage()),
     GetPage(name: '/newpass', page: () => NewPasswordPage()),
-    GetPage(name: '/verification', page: () => VerificationPage()),
     GetPage(name: '/pageManager', page: () => PageManager()),
     GetPage(name: '/projects', page: () => ProjectScreen()),
     GetPage(name: '/business', page: () => BusinessDirectoryScreen()),
