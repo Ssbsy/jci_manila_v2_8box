@@ -48,7 +48,6 @@ class GetPages {
     GetPage(name: '/history', page: () => HistoryScreen()),
     GetPage(name: '/creed', page: () => CreedScreen()),
     GetPage(name: '/BOD', page: () => BoardOfDirectorsScreen()),
-    GetPage(name: '/projectDetails', page: () => ProjectDetailsScreen()),
     GetPage(name: '/addProject', page: () => AddProjectScreen()),
     GetPage(name: '/profile', page: () => ProfileScreen()),
     GetPage(name: '/profileEdit', page: () => ProfileEditScreen()),

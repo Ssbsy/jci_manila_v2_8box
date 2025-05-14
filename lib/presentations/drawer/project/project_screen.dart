@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 import 'package:jci_manila_v2/app/components/widget_custom_appbar.dart';
 import 'package:jci_manila_v2/app/components/widget_drawer.dart';
 import 'package:jci_manila_v2/app/components/widget_fab.dart';
@@ -20,12 +19,10 @@ class _ProjectScreenState extends State<ProjectScreen> {
   final searchController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      FABController.showFAB.value = true;
-      FABController.fabDesignType.value = FABDesignType.altFab;
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    FABController.showFAB.value = true;
+    FABController.fabDesignType.value = FABDesignType.altFab;
   }
 
   @override
@@ -43,12 +40,17 @@ class _ProjectScreenState extends State<ProjectScreen> {
             const Gap(10),
             WidgetSearchBar(controller: searchController),
             const Gap(10),
-            ProjectsScreenContent(),
+            const ProjectsScreenContent(),
           ],
         ),
-        endDrawer: WidgetDrawer(),
-        floatingActionButton: WidgetFab(
-          onPressed: () => Get.offAllNamed('/addProject'),
+        endDrawer: const WidgetDrawer(),
+
+        floatingActionButton: ValueListenableBuilder<bool>(
+          valueListenable: FABController.showFAB,
+          builder: (context, show, _) {
+            if (!show) return const SizedBox.shrink();
+            return WidgetFab(onPressed: () => Get.toNamed('/addProject'));
+          },
         ),
       ),
     );
