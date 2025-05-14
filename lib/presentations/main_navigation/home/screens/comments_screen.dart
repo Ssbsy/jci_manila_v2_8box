@@ -138,14 +138,14 @@ class _CommentsScreenState extends State<CommentsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              WidgetText(title: 'Liked by $reaction others', isBold: true),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.arrow_forward_ios, size: 15),
-              ),
-            ],
+          GestureDetector(
+            onTap: () {},
+            child: Row(
+              children: [
+                WidgetText(title: 'Liked by $reaction others', isBold: true),
+                Icon(Icons.arrow_forward_ios, size: 15),
+              ],
+            ),
           ),
           Row(
             children: [

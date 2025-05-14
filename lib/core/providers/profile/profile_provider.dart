@@ -176,6 +176,11 @@ class ProfileProvider with ChangeNotifier {
   String get position => _position;
   String get previousProjects => _previousProjects;
 
+  //Photo
+  String _photo = '';
+
+  String get photo => _photo;
+
   Future<void> fetchProfile() async {
     try {
       _isLoading = true;
@@ -271,6 +276,9 @@ class ProfileProvider with ChangeNotifier {
       _chairmanship = data['chairmanship'] ?? 'null';
       _position = data['position'] ?? 'null';
       _previousProjects = data['previous_projects'] ?? 'null';
+
+      //Photo
+      _photo = data['photo'] ?? 'null';
 
       debugPrint("Profile data fetched: $data"); //For debuggimng
 

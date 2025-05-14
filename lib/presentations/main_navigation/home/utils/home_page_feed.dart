@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/providers/auth/auth_provider.dart';
+import 'package:jci_manila_v2/presentations/main_navigation/home/screens/reactions_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:jci_manila_v2/app/components/widget_feed_post.dart';
 import 'package:jci_manila_v2/core/models/feed.dart';
@@ -81,6 +82,17 @@ class _HomePageFeedState extends State<HomePageFeed> {
                           child: CommentsScreen(feed: feed),
                         ),
                   ),
+              reactionOnTap:
+                  () => showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder:
+                        (context) => SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          child: ReactionsScreen(),
+                        ),
+                  ),
             ),
             const Gap(10),
             const Divider(),
@@ -90,7 +102,7 @@ class _HomePageFeedState extends State<HomePageFeed> {
     );
   }
 
-  List<Widget> _buildFeeds(List<dynamic?> posts, String currentUserId) {
+  List<Widget> _buildFeeds(List<dynamic> posts, String currentUserId) {
     final feeds =
         posts
             .whereType<Map<String, dynamic>>()
