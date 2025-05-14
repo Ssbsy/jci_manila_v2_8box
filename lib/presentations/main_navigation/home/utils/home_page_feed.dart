@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/core/providers/auth_provider.dart';
-import 'package:jci_manila_v2/core/providers/posts/create_posts_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jci_manila_v2/app/components/widget_feed_post.dart';
 import 'package:jci_manila_v2/core/models/feed.dart';
