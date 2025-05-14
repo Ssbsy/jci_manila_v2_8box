@@ -28,21 +28,21 @@ class AuthProvider extends ChangeNotifier {
 
       _userData = response;
       final user = _userData?['user'];
-      final isVerified =
-          (user?['verification_status'] ?? 'Unverified')
-              .toString()
-              .toLowerCase() ==
-          'verified';
+      // final isVerified =
+      //     (user?['verification_status'] ?? 'Unverified')
+      //         .toString()
+      //         .toLowerCase() ==
+      //     'verified';
 
-      if (!isVerified) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.toNamed(
-            '/loginVerification',
-            arguments: {'email': username, 'password': password},
-          );
-        });
-        return 'Please verify your email';
-      }
+      // if (!isVerified) {
+      //   WidgetsBinding.instance.addPostFrameCallback((_) {
+      //     Get.toNamed(
+      //       '/verification',
+      //       arguments: {'email': username, 'password': password},
+      //     );
+      //   });
+      //   return 'Please verify your email';
+      // }
 
       if (_userData?['token'] != null) {
         final prefs = await SharedPreferences.getInstance();

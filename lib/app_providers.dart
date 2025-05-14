@@ -7,7 +7,7 @@ import 'package:jci_manila_v2/core/providers/posts/create_posts_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/get_all_posts_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/like_comment_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/reaction_provider.dart';
-import 'package:jci_manila_v2/core/providers/profile_provider.dart';
+import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
 import 'package:jci_manila_v2/core/providers/project_provider/add_project.dart';
 import 'package:jci_manila_v2/core/providers/project_provider/committee_member_provider.dart';
 import 'package:jci_manila_v2/core/providers/project_provider/project_information_provider.dart';

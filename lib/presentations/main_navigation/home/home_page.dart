@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/components/widget_custom_appbar.dart';
 import 'package:jci_manila_v2/core/constants/fab_controller.dart';
+import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/const/assets.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/utils/home_page_autochanging_tile.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/utils/home_page_feed.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/utils/home_page_header_container.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,6 +23,12 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FABController.showFAB.value = true;
       FABController.fabDesignType.value = FABDesignType.altFab;
+
+      final profileProvider = Provider.of<ProfileProvider>(
+        context,
+        listen: false,
+      );
+      profileProvider.fetchProfile();
     });
   }
 
@@ -56,7 +64,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const Gap(20),
-          const HomePageFeed(),
+          // HomePageFeed(),
         ],
       ),
     );

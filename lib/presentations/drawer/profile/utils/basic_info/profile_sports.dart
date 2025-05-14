@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
-import 'package:jci_manila_v2/core/providers/profile_provider.dart';
+import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProfileSports extends StatelessWidget {
