@@ -1,5 +1,10 @@
+import 'package:jci_manila_v2/core/base_api/base_api.dart';
 import 'package:jci_manila_v2/core/providers/auth/auth_provider.dart';
+import 'package:jci_manila_v2/core/providers/benefits_provider/add_user_benefits_provider.dart';
 import 'package:jci_manila_v2/core/providers/benefits_provider/benefits_provider.dart';
+import 'package:jci_manila_v2/core/providers/benefits_provider/create_benefits_provider.dart';
+import 'package:jci_manila_v2/core/providers/benefits_provider/get_my_benefits_provider.dart';
+import 'package:jci_manila_v2/core/providers/benefits_provider/redeem_benefits_provider.dart';
 import 'package:jci_manila_v2/core/providers/games_provider.dart';
 import 'package:jci_manila_v2/core/providers/events_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/create_comment_provider.dart';
@@ -14,16 +19,26 @@ import 'package:jci_manila_v2/core/providers/project_provider/get_my_projects_pr
 import 'package:jci_manila_v2/core/providers/project_provider/project_information_provider.dart';
 import 'package:jci_manila_v2/core/providers/project_provider/update_project_provider.dart';
 import 'package:jci_manila_v2/core/providers/update_profile_provider.dart';
+import 'package:jci_manila_v2/core/services/benefits/get_my_benefits_services.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 class AppProviders {
   static List<SingleChildWidget> providers = [
+    //Auth
     ChangeNotifierProvider(create: (_) => AuthProvider()),
+
+    //Profile
     ChangeNotifierProvider(create: (_) => ProfileProvider()),
     ChangeNotifierProvider(create: (_) => UpdateProfileProvider()),
+
+    //Games
     ChangeNotifierProvider(create: (_) => GamesProvider()),
+
+    //Events
     ChangeNotifierProvider(create: (_) => EventsProvider()),
+
+    //Posts
     ChangeNotifierProvider(create: (_) => GetAllPostsProvider()),
     ChangeNotifierProvider(create: (_) => CreatePostsProvider()),
     ChangeNotifierProvider(create: (_) => CreateCommentProvider()),
@@ -38,5 +53,13 @@ class AppProviders {
 
     //benefits
     ChangeNotifierProvider(create: (_) => BenefitsProvider()),
+    ChangeNotifierProvider(
+      create:
+          (_) =>
+              GetMyBenefitsProvider(GetMyBenefitsServices(BaseApiServices())),
+    ),
+    ChangeNotifierProvider(create: (_) => RedeemBenefitsProvider()),
+    ChangeNotifierProvider(create: (_) => AddUserBenefitsProvider()),
+    ChangeNotifierProvider(create: (_) => CreateBenefitsProvider()),
   ];
 }

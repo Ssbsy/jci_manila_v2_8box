@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isPageLoading = false;
   @override
   void initState() {
     super.initState();
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const Gap(20),
-          // HomePageFeed(),
+          HomePageFeed(),
         ],
       ),
     );

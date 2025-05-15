@@ -42,9 +42,20 @@ class _WidgetFeedPostState extends State<WidgetFeedPost> {
             child: WidgetText(title: widget.feed.content, maxLine: 10),
           ),
           const Gap(10),
-          widget.feed.imageUrls.isNotEmpty
-              ? Image.network(widget.feed.imageUrls[0])
+          widget.feed.imageUrls.isNotEmpty &&
+                  widget.feed.imageUrls[0].startsWith('http')
+              ? Image.network(
+                widget.feed.imageUrls[0],
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(
+                    Icons.broken_image,
+                    size: 100,
+                    color: Colors.grey,
+                  );
+                },
+              )
               : const SizedBox.shrink(),
+
           const Gap(10),
           _bottom(reaction),
         ],
@@ -110,8 +121,18 @@ class _WidgetFeedPostState extends State<WidgetFeedPost> {
             spacing: 10,
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(widget.feed.userPhotoUrl),
+                backgroundImage:
+                    widget.feed.userPhotoUrl != null &&
+                            widget.feed.userPhotoUrl!.isNotEmpty
+                        ? NetworkImage(widget.feed.userPhotoUrl!)
+                        : null,
+                child:
+                    (widget.feed.userPhotoUrl == null ||
+                            widget.feed.userPhotoUrl!.isEmpty)
+                        ? Icon(Icons.person, size: 40)
+                        : null,
               ),
+
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -43,7 +43,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
           body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(width: 80, height: 80, child: Images.profile_photo_01),
+              SizedBox(
+                width: 80,
+                height: 80,
+                child: Image.asset(
+                  profileProvider.photo,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Palette.accentBlue,
+                      ),
+                      child: Icon(Icons.person, color: Palette.white, size: 60),
+                    );
+                  },
+                ),
+              ),
               const Gap(5),
               WidgetText(
                 title:
