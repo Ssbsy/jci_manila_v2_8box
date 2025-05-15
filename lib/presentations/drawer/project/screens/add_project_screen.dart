@@ -51,10 +51,8 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
     if (!mounted) return;
 
     if (response['success'] == true) {
-      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     } else {
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(response['message'] ?? 'Something went wrong')),
       );
@@ -138,12 +136,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                 isRequired: true,
               ),
               const Gap(12),
-              _buildFormField(
-                'Commissioner',
-                'Auto-filled in backend',
-                formController.commissioner,
-              ),
-              const Gap(12),
+              // Commissioner field removed since it is auto-filled by backend
               _buildFormField(
                 'Directorates',
                 'Add Directorate ID',
