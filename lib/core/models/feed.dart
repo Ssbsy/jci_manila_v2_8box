@@ -24,7 +24,7 @@ class Feed {
   });
 
   factory Feed.fromMap(Map<String, dynamic> map, String currentUserId) {
-    bool isLiked = (map['likes'] as List).contains(currentUserId);
+    bool isLiked = (map['likes'] as List<int>).contains(currentUserId);
 
     return Feed(
       id: map['id'],
