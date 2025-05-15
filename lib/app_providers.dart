@@ -10,8 +10,12 @@ import 'package:jci_manila_v2/core/providers/events/events_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/create_comment_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/create_posts_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/get_all_posts_provider.dart';
-import 'package:jci_manila_v2/core/providers/posts/like_comment_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/reaction_provider.dart';
+import 'package:jci_manila_v2/core/providers/profile/get_profile_annual_dues_provider.dart';
+import 'package:jci_manila_v2/core/providers/profile/get_profile_gmm_provider.dart';
+import 'package:jci_manila_v2/core/providers/profile/get_profile_projects_provider.dart';
+import 'package:jci_manila_v2/core/providers/profile/get_settings_provider.dart';
+import 'package:jci_manila_v2/core/providers/profile/patch_settings_provider.dart';
 import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
 import 'package:jci_manila_v2/core/providers/project_provider/add_project_provider.dart';
 import 'package:jci_manila_v2/core/providers/project_provider/committee_member_provider.dart';
@@ -31,6 +35,11 @@ class AppProviders {
     //Profile
     ChangeNotifierProvider(create: (_) => ProfileProvider()),
     ChangeNotifierProvider(create: (_) => UpdateProfileProvider()),
+    ChangeNotifierProvider(create: (_) => GetProfileGmmProvider()),
+    ChangeNotifierProvider(create: (_) => GetProfileAnnualDuesProvider()),
+    ChangeNotifierProvider(create: (_) => GetProfileProjectsProvider()),
+    ChangeNotifierProvider(create: (_) => GetSettingsProvider()),
+    ChangeNotifierProvider(create: (_) => PatchSettingsProvider()),
 
     //Games
     ChangeNotifierProvider(create: (_) => GamesProvider()),

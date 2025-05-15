@@ -2,23 +2,35 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginServices {
+class PatchSettingsServices {
   final BaseApiServices apiServices;
 
-  LoginServices(this.apiServices);
+  PatchSettingsServices(this.apiServices);
 
-  Future<Map<String, dynamic>> postLogin({
-    required String username,
-    required String password,
+  Future<Map<String, dynamic>> patchSettings({
+    required int showNofif,
+    required int showBday,
+    required int showPrimaryContactInfo,
+    required int showEducationInfo,
+    required int showProfessionInfo,
+    required int showCivilStatus,
+    required int showSecondaryContactInfo,
   }) async {
-    const endpoint = 'v2.2/login';
-    final body = {'username': username, 'password': password};
+    const endpoint = 'v2.2/settings';
+    final body = {
+      'show_notifications': showNofif,
+      'show_bday': showBday,
+      'show_primary_contact_info': showPrimaryContactInfo,
+      'show_education_info': showEducationInfo,
+      'show_profession_info': showProfessionInfo,
+      'show_civil_status': showCivilStatus,
+      'show_secondary_contact_info': showSecondaryContactInfo,
+    };
 
     try {
       final headers = await apiServices.getHeaders();
-      final response = await http.post(
+      final response = await http.patch(
         Uri.parse('${apiServices.baseUrl}$endpoint'),
         headers: headers,
         body: jsonEncode(body),
@@ -26,9 +38,8 @@ class LoginServices {
 
       debugPrint("Raw API response: ${response.body}");
 
-      if (response.statusCode == 200) {
+      if (response.statusCode < 600) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
-
         return responseData;
       } else {
         debugPrint("Server error: ${response.statusCode} - ${response.body}");

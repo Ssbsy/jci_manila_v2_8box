@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
-import 'package:jci_manila_v2/core/services/accounts/get_profile_services.dart';
+import 'package:jci_manila_v2/core/services/profile/get_profile_services.dart';
 
 class ProfileProvider with ChangeNotifier {
   //-------------------------------//
@@ -16,9 +16,9 @@ class ProfileProvider with ChangeNotifier {
   String get lastName => _lastName;
   String get middleName => _middleName;
   String get aboutyourself => _aboutyourself;
-  bool get isLoading => _isLoading;
 
-  bool _isLoading = true;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
   //Home address
   String _homeAddress = '';
@@ -280,7 +280,8 @@ class ProfileProvider with ChangeNotifier {
       //Photo
       _photo = data['photo'] ?? 'null';
 
-      debugPrint("Profile data fetched: $data"); //For debuggimng
+      debugPrint("Profile data fetched: $data");
+      debugPrint('Profile API keys: ${data.keys.toList()}');
 
       _isLoading = false;
       notifyListeners();

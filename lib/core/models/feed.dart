@@ -24,19 +24,36 @@ class Feed {
   });
 
   factory Feed.fromMap(Map<String, dynamic> map, String currentUserId) {
-    bool isLiked = (map['likes'] as List<int>).contains(currentUserId);
+    final dynamic rawLikesData = map['likes'];
+    final List<dynamic> rawLikes = rawLikesData is List ? rawLikesData : [];
+
+    final List<dynamic> rawImages = map['images'] ?? [];
+    final List<dynamic> rawComments =
+        map['comments'] is List ? map['comments'] : [];
+
+    final List<String> imageUrls =
+        rawImages
+            .map(
+              (img) =>
+                  img is Map && img.containsKey('image')
+                      ? img['image'] as String
+                      : '',
+            )
+            .where((url) => url.isNotEmpty)
+            .toList();
+
+    final bool isLiked = rawLikes.contains(int.tryParse(currentUserId));
 
     return Feed(
-      id: map['id'],
+      id: map['id'] ?? 0,
       content: map['content'] ?? '',
       userName: map['member']?['name'] ?? 'Unknown User',
       userPhotoUrl: map['member']?['photo'] ?? '',
       createdAt: map['createdAt'] ?? '',
-      imageUrls:
-          (map['images'] as List).map((img) => img['image'] as String).toList(),
-      reactions: (map['likes'] as List).length,
-      comments: map['comments'] ?? [],
-      likes: map['likes'] ?? [],
+      imageUrls: imageUrls,
+      reactions: rawLikes.length,
+      comments: rawComments,
+      likes: rawLikes,
       isLiked: isLiked,
     );
   }

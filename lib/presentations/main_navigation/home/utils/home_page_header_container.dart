@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
@@ -13,11 +15,19 @@ class HomePageHeaderContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final profile = Provider.of<ProfileProvider>(context);
 
+    debugPrint("Building HomePageHeaderContainer...");
+    debugPrint("Profile loading: ${profile.isLoading}");
+    debugPrint("Profile firstName: ${profile.firstName}");
+    debugPrint("Profile membershipID: ${profile.membershipID}");
+
     if (profile.isLoading) {
+      debugPrint("Profile is loading...");
       return const Center(child: CircularProgressIndicator());
     }
 
     if (profile.firstName == null || profile.membershipID == null) {
+      debugPrint("Missing profile data. firstName or membershipID is null.");
+      debugger();
       return const Center(child: Text('Error loading profile.'));
     }
 
