@@ -10,6 +10,7 @@ import 'package:jci_manila_v2/core/providers/posts/reaction_provider.dart';
 import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
 import 'package:jci_manila_v2/core/providers/project_provider/add_project_provider.dart';
 import 'package:jci_manila_v2/core/providers/project_provider/committee_member_provider.dart';
+import 'package:jci_manila_v2/core/providers/project_provider/get_my_projects_provider.dart';
 import 'package:jci_manila_v2/core/providers/project_provider/project_information_provider.dart';
 import 'package:jci_manila_v2/core/providers/project_provider/update_project_provider.dart';
 import 'package:jci_manila_v2/core/providers/update_profile_provider.dart';
@@ -27,9 +28,9 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => CreatePostsProvider()),
     ChangeNotifierProvider(create: (_) => CreateCommentProvider()),
     ChangeNotifierProvider(create: (_) => ReactionProvider()),
-    ChangeNotifierProvider(create: (_) => LikeCommentProvider()),
 
     //project
+    ChangeNotifierProvider(create: (_) => GetMyProjectsProvider()),
     ChangeNotifierProvider(create: (_) => AddProjectProvider()),
     ChangeNotifierProvider(create: (_) => ProjectInformationProvider()),
     ChangeNotifierProvider(create: (_) => CommitteeMemberProvider()),

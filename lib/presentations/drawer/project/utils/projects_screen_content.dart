@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
-import 'package:jci_manila_v2/core/base_api/base_api.dart';
-import 'package:jci_manila_v2/core/models/project.dart';
-import 'package:jci_manila_v2/core/services/projects/my_projects_services.dart';
+import 'package:jci_manila_v2/core/providers/project_provider/get_my_projects_provider.dart';
 import 'package:jci_manila_v2/presentations/drawer/project/screens/project_details_screen.dart';
 import 'package:jci_manila_v2/presentations/drawer/project/screens/update_project_screen.dart';
 
@@ -17,31 +16,20 @@ class ProjectsScreenContent extends StatefulWidget {
 }
 
 class _ProjectsScreenContentState extends State<ProjectsScreenContent> {
-  List<ProjectModel> projects = [];
-  bool isLoading = true;
-
   @override
   void initState() {
     super.initState();
-    fetchProjects();
-  }
-
-  Future<void> fetchProjects() async {
-    final response =
-        await MyProjectsServices(BaseApiServices()).getMyProjects();
-    if (response['success'] == true && response['data'] != null) {
-      final List data = response['data'];
-      setState(() {
-        projects = data.map((e) => ProjectModel.fromJson(e)).toList();
-        isLoading = false;
-      });
-    } else {
-      setState(() => isLoading = false);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<GetMyProjectsProvider>().fetchProjects();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<GetMyProjectsProvider>();
+    final projects = provider.projects;
+    final isLoading = provider.isLoading;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       child: Column(
@@ -66,68 +54,66 @@ class _ProjectsScreenContentState extends State<ProjectsScreenContent> {
           else if (projects.isEmpty)
             const WidgetText(title: "No projects available.")
           else
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: projects.length,
-              separatorBuilder:
-                  (_, __) => const Divider(height: 20, thickness: 0.6),
-              itemBuilder: (context, index) {
-                final project = projects[index];
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // Project title
-                    Expanded(
-                      flex: 2,
-                      child: WidgetText(
-                        title: project.projectTitle,
-                        maxLine: 2,
-                        size: 13,
-                        color: Palette.black,
-                      ),
-                    ),
-
-                    // Status
-                    Expanded(
-                      flex: 1,
-                      child: WidgetText(
-                        title: project.status,
-                        size: 12,
-                        color:
-                            project.status.toLowerCase() == 'approved'
-                                ? Palette.warmGoldenYellow
-                                : Colors.orange.shade700,
-                      ),
-                    ),
-
-                    // Action buttons
-                    Row(
-                      children: [
-                        _icon(
-                          icon: Icons.edit_outlined,
-                          onTap:
-                              () => Get.to(
-                                () =>
-                                    UpdateProjectScreen(projectId: project.id),
-                              ),
+            Expanded(
+              child: ListView.separated(
+                padding: const EdgeInsets.only(bottom: 60),
+                itemCount: projects.length,
+                separatorBuilder:
+                    (_, __) => const Divider(height: 20, thickness: 0.6),
+                itemBuilder: (context, index) {
+                  final project = projects[index];
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: WidgetText(
+                          title: project.projectTitle,
+                          maxLine: 2,
+                          size: 13,
+                          color: Palette.black,
                         ),
-                        const SizedBox(width: 5),
-                        _icon(
-                          icon: Icons.visibility_outlined,
-                          bgColor: Palette.accent500,
-                          iconColor: Colors.white,
-                          onTap:
-                              () => Get.to(
-                                () =>
-                                    ProjectDetailsScreen(projectId: project.id),
-                              ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: WidgetText(
+                          title: project.status,
+                          size: 12,
+                          color:
+                              project.status.toLowerCase() == 'approved'
+                                  ? Palette.warmGoldenYellow
+                                  : Colors.orange.shade700,
                         ),
-                      ],
-                    ),
-                  ],
-                );
-              },
+                      ),
+                      Row(
+                        children: [
+                          _icon(
+                            icon: Icons.edit_outlined,
+                            onTap:
+                                () => Get.to(
+                                  () => UpdateProjectScreen(
+                                    projectId: project.id,
+                                  ),
+                                ),
+                          ),
+                          const SizedBox(width: 5),
+                          _icon(
+                            icon: Icons.visibility_outlined,
+                            bgColor: Palette.accent500,
+                            iconColor: Colors.white,
+                            onTap:
+                                () => Get.to(
+                                  () => ProjectDetailsScreen(
+                                    projectId: project.id,
+                                  ),
+                                ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
         ],
       ),

@@ -31,6 +31,14 @@ class _ProjectScreenState extends State<ProjectScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        endDrawer: const WidgetDrawer(),
+        floatingActionButton: ValueListenableBuilder<bool>(
+          valueListenable: FABController.showFAB,
+          builder: (context, show, _) {
+            if (!show) return const SizedBox.shrink();
+            return WidgetFab(onPressed: () => Get.toNamed('/addProject'));
+          },
+        ),
         body: Column(
           children: [
             WidgetCustomAppbar(
@@ -41,17 +49,8 @@ class _ProjectScreenState extends State<ProjectScreen> {
             const Gap(10),
             WidgetSearchBar(controller: searchController),
             const Gap(10),
-            const ProjectsScreenContent(),
+            const Expanded(child: ProjectsScreenContent()),
           ],
-        ),
-        endDrawer: const WidgetDrawer(),
-
-        floatingActionButton: ValueListenableBuilder<bool>(
-          valueListenable: FABController.showFAB,
-          builder: (context, show, _) {
-            if (!show) return const SizedBox.shrink();
-            return WidgetFab(onPressed: () => Get.toNamed('/addProject'));
-          },
         ),
       ),
     );
