@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:jci_manila_v2/core/providers/project_provider/add_project.dart';
+import 'package:jci_manila_v2/core/constants/project_form_controller.dart';
+import 'package:jci_manila_v2/core/providers/project_provider/add_project_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text_field.dart';
-import 'package:jci_manila_v2/core/constants/project_form_controller.dart';
 
 class AddProjectScreen extends StatefulWidget {
   const AddProjectScreen({super.key});
@@ -16,10 +16,17 @@ class AddProjectScreen extends StatefulWidget {
 
 class _AddProjectScreenState extends State<AddProjectScreen> {
   final _formKey = GlobalKey<FormState>();
+  late final ProjectFormController formController;
+
+  @override
+  void initState() {
+    super.initState();
+    formController = ProjectFormController();
+  }
 
   @override
   void dispose() {
-    ProjectFormController.disposeAll();
+    formController.disposeAll();
     super.dispose();
   }
 
@@ -39,7 +46,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final provider = Provider.of<AddProjectProvider>(context, listen: false);
-    final response = await provider.submitProject();
+    final response = await provider.submitProject(formController);
 
     if (!mounted) return;
 
@@ -78,14 +85,14 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               _buildFormField(
                 'Project Title',
                 'Add Project Title',
-                ProjectFormController.title,
+                formController.title,
                 isRequired: true,
               ),
               const Gap(12),
               _buildFormField(
                 'Project Description',
                 'Add Project Description',
-                ProjectFormController.description,
+                formController.description,
                 maxLines: 3,
                 isRequired: true,
               ),
@@ -93,25 +100,25 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               _buildFormField(
                 'Start Date',
                 'Add Start Date',
-                ProjectFormController.startDate,
+                formController.startDate,
                 isDate: true,
                 isRequired: true,
-                onTap: () => _selectDate(ProjectFormController.startDate),
+                onTap: () => _selectDate(formController.startDate),
               ),
               const Gap(12),
               _buildFormField(
                 'End Date',
                 'Add End Date',
-                ProjectFormController.endDate,
+                formController.endDate,
                 isDate: true,
                 isRequired: true,
-                onTap: () => _selectDate(ProjectFormController.endDate),
+                onTap: () => _selectDate(formController.endDate),
               ),
               const Gap(12),
               _buildFormField(
                 'Overview/Background',
                 'Add Overview',
-                ProjectFormController.overview,
+                formController.overview,
                 maxLines: 3,
                 isRequired: true,
               ),
@@ -119,7 +126,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               _buildFormField(
                 'Objectives',
                 'Add Objectives',
-                ProjectFormController.objective,
+                formController.objective,
                 maxLines: 3,
                 isRequired: true,
               ),
@@ -127,20 +134,20 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               _buildFormField(
                 'Chairman',
                 'Add Chairman ID',
-                ProjectFormController.chairman,
+                formController.chairman,
                 isRequired: true,
               ),
               const Gap(12),
               _buildFormField(
                 'Commissioner',
                 'Auto-filled in backend',
-                ProjectFormController.commissioner,
+                formController.commissioner,
               ),
               const Gap(12),
               _buildFormField(
                 'Directorates',
                 'Add Directorate ID',
-                ProjectFormController.directorates,
+                formController.directorates,
                 isRequired: true,
               ),
               const Gap(24),
@@ -148,21 +155,21 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               _buildFormField(
                 'Committee Name',
                 'Add Committee Name',
-                ProjectFormController.committeeName,
+                formController.committeeName,
                 isRequired: true,
               ),
               const Gap(12),
               _buildFormField(
                 'Committee ID',
                 'Add Committee ID',
-                ProjectFormController.committeeId,
+                formController.committeeId,
                 isRequired: true,
               ),
               const Gap(12),
               _buildFormField(
                 'Member Type',
                 'Add Member Type',
-                ProjectFormController.memberType,
+                formController.memberType,
                 isRequired: true,
               ),
               const Gap(16),

@@ -13,9 +13,10 @@ import 'package:jci_manila_v2/core/providers/posts/get_all_posts_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/like_comment_provider.dart';
 import 'package:jci_manila_v2/core/providers/posts/reaction_provider.dart';
 import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
-import 'package:jci_manila_v2/core/providers/project_provider/add_project.dart';
+import 'package:jci_manila_v2/core/providers/project_provider/add_project_provider.dart';
 import 'package:jci_manila_v2/core/providers/project_provider/committee_member_provider.dart';
 import 'package:jci_manila_v2/core/providers/project_provider/project_information_provider.dart';
+import 'package:jci_manila_v2/core/providers/project_provider/update_project_provider.dart';
 import 'package:jci_manila_v2/core/providers/update_profile_provider.dart';
 import 'package:jci_manila_v2/core/services/benefits/get_my_benefits_services.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +48,7 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => AddProjectProvider()),
     ChangeNotifierProvider(create: (_) => ProjectInformationProvider()),
     ChangeNotifierProvider(create: (_) => CommitteeMemberProvider()),
+    ChangeNotifierProvider(create: (_) => UpdateProjectProvider()),
 
     //benefits
     ChangeNotifierProvider(create: (_) => BenefitsProvider()),
