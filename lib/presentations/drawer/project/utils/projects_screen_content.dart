@@ -7,6 +7,7 @@ import 'package:jci_manila_v2/core/base_api/base_api.dart';
 import 'package:jci_manila_v2/core/models/project.dart';
 import 'package:jci_manila_v2/core/services/projects/my_projects_services.dart';
 import 'package:jci_manila_v2/presentations/drawer/project/screens/project_details_screen.dart';
+import 'package:jci_manila_v2/presentations/drawer/project/screens/update_project_screen.dart';
 
 class ProjectsScreenContent extends StatefulWidget {
   const ProjectsScreenContent({super.key});
@@ -103,7 +104,14 @@ class _ProjectsScreenContentState extends State<ProjectsScreenContent> {
                     // Action buttons
                     Row(
                       children: [
-                        _icon(icon: Icons.edit_outlined, onTap: () {}),
+                        _icon(
+                          icon: Icons.edit_outlined,
+                          onTap:
+                              () => Get.to(
+                                () =>
+                                    UpdateProjectScreen(projectId: project.id),
+                              ),
+                        ),
                         const SizedBox(width: 5),
                         _icon(
                           icon: Icons.visibility_outlined,
