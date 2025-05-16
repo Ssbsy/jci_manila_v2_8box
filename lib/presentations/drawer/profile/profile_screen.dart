@@ -20,10 +20,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => Provider.of<ProfileProvider>(context, listen: false).fetchProfile(),
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // You can use context safely here
+      final profile = Provider.of<ProfileProvider>(context, listen: false);
+      profile.fetchProfile();
+    });
+    // Future.microtask(
+    //   () => Provider.of<ProfileProvider>(context, listen: false).fetchProfile(),
+    // );
   }
+
+  // testFunc() {
+  //   Provider.of<ProfileProvider>(context, listen: false).fetchProfile();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -45,25 +54,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 width: 80,
                 height: 80,
-                child: Image.asset(
-                  profileProvider.photo,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Palette.accentBlue,
-                      ),
-                      child: Icon(Icons.person, color: Palette.white, size: 60),
-                    );
-                  },
-                ),
+
+                //s child:
+                //  Image.asset(
+                //   profileProvider.photo,
+                //   errorBuilder: (context, error, stackTrace) {
+                //     return Container(
+                //       decoration: BoxDecoration(
+                //         shape: BoxShape.circle,
+                //         color: Palette.accentBlue,
+                //       ),
+                //       child: Icon(Icons.person, color: Palette.white, size: 60),
+                //     );
+                //   },
+                // ),
               ),
               const Gap(5),
               WidgetText(
-                title:
-                    profileProvider.firstName.isEmpty
-                        ? 'null'
-                        : profileProvider.firstName,
+                title: profileProvider.user?.firstName ?? '',
                 color: Palette.white,
                 isBold: true,
                 size: 16,
@@ -92,10 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       children: [
                         QrImageView(
-                          data:
-                              profileProvider.qrData.isNotEmpty
-                                  ? profileProvider.qrData
-                                  : '1234567890',
+                          data: '1234567890',
                           version: QrVersions.auto,
                           size: 150.0,
                         ),
@@ -110,15 +115,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               _col(
                                 'GMM Count',
-                                profileProvider.freeGmmCount.toString(),
+                                profileProvider.user.freeGmm.toString(),
                               ),
                               _col(
                                 'Member Points',
-                                profileProvider.memberPoints.toString(),
+                                profileProvider.user.memberPoints.toString(),
                               ),
                               _col(
                                 'No. of Projects',
-                                profileProvider.projectsCount.toString(),
+                                profileProvider.user.projectsCount.toString(),
                               ),
                             ],
                           ),
