@@ -32,7 +32,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         if (profileProvider.isLoading) {
           return Scaffold(
             backgroundColor: Palette.veryDarkBluishGray,
-            appBar: ProfileAppbar(),
             body: const Center(child: CircularProgressIndicator()),
           );
         }
@@ -63,7 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               WidgetText(
                 title:
                     profileProvider.firstName.isEmpty
-                        ? 'Padiernos, Jan Adrian D.'
+                        ? 'null'
                         : profileProvider.firstName,
                 color: Palette.white,
                 isBold: true,

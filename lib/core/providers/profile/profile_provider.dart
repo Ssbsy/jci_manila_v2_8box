@@ -213,7 +213,7 @@ class ProfileProvider with ChangeNotifier {
 
       //Highschool
       _highSchool = data['high_school'] ?? '';
-      _educationalAttainment = data['educational_attaiment'] ?? 'null';
+      _educationalAttainment = data['educational_attainment'] ?? 'null';
       _schoolGraduated = data['school_graduated'] ?? 'null';
 
       //Profession
@@ -226,7 +226,7 @@ class ProfileProvider with ChangeNotifier {
 
       //Sports
       _sports = data['sports'] ?? 'null';
-      _instagram = data['instragram'] ?? 'null';
+      _instagram = data['instagram'] ?? 'null';
       _twitter = data['twitter'] ?? 'null';
       _linkedin = data['linkedin'] ?? 'null';
 

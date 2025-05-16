@@ -30,8 +30,12 @@ class _HomePageAutochangingTileState extends State<HomePageAutochangingTile>
     });
   }
 
+  //Use Advertisements instead
   void _fetchEventsOnce() async {
-    final provider = Provider.of<EventsProvider>(context, listen: false);
+    final provider = Provider.of<EventsProvider>(
+      context,
+      listen: false,
+    ); //Revise the events services and provider
     if (provider.homeEvents.isEmpty) {
       await provider.getHomeEvents();
     }
@@ -67,6 +71,8 @@ class _HomePageAutochangingTileState extends State<HomePageAutochangingTile>
       );
     });
   }
+
+  //Change the event to advertisement
 
   @override
   void dispose() {

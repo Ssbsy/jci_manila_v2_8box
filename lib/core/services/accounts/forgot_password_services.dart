@@ -11,7 +11,7 @@ class ForgotPasswordServices {
   Future<Map<String, dynamic>> postForgotPassword({
     required String email,
   }) async {
-    const endpoint = 'forgotpassword';
+    const endpoint = 'v2.2/password-reset';
     final body = {'email': email};
 
     try {

@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/const/assets.dart';
@@ -31,58 +33,64 @@ class HomePageHeaderContainer extends StatelessWidget {
       return const Center(child: Text('Error loading profile.'));
     }
 
-    return Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            spacing: 5,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                spacing: 5,
-                children: [
-                  const Text(
-                    'Hi,',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  WidgetText(
-                    title: profile.firstName ?? '',
-                    size: 18,
-                    color: const Color(0xFFE9A101),
-                    isBold: true,
-                  ),
-                ],
-              ),
-              WidgetText(title: profile.membershipID ?? ''),
-              const Gap(5),
-              Row(
-                spacing: 5,
-                children: [
-                  _logo(Assets.jciBlackLogo, Colors.amber),
-                  _logo(
-                    const Icon(
-                      Icons.verified_user,
-                      color: Colors.white,
-                      size: 15,
+    return GestureDetector(
+      onTap: () => Get.toNamed('/profile'),
+      child: Container(
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              spacing: 5,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  spacing: 5,
+                  children: [
+                    const Text(
+                      'Hi,',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    Colors.lightGreen,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          QrImageView(
-            data: profile.membershipID ?? '1234567890',
-            version: QrVersions.auto,
-            size: 100.0,
-          ),
-        ],
+                    WidgetText(
+                      title: profile.firstName ?? '',
+                      size: 18,
+                      color: const Color(0xFFE9A101),
+                      isBold: true,
+                    ),
+                  ],
+                ),
+                WidgetText(title: profile.membershipID ?? ''),
+                const Gap(5),
+                Row(
+                  spacing: 5,
+                  children: [
+                    _logo(Assets.jciBlackLogo, Colors.amber),
+                    _logo(
+                      const Icon(
+                        Icons.verified_user,
+                        color: Colors.white,
+                        size: 15,
+                      ),
+                      Colors.lightGreen,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            QrImageView(
+              data: profile.membershipID ?? '1234567890',
+              version: QrVersions.auto,
+              size: 100.0,
+            ),
+          ],
+        ),
       ),
     );
   }

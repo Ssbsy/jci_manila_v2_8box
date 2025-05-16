@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
 
-class AllEventsService {
+class GetGamesCalendarServices {
   final BaseApiServices apiServices;
 
-  AllEventsService(this.apiServices);
+  GetGamesCalendarServices(this.apiServices);
 
-  Future<Map<String, dynamic>> getAllEvents() async {
-    const endpoint = 'v2.2/events';
+  Future<Map<dynamic, dynamic>> getCalendar() async {
+    const endpoint = 'v2.2/games/calendar?month=2025-05';
 
     try {
       final headers = await apiServices.getHeaders();
@@ -21,24 +21,17 @@ class AllEventsService {
       debugPrint("Raw API response: ${response.body}");
 
       if (response.statusCode < 600) {
-        final decoded = jsonDecode(response.body);
-
-        if (decoded is List) {
-          return {"success": true, "data": decoded};
-        } else if (decoded is Map<String, dynamic>) {
-          return decoded;
-        } else {
-          return {"success": false, "message": "Unexpected response format"};
-        }
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        return responseData;
       } else {
-        debugPrint("Server error: ${response.statusCode} - ${response.body}");
+        print("Server error: ${response.statusCode} - ${response.body}");
         return {
           "success": false,
           "message": "Server error: ${response.statusCode}",
         };
       }
     } catch (e) {
-      debugPrint('Error fetching all events: $e');
+      debugPrint('$e');
       return {"success": false, "message": "An error occurred: $e"};
     }
   }
