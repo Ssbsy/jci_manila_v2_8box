@@ -23,11 +23,20 @@ class BjcStartDate extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _col('BJC Start Date', 'null'),
-          _col('Sponsor Name', profile.sponsorName),
-          _col('JCI Area Conference Events', profile.jciAreaConferenceEvents),
-          _col('JCI Asia Pacific Conference', profile.jciAsiaPacificConference),
-          _col('JCI World Congress', profile.jciWorldCongress),
-          _col('JCI National Convention', profile.jcipNationalConvention),
+          _col('Sponsor Name', profile.user?.sponsorName ?? 'null'),
+          _col(
+            'JCI Area Conference Events',
+            profile.user?.jciAreaConferenceEvents ?? 'null',
+          ),
+          _col(
+            'JCI Asia Pacific Conference',
+            profile.user?.jciAsiaPacificConference ?? 'null',
+          ),
+          _col('JCI World Congress', profile.user?.jciWorldCongress ?? 'null'),
+          _col(
+            'JCI National Convention',
+            profile.user?.jcipNationalConvention ?? 'null',
+          ),
         ],
       ),
     );

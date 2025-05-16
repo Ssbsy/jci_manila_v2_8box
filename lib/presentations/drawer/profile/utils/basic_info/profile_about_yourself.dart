@@ -30,7 +30,7 @@ class ProfileAboutYourself extends StatelessWidget {
           ),
           const Gap(5),
           WidgetText(
-            title: profile.aboutyourself,
+            title: profile.user?.aboutYourSelf ?? 'null',
             color: Palette.black,
             maxLine: 10,
           ),
@@ -39,12 +39,12 @@ class ProfileAboutYourself extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             spacing: 70,
             children: [
-              _col('First Name', profile.firstName),
-              _col('Last Name', profile.lastName),
+              _col('First Name', profile.user?.firstName ?? 'null'),
+              _col('Last Name', profile.user?.lastName ?? 'null'),
             ],
           ),
           const Gap(15),
-          _col('Middle Name', profile.middleName),
+          _col('Middle Name', profile.user?.middleName ?? 'null'),
         ],
       ),
     );

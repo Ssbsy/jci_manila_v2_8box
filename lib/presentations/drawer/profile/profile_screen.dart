@@ -21,13 +21,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // You can use context safely here
       final profile = Provider.of<ProfileProvider>(context, listen: false);
       profile.fetchProfile();
     });
-    // Future.microtask(
-    //   () => Provider.of<ProfileProvider>(context, listen: false).fetchProfile(),
-    // );
   }
 
   // testFunc() {
@@ -54,20 +50,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 width: 80,
                 height: 80,
-
-                //s child:
-                //  Image.asset(
-                //   profileProvider.photo,
-                //   errorBuilder: (context, error, stackTrace) {
-                //     return Container(
-                //       decoration: BoxDecoration(
-                //         shape: BoxShape.circle,
-                //         color: Palette.accentBlue,
-                //       ),
-                //       child: Icon(Icons.person, color: Palette.white, size: 60),
-                //     );
-                //   },
-                // ),
+                child: Image.asset(
+                  profileProvider.user?.photo ?? 'default_photo.png',
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Palette.accentBlue,
+                      ),
+                      child: Icon(Icons.person, color: Palette.white, size: 60),
+                    );
+                  },
+                ),
               ),
               const Gap(5),
               WidgetText(
@@ -115,15 +109,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               _col(
                                 'GMM Count',
-                                profileProvider.user.freeGmm.toString(),
+                                profileProvider.user?.freeGmm.toString() ??
+                                    'null',
                               ),
                               _col(
                                 'Member Points',
-                                profileProvider.user.memberPoints.toString(),
+                                profileProvider.user?.memberPoints.toString() ??
+                                    'null',
                               ),
                               _col(
                                 'No. of Projects',
-                                profileProvider.user.projectsCount.toString(),
+                                profileProvider.user?.projectsCount
+                                        .toString() ??
+                                    'null',
                               ),
                             ],
                           ),

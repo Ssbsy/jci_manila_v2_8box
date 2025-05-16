@@ -22,10 +22,10 @@ class ProfileSports extends StatelessWidget {
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _col('Sports', profile.sports),
-          _col('Instagran', profile.instagram),
-          _col('Twitter', profile.twitter),
-          _col('Linkedln', profile.linkedin),
+          _col('Sports', profile.user?.sports ?? 'null'),
+          _col('Instagran', profile.user?.instragram ?? 'null'),
+          _col('Twitter', profile.user?.twitter ?? 'null'),
+          _col('Linkedln', profile.user?.linkedin ?? 'null'),
         ],
       ),
     );

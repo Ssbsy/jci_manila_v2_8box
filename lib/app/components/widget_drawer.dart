@@ -116,7 +116,10 @@ class WidgetDrawer extends StatelessWidget {
 
   Widget _header(BuildContext context, ProfileProvider profileProvider) {
     String fullName =
-        profileProvider.firstName + ' ' + profileProvider.lastName;
+        [
+          profileProvider.user?.firstName ?? '',
+          profileProvider.user?.lastName ?? '',
+        ].where((part) => part.isNotEmpty).join(' ').trim();
     debugPrint(fullName);
     return GestureDetector(
       onTap: () {
@@ -134,7 +137,7 @@ class WidgetDrawer extends StatelessWidget {
           children: [
             SizedBox(
               child: Image.asset(
-                profileProvider.photo,
+                profileProvider.user?.photo ?? 'default_photo.png',
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     padding: const EdgeInsets.all(5),

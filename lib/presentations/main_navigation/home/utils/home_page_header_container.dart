@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/const/assets.dart';
@@ -17,19 +16,21 @@ class HomePageHeaderContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final profile = Provider.of<ProfileProvider>(context);
 
-    debugPrint("Building HomePageHeaderContainer...");
-    debugPrint("Profile loading: ${profile.isLoading}");
-    debugPrint("Profile firstName: ${profile.firstName}");
-    debugPrint("Profile membershipID: ${profile.membershipID}");
+    // debugPrint("Building HomePageHeaderContainer...");
+    // debugPrint("Profile loading: ${profile.isLoading}");
+    // // debugPrint("Profile firstName: ${profile.user!.firstName}");
+    // debugPrint("Profile membershipID: ${profile.user!.memberId}");
 
     if (profile.isLoading) {
       debugPrint("Profile is loading...");
       return const Center(child: CircularProgressIndicator());
     }
 
-    if (profile.firstName == null || profile.membershipID == null) {
+    if (profile.user == null ||
+        profile.user!.firstName == null ||
+        profile.user!.memberId == null) {
       debugPrint("Missing profile data. firstName or membershipID is null.");
-      debugger();
+      // debugger();
       return const Center(child: Text('Error loading profile.'));
     }
 
@@ -59,14 +60,14 @@ class HomePageHeaderContainer extends StatelessWidget {
                       ),
                     ),
                     WidgetText(
-                      title: profile.firstName ?? '',
+                      title: profile.user!.firstName ?? '',
                       size: 18,
                       color: const Color(0xFFE9A101),
                       isBold: true,
                     ),
                   ],
                 ),
-                WidgetText(title: profile.membershipID ?? ''),
+                WidgetText(title: profile.user!.memberId ?? ''),
                 const Gap(5),
                 Row(
                   spacing: 5,
@@ -85,7 +86,7 @@ class HomePageHeaderContainer extends StatelessWidget {
               ],
             ),
             QrImageView(
-              data: profile.membershipID ?? '1234567890',
+              data: profile.user!.memberId ?? '1234567890',
               version: QrVersions.auto,
               size: 100.0,
             ),

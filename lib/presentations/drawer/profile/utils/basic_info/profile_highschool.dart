@@ -22,9 +22,12 @@ class ProfileHighschool extends StatelessWidget {
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _col('High School', profile.highSchool),
-          _col('Educational Attainment', profile.educationalAttainment),
-          _col('School Graduated', profile.schoolGraduated),
+          _col('High School', profile.user?.highSchool ?? 'null'),
+          _col(
+            'Educational Attainment',
+            profile.user?.educationalAttaiment ?? 'null',
+          ),
+          _col('School Graduated', profile.user?.schoolGraduated ?? 'null'),
         ],
       ),
     );

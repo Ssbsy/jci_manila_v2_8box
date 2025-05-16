@@ -4,7 +4,6 @@ import 'package:jci_manila_v2/core/models/user_profile.dart';
 import 'package:jci_manila_v2/core/services/profile/get_profile_services.dart';
 
 class ProfileProvider with ChangeNotifier {
-  //-------------------------------//
   Map<dynamic, dynamic>? profileData;
   UserProfile? _user;
 
@@ -22,7 +21,7 @@ class ProfileProvider with ChangeNotifier {
       final profileService = GetProfileServices(apiService);
       final data = await profileService.getProfile();
 
-      if (data['Success']) {
+      if (data['success'] == true && data['data'] != null) {
         _user = UserProfile.fromJson(data['data']);
       }
 

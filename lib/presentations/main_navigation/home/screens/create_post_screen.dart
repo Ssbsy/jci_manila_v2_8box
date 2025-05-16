@@ -113,7 +113,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Gap(15),
-                    _header(),
+                    _header(ProfileProvider()),
                     const Gap(15),
                     Expanded(
                       child: TextField(
@@ -171,9 +171,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     }
   }
 
-  Widget _header() {
+  Widget _header(ProfileProvider profileProvider) {
     final profile = Provider.of<ProfileProvider>(context);
-    String fullName = profile.firstName + ' ' + profile.lastName;
+    String fullName =
+        [
+          profileProvider.user?.firstName ?? '',
+          profileProvider.user?.lastName ?? '',
+        ].where((part) => part.isNotEmpty).join(' ').trim();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

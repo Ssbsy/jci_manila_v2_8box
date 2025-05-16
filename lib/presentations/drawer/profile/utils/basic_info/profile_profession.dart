@@ -25,19 +25,22 @@ class ProfileProfession extends StatelessWidget {
           Row(
             spacing: 60,
             children: [
-              _col('Profession', profile.profession),
-              _col('Employment Status', profile.employementStatus),
+              _col('Profession', profile.user?.profession ?? 'null'),
+              _col(
+                'Employment Status',
+                profile.user?.employmentStatus ?? 'null',
+              ),
             ],
           ),
           Row(
             spacing: 40,
             children: [
-              _col('Company', profile.company),
-              _col('Industry', profile.industry),
+              _col('Company', profile.user?.company ?? 'null'),
+              _col('Industry', profile.user?.industry ?? 'null'),
             ],
           ),
-          _col('Office Address', profile.officeAddress),
-          _col('Office City', profile.officeCity),
+          _col('Office Address', profile.user?.officeAddress ?? 'null'),
+          _col('Office City', profile.user?.officeCity ?? 'null'),
         ],
       ),
     );

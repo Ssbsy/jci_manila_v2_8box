@@ -22,12 +22,24 @@ class ProfileCivilStatus extends StatelessWidget {
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _col(isCentered: false, 'Civil Status', profile.civilStatus),
+          _col(
+            isCentered: false,
+            'Civil Status',
+            profile.user?.civilStatus ?? 'null',
+          ),
           Row(
             spacing: 60,
             children: [
-              _col(isCentered: false, 'Spouse Name', profile.spouseName),
-              _col(isCentered: false, 'Spouse Contact', profile.spouseContact),
+              _col(
+                isCentered: false,
+                'Spouse Name',
+                profile.user?.spouseName ?? 'null',
+              ),
+              _col(
+                isCentered: false,
+                'Spouse Contact',
+                profile.user?.spouseContactNo ?? 'null',
+              ),
             ],
           ),
         ],

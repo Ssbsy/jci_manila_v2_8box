@@ -25,22 +25,22 @@ class ProfileMembership extends StatelessWidget {
           Row(
             spacing: 50,
             children: [
-              _col('Membership', profile.membership),
-              _col('Membership ID', profile.membershipID),
+              _col('Membership', profile.user?.membership ?? 'null'),
+              _col('Membership ID', profile.user?.memberId ?? 'null'),
             ],
           ),
           Row(
             spacing: 60,
             children: [
-              _col('JCI Phil ID', profile.jciPhilID),
-              _col('JCI Sen No.', profile.jciSenNo),
+              _col('JCI Phil ID', profile.user?.jciPhilId ?? 'null'),
+              _col('JCI Sen No.', profile.user?.jciSenNo ?? 'null'),
             ],
           ),
-          _col('Care Group', profile.careGroup),
-          _col('Current Position', profile.currentPosition),
+          _col('Care Group', profile.user?.careGroup ?? 'null'),
+          _col('Current Position', profile.user?.currentPosition ?? 'null'),
           _col(
             'Current Position Directorate',
-            profile.currentPositionDirectorate,
+            profile.user?.currentPositionDirectorate ?? 'null',
           ),
         ],
       ),

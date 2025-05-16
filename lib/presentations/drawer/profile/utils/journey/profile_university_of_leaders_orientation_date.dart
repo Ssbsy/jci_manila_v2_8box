@@ -22,39 +22,33 @@ class ProfileUniversityOfLeadersOrientationDate extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 10,
         children: [
-          _col('University of Leaders Orientation Date', profile.uloDate),
+          // _col('University of Leaders Orientation Date', profile.user!.uloDate),
           Row(
             spacing: 35,
             children: [
-              _col('Launch Pad Date', profile.launchPadDate),
+              // _col('Launch Pad Date', profile.user!.launchPadDate ),
               _col(
                 'Year Inducted (Baby JC)',
-                profile.yearInductedBaby.toString().isEmpty
-                    ? 'null'
-                    : profile.yearInductedBaby.toString(),
+                profile.user?.yearInductedBaby.toString() ?? 'null',
               ),
             ],
           ),
           _col(
             'Year Inducted (Baby JC)',
-            profile.yearInductedBaby.toString().isEmpty
-                ? 'null'
-                : profile.yearInductedBaby.toString(),
+            profile.user?.yearInductedBaby.toString() ?? 'null',
           ),
           _col(
             'BJC Project Presentation Date',
-            profile.bjcProjectPresentationDate.toString().isEmpty
-                ? 'null'
-                : profile.bjcProjectPresentationDate.toString(),
+            profile.user?.bjcProjectPresentationDate.toString() ?? 'null',
           ),
           Row(
             spacing: 10,
             children: [
-              _col('Induction Date', profile.inductionDate),
-              _col('Year Inducted (Regular)', profile.inductionDate),
+              // _col('Induction Date', profile.user!.inductionDate),
+              // _col('Year Inducted (Regular)', profile.user!.inductionDate),
             ],
           ),
-          _col('Awards Received', profile.awardsReceived),
+          // _col('Awards Received', profile.user!.awardsReceived),
         ],
       ),
     );

@@ -272,7 +272,7 @@ class UserProfile {
     shippingAddress2: json["shipping_address2"],
     shippingCity: json["shipping_city"],
     shippingZip: json["shipping_zip"],
-    freeGmm: json["free_gmm"] ?? 0,
+    freeGmm: json["free_gmm"],
     membership: json["membership"],
     id: json["id"],
     membershipDue: json["membership_due"],

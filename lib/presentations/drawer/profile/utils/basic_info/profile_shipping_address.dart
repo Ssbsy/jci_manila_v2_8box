@@ -22,11 +22,15 @@ class ProfileShippingAddress extends StatelessWidget {
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _col(isCentered: false, 'Shipping Address', profile.shippingAddress1),
+          _col(
+            isCentered: false,
+            'Shipping Address',
+            profile.user?.shippingAddress1 ?? 'null',
+          ),
           _col(
             isCentered: false,
             'Shipping Zip',
-            profile.shippingZip.toString(),
+            profile.user?.shippingZip.toString() ?? 'null',
           ),
         ],
       ),

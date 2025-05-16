@@ -22,9 +22,17 @@ class ProfileHomeAddress extends StatelessWidget {
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _col(isCentered: false, 'Home Address', profile.homeAddress),
-          _col(isCentered: false, 'City', profile.city),
-          _col(isCentered: false, 'Contact', profile.contact),
+          _col(
+            isCentered: false,
+            'Home Address',
+            profile.user?.homeAddress ?? 'null',
+          ),
+          _col(isCentered: false, 'City', profile.user?.homeCity ?? 'null'),
+          _col(
+            isCentered: false,
+            'Contact',
+            profile.user?.contactNumber ?? 'null',
+          ),
         ],
       ),
     );

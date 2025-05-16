@@ -22,11 +22,14 @@ class Director extends StatelessWidget {
         spacing: 10,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _col('Director', profile.boardOfDirector),
-          _col('Commisioner', profile.commissionership),
-          _col('Chairman', profile.chairmanship),
-          _col('Commitee', profile.position), // Note: Walang Commitee...
-          _col('Previous Projects', profile.previousProjects),
+          _col('Director', profile.user?.boardOfDirector ?? 'null'),
+          _col('Commisioner', profile.user?.commissionership ?? 'null'),
+          _col('Chairman', profile.user?.chairmanship ?? 'null'),
+          _col(
+            'Commitee',
+            profile.user?.position ?? 'null',
+          ), // Note: Walang Commitee...
+          _col('Previous Projects', profile.user?.previousProjects ?? 'null'),
         ],
       ),
     );
