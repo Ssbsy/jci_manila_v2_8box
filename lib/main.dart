@@ -7,7 +7,7 @@ import 'package:jci_manila_v2/app_providers.dart';
 import 'package:jci_manila_v2/core/routes/get_pages.dart';
 import 'package:provider/provider.dart';
 
-//Certificate
+//Certification
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {

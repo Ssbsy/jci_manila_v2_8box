@@ -21,7 +21,7 @@ class WidgetBottomNav extends StatelessWidget {
         boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(items.length, (index) {
           final isSelected = index == currentIndex;
           return GestureDetector(
