@@ -6,7 +6,7 @@ import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
 import 'package:jci_manila_v2/core/constants/images.dart';
 import 'package:jci_manila_v2/core/providers/auth/verfication_provider.dart';
-import 'package:jci_manila_v2/core/services/accounts/login_verification_services.dart';
+import 'package:jci_manila_v2/core/services/accounts/auth/login_verification_services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 

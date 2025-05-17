@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
 
-class MyProjectsServices {
+class ProjectComitteeMembersServices {
   final BaseApiServices apiServices;
 
-  MyProjectsServices(this.apiServices);
+  ProjectComitteeMembersServices(this.apiServices);
 
-  Future<Map<String, dynamic>> getMyProjects() async {
-    const endpoint = 'v2.2/projects/me';
+  Future<Map<String, dynamic>> getComitteeMembers() async {
+    const endpoint = 'v2.2/projects/:id/committees';
 
     try {
       final headers = await apiServices.getHeaders();

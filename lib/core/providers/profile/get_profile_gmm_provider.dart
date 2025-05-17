@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
-import 'package:jci_manila_v2/core/services/profile/get_profile_gmm_services.dart';
+import 'package:jci_manila_v2/core/services/accounts/profile/get_profile_gmm_services.dart';
 
 class GetProfileGmmProvider extends ChangeNotifier {
   final GetProfileGmmServices profileGmm = GetProfileGmmServices(

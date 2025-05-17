@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
-import 'package:jci_manila_v2/core/services/profile/patch_settings_services.dart';
+import 'package:jci_manila_v2/core/services/accounts/profile/patch_settings_services.dart';
 
 class PatchSettingsProvider extends ChangeNotifier {
   final PatchSettingsServices settings = PatchSettingsServices(

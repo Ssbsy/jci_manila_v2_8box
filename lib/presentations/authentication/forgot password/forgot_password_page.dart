@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
-import 'package:jci_manila_v2/core/services/accounts/forgot_password_services.dart';
+import 'package:jci_manila_v2/core/services/accounts/auth/forgot_password_services.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
-import 'package:jci_manila_v2/core/services/accounts/login_services.dart';
-import 'package:jci_manila_v2/core/services/accounts/login_verification_services.dart';
+import 'package:jci_manila_v2/core/services/accounts/auth/login_services.dart';
+import 'package:jci_manila_v2/core/services/accounts/auth/login_verification_services.dart';
 
 class VerificationProvider extends ChangeNotifier {
   final LoginVerificationServices _verificationService =

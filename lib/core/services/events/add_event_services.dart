@@ -3,25 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
 
-class MyProjectsServices {
+class AddEventServices {
   final BaseApiServices apiServices;
 
-  MyProjectsServices(this.apiServices);
+  AddEventServices(this.apiServices);
 
-  Future<Map<String, dynamic>> getMyProjects() async {
-    const endpoint = 'v2.2/projects/me';
+  Future<Map<String, dynamic>> postEvent({
+    required String username,
+    required String password,
+  }) async {
+    const endpoint = 'v2.2/login';
+    final body = {'username': username, 'password': password};
 
     try {
       final headers = await apiServices.getHeaders();
-      final response = await http.get(
+      final response = await http.post(
         Uri.parse('${apiServices.baseUrl}$endpoint'),
         headers: headers,
+        body: jsonEncode(body),
       );
 
       debugPrint("Raw API response: ${response.body}");
 
       if (response.statusCode < 600) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
+
         return responseData;
       } else {
         debugPrint("Server error: ${response.statusCode} - ${response.body}");
