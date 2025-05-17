@@ -3,41 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
 
-class LoginServices {
+class GetBodListServices {
   final BaseApiServices apiServices;
 
-  LoginServices(this.apiServices);
+  GetBodListServices(this.apiServices);
 
-  Future<Map<String, dynamic>> postLogin({
-    required String username,
-    required String password,
-  }) async {
-    const endpoint = 'v2.2/login';
-    final body = {'username': username, 'password': password};
+  Future<Map<String, dynamic>> getBodList() async {
+    const endpoint = 'v2.2/bod-list/';
 
     try {
       final headers = await apiServices.getHeaders();
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('${apiServices.baseUrl}$endpoint'),
         headers: headers,
-        body: jsonEncode(body),
       );
 
+      debugPrint("Status Code: ${response.statusCode}");
       debugPrint("Raw API response: ${response.body}");
 
-      if (response.statusCode == 200) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
-
         return responseData;
       } else {
-        debugPrint("Server error: ${response.statusCode} - ${response.body}");
+        print("Server error: ${response.statusCode} - ${response.body}");
         return {
           "success": false,
           "message": "Server error: ${response.statusCode}",
         };
       }
     } catch (e) {
-      debugPrint('$e');
+      debugPrint('Error: $e');
       return {"success": false, "message": "An error occurred: $e"};
     }
   }

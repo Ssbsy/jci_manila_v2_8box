@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jci_manila_v2/core/base_api/base_api.dart';
 
-class LoginServices {
+class PostJoinServices {
   final BaseApiServices apiServices;
 
-  LoginServices(this.apiServices);
+  PostJoinServices(this.apiServices);
 
-  Future<Map<String, dynamic>> postLogin({
+  Future<Map<String, dynamic>> postJoin({
     required String username,
     required String password,
   }) async {
