@@ -5,7 +5,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/constants/font_manager.dart';
-import 'package:jci_manila_v2/core/providers/auth/auth_provider.dart';
+import 'package:jci_manila_v2/core/providers/accounts/auth/auth_provider.dart';
 import 'package:jci_manila_v2/core/utils/credentianl_manager.dart';
 import 'package:jci_manila_v2/core/utils/login_secure_storage.dart';
 import 'package:provider/provider.dart';

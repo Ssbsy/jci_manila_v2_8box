@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
-import 'package:jci_manila_v2/core/providers/auth/auth_provider.dart';
+import 'package:jci_manila_v2/core/providers/accounts/auth/auth_provider.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/screens/reactions_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:jci_manila_v2/app/components/widget_feed_post.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jci_manila_v2/app/components/widget_custom_appbar.dart';
 import 'package:jci_manila_v2/core/constants/fab_controller.dart';
-import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
+import 'package:jci_manila_v2/core/providers/accounts/profile/profile_provider.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/const/assets.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/utils/home_page_autochanging_tile.dart';
 import 'package:jci_manila_v2/presentations/main_navigation/home/utils/home_page_feed.dart';

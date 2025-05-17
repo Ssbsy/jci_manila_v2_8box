@@ -4,7 +4,7 @@ import 'package:jci_manila_v2/app/theme/app_colors.dart';
 import 'package:jci_manila_v2/app/widgets/widget_text.dart';
 import 'package:jci_manila_v2/core/constants/images.dart';
 import 'package:jci_manila_v2/core/providers/posts/create_posts_provider.dart';
-import 'package:jci_manila_v2/core/providers/profile/profile_provider.dart';
+import 'package:jci_manila_v2/core/providers/accounts/profile/profile_provider.dart';
 import 'package:provider/provider.dart';
 
 class CreatePostScreen extends StatefulWidget {
